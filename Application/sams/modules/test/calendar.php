@@ -7,6 +7,7 @@
 	
 	
 	
+	
 	mysqli_connect($hostname,$username,$password) or die ($error);
 	mysqli_select_db (mysqli_connect($hostname,$username,$password),$dbname) or die ($error);
 ?>
