@@ -2,6 +2,16 @@
 	<head>
 		<title>Upload a File</title>
 		<style>
+			body{
+				background-color: gray;
+			}
+			
+			hr{
+				color:#000000;
+				width:50%;
+				margin-left:10px;
+			}
+			
 			h1{
 				padding-top:10px;
 				padding-left:10px;
@@ -13,7 +23,7 @@
 		</style>
 	</head>
 	<body bgcolor="gray">
-		<h1>Add Document</h1><hr width="50%" align="left" color="black"><br>
+		<h1>Add Document</h1><hr align="left"><br>
 		<form action="upload.php" method="post" enctype="multipart/form-data">
 			<input type="file" name="file"><br><br>
 			<label>Description: </label><br>

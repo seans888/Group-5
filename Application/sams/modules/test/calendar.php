@@ -5,9 +5,6 @@
 	$dbname = "sams_db";
 	$error = "Cannot connect to databasae, Please try again later...";
 	
-	
-	
-	
 	mysqli_connect($hostname,$username,$password) or die ($error);
 	mysqli_select_db (mysqli_connect($hostname,$username,$password),$dbname) or die ($error);
 ?>
@@ -152,11 +149,11 @@ if(isset($_GET['f'])) {
 include("eventform.php");
 }
 $sqlEvent = "select * FROM calevent where calEvent_Date='".$month."/".$day."/".$year."'";
-$resultEvents = mysqli_query(mysqli_connect($hostname,$username,$password,$dbname), $sqlEvent);
+$resultEvents = mysqli_query(mysqli_connect($hostname,$username,$password), $sqlEvent);
 echo "<hr>";
 while ($events = mysqli_fetch_array($resultEvents)){
-echo "Event Name: ".$events['calEvent_Name']."<br>";
-echo "Details: ".$events['calEvent_Detail']."<br>";
+echo "Title: ".$events['Title']."<br>";
+echo "Detail: ".$events['Detail']."<br>";
 }
 }
 ?>
