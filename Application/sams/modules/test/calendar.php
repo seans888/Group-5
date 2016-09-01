@@ -149,11 +149,11 @@ if(isset($_GET['f'])) {
 include("eventform.php");
 }
 $sqlEvent = "select * FROM calevent where calEvent_Date='".$month."/".$day."/".$year."'";
-$resultEvents = mysqli_query(mysqli_connect($hostname,$username,$password), $sqlEvent);
+$resultEvents = mysqli_query(mysqli_connect($hostname,$username,$password,$dbname), $sqlEvent);
 echo "<hr>";
 while ($events = mysqli_fetch_array($resultEvents)){
-echo "Title: ".$events['Title']."<br>";
-echo "Detail: ".$events['Detail']."<br>";
+echo "Title: ".$events['calEvent_Name']."<br>";
+echo "Detail: ".$events['calEvent_Detail']."<br>";
 }
 }
 ?>
