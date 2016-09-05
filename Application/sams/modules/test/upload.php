@@ -21,7 +21,7 @@
 		$file_ext = explode('.', $file_name);
 		$file_ext = strtolower(end($file_ext));
 		
-		$allowed = array('txt', 'jpg');
+		$allowed = array('docx','doc','xlsx','xls','pdf');
 		$dir = 'c:/xampp/tmp';
 		
 		if(in_array($file_ext, $allowed)){
