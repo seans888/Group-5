@@ -3,7 +3,7 @@ require_once 'path.php';
 init_cobalt('ALLOW_ALL',FALSE);
 
 $html = new html;
-$html->draw_header('Welcome to your Control Center', $message, $message_type, FALSE);
+$html->draw_header('Welcome to your Control Center, ' . $_SESSION['first_name'] . " " . $_SESSION['last_name'], $message, $message_type, FALSE);
 
 if(ENABLE_SIDEBAR)
 {

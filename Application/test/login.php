@@ -128,13 +128,9 @@ echo '<input type="hidden" name="form_key" value="' . $form_key .'">';
 ?>
 <div class="left_container">
 
-    <div class="title">
-        <?php echo GLOBAL_PROJECT_NAME;?>
-    </div>
-
     <div class="flavor_text">
         <?php
-        $enable_flavor_text = TRUE;
+        $enable_flavor_text =TRUE;
         require 'login_flavor_text.php';
         ?>
     </div>
@@ -142,11 +138,10 @@ echo '<input type="hidden" name="form_key" value="' . $form_key .'">';
 </div>
 <div class="right_container">
     <fieldset class="right_panel">
-
         <table border="0" width="100%" cellspacing="1">
         <tr>
             <td align="center">
-                <img src="images/sao.png">
+                <img src="images/sao.png" class="logo">
             </td>
         </tr>
         <tr>
@@ -171,12 +166,18 @@ echo '<input type="hidden" name="form_key" value="' . $form_key .'">';
         </tr>
 		<tr>
 			<td align="center">
-				<input type=submit value="SIGNUP" name="btnSignup">
+				<form>
+				<input type=submit value="SIGN UP" name="btnSignUp"></form>
+				<?php
+					if(isset($_POST['btnSignUp'])){
+						header('Location: signup.php');
+					}
+				?>
 			</td>
 		</tr>
 		<tr>
-			<td>
-				<a href="#"><center>Forgot Password?</center></a>
+			<td align="center">
+				<a href="forgot_password.php"><font color="blue">Forgot Password?</font></a>
 			</td>
 		</tr>
         </table>

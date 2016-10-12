@@ -14,8 +14,8 @@ if(ENABLE_SIDEBAR)
 <frameset rows="120,*" frameborder="0">
     <frame src="header.php" name="header_frame" frameborder="0">
     <frameset cols="200,*" frameborder="0">
-        <frame frameborder="1" src="menus.php" name="menu_frame" noresize="noresize">
-        <frame frameborder="1" src="main.php" name="content_frame" noresize="noresize">
+        <frame frameborder="0" src="menus.php" name="menu_frame" noresize="noresize">
+        <frame frameborder="0" src="main.php" name="content_frame" noresize="noresize">
     </frameset>
 </frameset>
 <?php

@@ -3,6 +3,14 @@
     src: url('fonts/FiraSansOT-Regular.otf');
 }
 
+body{
+	overflow-x:hidden;
+}
+
+img.logo{
+	margin-top:-25px;
+}
+
 * {
     padding: 0;
     margin:  0;
@@ -60,7 +68,7 @@ a.footer:active {
 }
 
 body {
-    background-image: url("../images/orgs1.png");
+    background-image: url("../images/orgs.png");
 	/*background-color: #0047AB;*/
     font-family: "Display Font";
     font-size: 16px;
@@ -103,6 +111,7 @@ div.right_container {
     background: #eee;
     height: 100%;
 	padding-right: 15px;
+	overflow-y:hidden;
 }
 
 fieldset.right_panel {
