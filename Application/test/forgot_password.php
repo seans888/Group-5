@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
 	<head>
 		<title>Forgotten Password - SAMS_TEST</title>
@@ -22,6 +23,7 @@
 				border-radius:10px;
 				font-size:20px;
 				padding-left:8px;
+				margin-top:5px;
 			}
 			
 			input.submit{
@@ -33,6 +35,7 @@
 			
 			img.logo{ margin-top:-190px;}
 			p{ font-size:12px; margin-top:-7px; color:rgb(7,6,191); }
+			label{ font-size:15px; }
 		</style>
 	</head>
 	<body>
@@ -55,34 +58,41 @@
 			$hostname = "localhost";
 			$db = "dbtest";
 			
-			@mysqli_connect($hostname, $username, $password, $db);
-			@mysqli_select_db(mysqli_connect($hostname, $username, $password, $db), "user");
+			@mysqli_connect($hostname, $username, $password);
+			@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
 		
 			if(isset($_POST['btnSubmit'])){
-				$user = $_POST['username'];
-				$row;
-				
-				$s = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 5)), 0, 5);
-				$query = "SELECT username FROM user WHERE username='$user'";
-				$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-				$msg = "Good Day! Here is the Code you need to reset your password to access the APC-Student Activities Management System. \n
-						 Just enter the code in the Password Reset Code field and you're good to go! \n\n\n\t\tCODE: " . $s . ".";
-						 
-				$header = "From: webmaster@example.com";
-				
-				if(mysqli_num_rows($result) > 0){
-					$query1 = "SELECT email FROM user WHERE username='$user'";
-					$result1 = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query1);
-					
-					if(mysqli_num_rows($result1) > 0){
-						$row = mysqli_fetch_row($result1)[0];
-						$query2 = "UPDATE user SET password_reset_code='$s' WHERE username='$user'";
-						$result2 = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query2);
-						mail($row, "Password Reset Code - APC-Student Activities Management System",$msg,$header);
-					}
+				if($_POST['username'] == ""){
+					echo "No input detected. Please enter your username and try again.";
 				}else{
-					echo "Sorry, user with username '" . $user . "' does not exist.";
+					$user = $_POST['username'];
+					$row;
+					
+					$s = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 5)), 0, 5);
+					$query = "SELECT username FROM user WHERE username='$user'";
+					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+					$msg = "Good Day! Here is the Code you need to reset your password to access the APC-Student Activities Management System. \n
+							 Just enter the code in the Password Reset Code field and you're good to go! \n\n\n\t\tCODE: " . $s . ".";
+							 
+					$header = "From: webmaster@example.com";
+					
+					if(mysqli_num_rows($result) > 0){
+						$query1 = "SELECT email FROM user WHERE username='$user'";
+						$result1 = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query1);
+						
+						if(mysqli_num_rows($result1) > 0){
+							$row = mysqli_fetch_row($result1)[0];
+							$query2 = "UPDATE user SET password_reset_code='$s' WHERE username='$user'";
+							$result2 = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query2);
+							mail($row, "Password Reset Code - APC-Student Activities Management System",$msg,$header);
+							header('Location: reset_code.php');
+						}
+					}else{
+						echo "Sorry, user with username '" . $user . "' does not exist.";
+					}
 				}
+			}else if(isset($_POST['btnLogIn'])){
+				header('Location: login.php');
 			}
 		?>
 	</body>

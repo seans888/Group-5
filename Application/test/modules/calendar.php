@@ -2,7 +2,7 @@
 	$hostname = "localhost";
 	$username = "root";
 	$password = "projDb_2016";
-	$dbname = "sams_db";
+	$dbname = "dbtest";
 	$error = "Cannot connect to databasae, Please try again later...";
 	
 	mysqli_connect($hostname,$username,$password) or die ($error);
@@ -130,7 +130,7 @@ echo "<td align='center' ";
 if ($todaysDate == $dateToCompare){
 echo "class ='today'";
 } else{
-$sqlCount = "select * from calevent where calEvent_Date='".$dateToCompare."'";
+$sqlCount = "select * from calendar_event where date='".$dateToCompare."'";
 $noOfEvent = mysqli_num_rows(mysqli_query(mysqli_connect($hostname,$username,$password,$dbname),$sqlCount));
 if($noOfEvent >= 1){
 echo "class='event'";
@@ -148,12 +148,12 @@ echo "<a href='".$_SERVER['PHP_SELF']."?month=".$month."&day=".$day."&year=".$ye
 if(isset($_GET['f'])) {
 include("eventform.php");
 }
-$sqlEvent = "select * FROM calevent where calEvent_Date='".$month."/".$day."/".$year."'";
+$sqlEvent = "select * FROM calendar_event where date='".$month."/".$day."/".$year."'";
 $resultEvents = mysqli_query(mysqli_connect($hostname,$username,$password,$dbname), $sqlEvent);
 echo "<hr>";
 while ($events = mysqli_fetch_array($resultEvents)){
-echo "Title: ".$events['calEvent_Name']."<br>";
-echo "Detail: ".$events['calEvent_Detail']."<br>";
+echo "Title: ".$events['name']."<br>";
+echo "Detail: ".$events['description']."<br>";
 }
 }
 ?>

@@ -32,6 +32,7 @@
 				border:1px solid black;
 				background-color:rgb(232,192,32);
 				margin-bottom:115px;
+				min-height:100px;
 			}
 			
 			div.orgmem{
@@ -60,6 +61,13 @@
 				border-radius:15px;
 				width:100px;
 				height:50px;
+				margin-top:25px;
+			}
+			
+			select{
+				height:5%;
+				width:80%;
+				border-radius:5px;
 			}
 			
 		</style>
@@ -86,7 +94,26 @@
 			
 				<form action="page3.php" method="POST">
 					<label>Your Organizations</label><br><hr />
-					
+					<select>
+						<?php
+							$username = "root";
+							$password = "projDb_2016";
+							$hostname = "localhost";
+							$db = "dbtest";
+							
+							@mysqli_connect($hostname, $username, $password);
+							@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
+							
+							$query = "SELECT name FROM organization";
+							$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+							$row = mysqli_fetch_row($result);
+							$count = mysqli_num_rows($result);
+							
+							for($i = 0; $i < mysqli_num_rows($result); $i++){
+								echo '<option>' . $row[$i] . '</option>';
+							}
+						?>
+					</select>
 					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>
 				</form>
 			</div>

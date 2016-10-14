@@ -108,5 +108,25 @@
 				</form>
 			</div>
 		</div>
+		
+		<?php
+			$username="root";
+			$password="projDb_2016";
+			$db="dbtest";
+			$hostname="localhost";
+			
+			@mysqli_connect($hostname, $username, $password);
+			@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
+		
+			if(isset($_POST['next'])){
+				$lastname = $_POST['lastname'];
+				$firstname = $_POST['firstname'];
+				$midname = $_POST['middle'];
+				$gender = $_POST['gender'];
+				$bday = $_POST['bday'];
+				
+				
+			}
+		?>
 	</body>
 </html>
