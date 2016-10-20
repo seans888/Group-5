@@ -1,0 +1,58 @@
+<html>
+<head>
+ <style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css");body {
+  padding: 100px 5px;
+  margin-left:300px;
+}
+.button {
+  height: 70px;
+  display: inline-block;
+  border: 3px solid #2d71e2;
+  border-radius: 3px;
+  font-family: helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  color: #2d71e2;
+  overflow: hidden;
+}
+.layer1 {
+  color: #fff;
+  background: #2d71e2;
+}
+.button .layer1 span,.layer2 span{
+  margin-right: 5px;
+}.button .layer1,.button .layer2 {
+  display: block;
+  padding: 0 22px;
+  height: 70px;
+  line-height: 70px;
+  transition: margin 0.7s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+  -o-transition: margin 0.7s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+  -webkit-transition: margin 0.7s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+  -moz-transition: margin 0.7s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+  -ms-transition: margin 0.7s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+}
+.button:hover .layer1 {
+  margin-top: -70px;
+}
+.button:active .layer1 {
+  margin-top: -140px;
+}
+ </style>
+</head>
+<body>
+<a class="button" href='Document Request.docx'>
+  <div class="layer1">
+    <span class="fa fa-download"></span>
+   Document Request
+  </div>
+  <div class="layer2">
+    <span class="fa fa-hdd-o"></span>
+    Size : 855kB
+  </div>
+</a>
+</body>
+</html>
