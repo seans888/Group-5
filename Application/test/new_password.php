@@ -64,7 +64,7 @@
 			if(isset($_POST['btnContinue'])){
 				$new = $_POST['new_password'];
 				$confirm = $_POST['confirm_password'];
-				$salt, $newpass, $passhash;
+				
 				
 				if($new != $confirm){
 					echo "The passwords did not match. Please try again.";

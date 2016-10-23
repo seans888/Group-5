@@ -1,3 +1,22 @@
+<?php
+	require 'path.php';
+	init_cobalt();
+
+	if($_SESSION['lastname'] == "" ||
+		$_SESSION['firstname'] == "" ||
+		$_SESSION['midname'] == "" ||
+		$_SESSION['gender'] == "" ||
+		$_SESSION['bday'] == "" ||
+		$_SESSION['contact_num' == ""]){
+			header('Location: signup.php');
+		}else if($_SESSION['org'] == "" ||
+				$_SESSION['committee'] == ""){
+			header('Location: page2.php');
+		}else{
+			echo $_SESSION['org'];
+			echo $_SESSION['committee'];
+		}
+?>
 <html>
 	<head>
 		<title>Create your new Account - SAMS</title>
@@ -117,5 +136,30 @@
 				</form>
 			</div>
 		</div>
+		
+		<?php		
+			if(isset($_POST['next'])){
+				$username = "root";
+				$password = "projDb_2016";
+				$hostname = "localhost";
+				$db = "dbtest";
+				
+				$email = $_POST['email'];
+				$user = $_POST['username'];
+				$password = $_POST['pswd'];
+				
+				$salt = uniqid(mt_rand(), true);
+				//$phsh = 
+				//$real_pass = '$2y$12$' + $salt + ;
+				@mysqli_connect($hostname, $username, $password, $db);
+				
+				$query = "INSERT INTO person(last_name, first_name, middle_name, gender, birthday, contact_num, org_position)
+							VALUES ('{$_SESSION['lastname']}', '{$_SESSION['firstname']}', '{$_SESSION['midname']}', '{$_SESSION['gender']}',
+							'{$_SESSION['bday']}', '{$_SESSION['contact_num']}')";
+				@mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+				
+				header('Location: signup_success.php');
+			}
+		?>
 	</body>
 </html>

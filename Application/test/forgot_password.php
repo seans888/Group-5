@@ -63,7 +63,7 @@
 		
 			if(isset($_POST['btnSubmit'])){
 				if($_POST['username'] == ""){
-					echo "No input detected. Please enter your username and try again.";
+					echo '<center><p style="margin-top:-30px; color:red;"><b>No input detected. Please enter your username and try again.</b></p></center>';
 				}else{
 					$user = $_POST['username'];
 					$row;
@@ -88,7 +88,7 @@
 							header('Location: reset_code.php');
 						}
 					}else{
-						echo "Sorry, user with username '" . $user . "' does not exist.";
+						echo '<center><p style="margin-top:-30px; color:red;"><b>Sorry, user with username ' . $user . ' does not exist.</b></p></center>';
 					}
 				}
 			}else if(isset($_POST['btnLogIn'])){

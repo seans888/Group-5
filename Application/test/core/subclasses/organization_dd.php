@@ -38,7 +38,7 @@ class organization_dd
                         'name' => array('value'=>'',
                                               'nullable'=>FALSE,
                                               'data_type'=>'varchar',
-                                              'length'=>45,
+                                              'length'=>255,
                                               'required'=>TRUE,
                                               'attribute'=>'',
                                               'control_type'=>'textbox',

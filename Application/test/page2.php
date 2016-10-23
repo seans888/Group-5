@@ -1,3 +1,40 @@
+<?php 
+	require 'path.php';
+	init_cobalt();
+	
+	if($_SESSION['lastname'] == "" ||
+		$_SESSION['firstname'] == "" ||
+		$_SESSION['midname'] == "" ||
+		$_SESSION['gender'] == "" ||
+		$_SESSION['bday'] == ""){
+			header('Location: signup.php');
+		}else{				
+			$username = "root";
+			$password = "projDb_2016";
+			$hostname = "localhost";
+			$db = "dbtest";
+
+			@mysqli_connect($hostname, $username, $password);
+			@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
+		}
+		
+		function newOrg(){
+			echo '<select name="selectOrg" required="required">';		
+			echo '<option>------------------------------------------- Select One --------------------------------------------</option>';
+			$query = "SELECT name FROM organization";
+			$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+			$row = mysqli_fetch_row($result);
+			$count = mysqli_num_rows($result);
+									
+			for($i = 0; $i < mysqli_num_rows($result); $i++){
+				echo '<option value="' . $i . '">' . mysqli_fetch_row($result)[0] . '</option>';
+			}
+						
+			echo '</select>';
+			echo '<br /><br />';
+			return newOrg();
+		}
+?>
 <html>
 	<head>
 		<title>Create your new Account - SAMS</title>
@@ -68,8 +105,7 @@
 				height:5%;
 				width:80%;
 				border-radius:5px;
-			}
-			
+			}	
 		</style>
 	</head>
 	<body>
@@ -92,31 +128,58 @@
 					</div>
 				</div>
 			
-				<form action="page3.php" method="POST">
+				<form action="" method="POST" id="orgs">
 					<label>Your Organizations</label><br><hr />
-					<select>
+					<label>Organization 1:</label>
 						<?php
-							$username = "root";
-							$password = "projDb_2016";
-							$hostname = "localhost";
-							$db = "dbtest";
-							
-							@mysqli_connect($hostname, $username, $password);
-							@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
-							
+							echo '<select name="selectOrg" required="required">';
+							echo '<option>------------------------------------------- Select One --------------------------------------------</option>';
 							$query = "SELECT name FROM organization";
 							$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
 							$row = mysqli_fetch_row($result);
 							$count = mysqli_num_rows($result);
-							
+									
 							for($i = 0; $i < mysqli_num_rows($result); $i++){
-								echo '<option>' . $row[$i] . '</option>';
+								echo '<option value="' . $i . '">' . mysqli_fetch_row($result)[0] . '</option>';
 							}
+							
+							echo '</select>';
+							echo '<br /><br />';
+							echo '<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Committee: </label>';
+							echo '<select name="selectComm" required="required">';
+							echo '<option>------------------------------------------- Select One --------------------------------------------</option>';
+							$query = "SELECT name FROM committee";
+							$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+							$row = mysqli_fetch_row($result);
+							$count = mysqli_num_rows($result);
+									
+							for($i = 0; $i < mysqli_num_rows($result); $i++){
+								echo '<option value="' . $i . '">' . mysqli_fetch_row($result)[0] . '</option>';
+							}
+							
+							echo '</select>';
+							echo '<br /><br />';
+							echo '<a href="#">+ Add an Organization</a>';
 						?>
-					</select>
 					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>
 				</form>
 			</div>
 		</div>
+
+		<?php
+			if(isset($_POST['next'])){
+				/*$org_name = $_POST['selectOrg'];
+				$_SESSION['org'] = $org_name;
+
+				$committee_name = $_POST['selectComm'];
+				$_SESSION['committee'] = $committee_name;*/
+
+				if(headers_sent()){
+					echo '<p style="margin-top:60px;"><b><center><font size="2" color="red">Sorry, an error occurred and the system cannot process your request. Please reload the page and try again.</font></center></b></p>';
+				}else{
+					header('Location: page3.php');
+				}
+			}
+		?>
 	</body>
 </html>

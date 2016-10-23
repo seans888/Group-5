@@ -1,3 +1,11 @@
+<?php
+	require 'path.php';
+	init_cobalt();
+
+	if(isset($_SESSION['logged']) && $_SESSION['logged'] == "Logged"){
+		redirect('start.php');
+	}
+?>
 <html>
 	<head>
 		<title>Create your new Account - SAMS</title>
@@ -92,7 +100,7 @@
 					</div>
 				</div>
 			
-				<form action="page2.php" method="POST">
+				<form action="" method="POST">
 					<label>Lastname: </label>
 					<input type="text" name="last" required/><br><br>
 					<label>Firstname: </label>
@@ -100,16 +108,18 @@
 					<label>Middle Name: </label>
 					<input type="text" name="middle" /><br><br>
 					<label>Gender: </label>
-						<input type="radio" name="gender" value="male">Male
-						<input type="radio" name="gender" value="female">Female<br><br>
+						<input type="radio" name="gender" value="male" required/>Male
+						<input type="radio" name="gender" value="female" required/>Female<br><br>
 					<label>Birthdate: </label>
 					<input type="date" name="bday" required/><br><br>
+					<label>Contact Number: </label>
+					<input type="text" name="contact" required/><br><br>
 					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>
 				</form>
 			</div>
 		</div>
 		
-		<?php
+		<?php					
 			$username="root";
 			$password="projDb_2016";
 			$db="dbtest";
@@ -119,13 +129,21 @@
 			@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
 		
 			if(isset($_POST['next'])){
-				$lastname = $_POST['lastname'];
-				$firstname = $_POST['firstname'];
+				$lastname = $_POST['last'];
+				$firstname = $_POST['first'];
 				$midname = $_POST['middle'];
 				$gender = $_POST['gender'];
 				$bday = $_POST['bday'];
+				$contact_num = $_POST['contact'];
 				
+				$_SESSION['lastname'] = $lastname;
+				$_SESSION['firstname'] = $firstname;
+				$_SESSION['midname'] = $midname;
+				$_SESSION['gender'] = $gender;
+				$_SESSION['bday'] = $bday;
+				$_SESSION['contact'] = $contact_num;
 				
+				header('Location: page2.php');
 			}
 		?>
 	</body>
