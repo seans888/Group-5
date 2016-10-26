@@ -1,7 +1,7 @@
 <?php
 	$hostname = "localhost";
 	$username = "root";
-	$password = "projDb_2016";
+	$password = "";
 	$dbname = "dbtest";
 	$error = "Cannot connect to databasae, Please try again later...";
 	
@@ -75,8 +75,9 @@ $counter = 0;
 if(isset($_GET['add'])){
 $title =$_POST['txttitle'];
 $detail =$_POST['txtdetail'];
+$venue =$_POST['txtvenue'];
 $eventdate = $month."/".$day."/".$year;
-$sqlinsert = "insert into calevent(calEvent_Name,calEvent_Detail,calEvent_Date,calDate_Added) values ('".$title."','".$detail."','".$eventdate."',now())";
+$sqlinsert = "insert into calendar_event(name,description,date,time,venue) values ('".$title."','".$detail."','".$eventdate."',now(),'".$venue."')";
 $resultinginsert = mysqli_query(mysqli_connect($hostname,$username,$password,$dbname),$sqlinsert);
 if($resultinginsert ){
 echo "Event was successfully Added...";
@@ -152,8 +153,9 @@ $sqlEvent = "select * FROM calendar_event where date='".$month."/".$day."/".$yea
 $resultEvents = mysqli_query(mysqli_connect($hostname,$username,$password,$dbname), $sqlEvent);
 echo "<hr>";
 while ($events = mysqli_fetch_array($resultEvents)){
-echo "Title: ".$events['name']."<br>";
+echo "Event Name ".$events['name']."<br>";
 echo "Detail: ".$events['description']."<br>";
+echo "Venue: ".$events['venue']."<br><br><br>";
 }
 }
 ?>
