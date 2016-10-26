@@ -9,6 +9,10 @@
 <td width='250px'><textarea name='txtdetail'></textarea></td>
 </tr>
 <tr>
+<td width='150px'>Venue</td>
+<td width='250px'><textarea name='txtvenue'></textarea></td>
+</tr>
+<tr>
 <td colspan='2' align='center'><input type='submit' name='btnadd' value='Add Event'></td>
 </tr>
 </table>

@@ -68,8 +68,8 @@ a.footer:active {
 }
 
 body {
-    background-image: url("../images/orgs.png");
-	/*background-color: #0047AB;*/
+    /*background-image: url("../images/orgs1.png");*/
+	background-color:rgb(27,61,85);
     font-family: "Display Font";
     font-size: 16px;
     margin-right: 0px;
@@ -81,7 +81,7 @@ body {
 
 div.flavor_text {
     padding-top: 30px;
-    font-size: 24px;
+    font-size: 10px;
     color: #ffffff;
     word-wrap: break-word;
     text-align: justify;
