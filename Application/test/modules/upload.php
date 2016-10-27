@@ -1,3 +1,15 @@
+<?php
+	require 'path.php';
+	init_cobalt();
+	
+	$username = "root";
+	$password = "projDb_2016";
+	$db = "dbtest";
+	$hostname = "localhost";
+	
+	@mysqli_connect($hostname, $username, $password, $db);
+	@mysqli_select_db($db);
+?>
 <html>
 	<head>
 		<title>Upload a File</title>
@@ -61,6 +73,14 @@
 				height:25%;
 				padding:5px;
 			}
+			
+			select{
+				border-radius:5px;
+				width:50%;
+				height:5%;
+				padding:5px;
+				padding-top:0px;
+			}
 		</style>
 	</head>
 	<body bgcolor="gray">
@@ -71,11 +91,17 @@
 		<div class="main">
 		<form action="upload.php" method="post" enctype="multipart/form-data">
 			<input type="file" name="file"><br><br>
-			<label>Share with: </label>
-			<select name="share_options">
-				<option value="1">Only Me</option>
-				<option value="2">All Organizations</option>
-				<option value="3">Public</option>
+			<label>Share with: &nbsp;&nbsp;&nbsp;</label>
+			<select name="share_options" required="required">
+			<option vlue="0">------------------ Select One ------------------</option>
+				<?php
+					$query = "SELECT * FROM share_option";
+					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+					
+					while($row=mysqli_fetch_assoc($result)){
+						echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
+					}
+				?>
 			</select><br /><br />
 			<label>Description: </label><br>
 			<textarea name="desc" required="required"></textarea><br>
@@ -88,15 +114,7 @@
 	</body>
 </html>
 
-<?php
-	$user = "root";
-	$pass = "projDb_2016";
-	$db = "sams_db";
-	$link = mysqli_connect("localhost", $user, $pass);
-	
-	@mysqli_connect("localhost", $user, $pass);
-	@mysqli_select_db($link, $db);
-	
+<?php	
 	if(isset($_FILES['file'])){
 		$file = $_FILES['file'];
 		$desc = $_POST['desc'];
@@ -119,7 +137,7 @@
 			if($file_error === 0){
 				if($file_size <= 2097152){
 					$file_name_new = uniqid('', true) . '.' . $file_ext;
-					$file_destination = $dir . '/uploads/' . $file_name_new;
+					$file_destination = $dir . '/uploads/documents' . $file_name_new;
 					
 					//$query = "INSERT INTO document(`Doc_Name`, `Doc_Description`) VALUES($file_name, $desc)";
 					//@mysqli_query($link, $query);
