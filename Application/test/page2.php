@@ -1,4 +1,4 @@
-<?php
+<?php 
 	require 'path.php';
 	init_cobalt();
 	
@@ -16,6 +16,23 @@
 
 			@mysqli_connect($hostname, $username, $password);
 			@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
+		}
+		
+		function newOrg(){
+			echo '<select name="selectOrg" required="required">';		
+			echo '<option>------------------------------------------- Select One --------------------------------------------</option>';
+			$query = "SELECT name FROM organization";
+			$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+			$row = mysqli_fetch_row($result);
+			$count = mysqli_num_rows($result);
+									
+			for($i = 0; $i < mysqli_num_rows($result); $i++){
+				echo '<option value="' . $i . '">' . mysqli_fetch_row($result)[0] . '</option>';
+			}
+						
+			echo '</select>';
+			echo '<br /><br />';
+			return newOrg();
 		}
 ?>
 <html>
@@ -86,7 +103,7 @@
 			
 			select{
 				height:5%;
-				width:78%;
+				width:80%;
 				border-radius:5px;
 			}	
 		</style>
@@ -113,40 +130,56 @@
 			
 				<form action="" method="POST" id="orgs">
 					<label>Your Organizations</label><br><hr />
-					<label>Organization Name:</label>
-					<select name="org[]" required="required">
-						<option>------------------------------------------- Select One --------------------------------------------</option>
+					<label>Organization 1:</label>
 						<?php
-							$query = "SELECT * FROM organization";
+							echo '<select name="selectOrg" required="required">';
+							echo '<option>------------------------------------------- Select One --------------------------------------------</option>';
+							$query = "SELECT name FROM organization";
 							$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-
-							while($row=mysqli_fetch_assoc($result)){
-								echo "<option value=".$row['id'].">".$row['name']."</option>";
+							$row = mysqli_fetch_row($result);
+							$count = mysqli_num_rows($result);
+									
+							for($i = 0; $i < mysqli_num_rows($result); $i++){
+								echo '<option value="' . $i . '">' . mysqli_fetch_row($result)[0] . '</option>';
 							}
-						?>
-					</select>
-					<br /><br />
-					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>
-					<?php
-					if(isset($_POST['org'])){
-						while(!isset($_POST['next'])){
 							
-						}
-						$org_name = "Junior Philippine Computer Society (JPCS)";
-						$_SESSION['org'] = $org_name;
-						
-						$org_pos = "President";
-						$_SESSION['org_pos'] = $org_pos;
-						
-						if(headers_sent()){
-							die("Please click this <a href='page3.php'>link</a> to continue");
-						}else{
-							exit(header('Location: page3.php'));
-						}
-					}
-				?>
+							echo '</select>';
+							echo '<br /><br />';
+							echo '<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Committee: </label>';
+							echo '<select name="selectComm" required="required">';
+							echo '<option>------------------------------------------- Select One --------------------------------------------</option>';
+							$query = "SELECT name FROM committee";
+							$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+							$row = mysqli_fetch_row($result);
+							$count = mysqli_num_rows($result);
+									
+							for($i = 0; $i < mysqli_num_rows($result); $i++){
+								echo '<option value="' . $i . '">' . mysqli_fetch_row($result)[0] . '</option>';
+							}
+							
+							echo '</select>';
+							echo '<br /><br />';
+							echo '<a href="#">+ Add an Organization</a>';
+						?>
+					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>
 				</form>
 			</div>
 		</div>
+
+		<?php
+			if(isset($_POST['next'])){
+				/*$org_name = $_POST['selectOrg'];
+				$_SESSION['org'] = $org_name;
+
+				$committee_name = $_POST['selectComm'];
+				$_SESSION['committee'] = $committee_name;*/
+
+				if(headers_sent()){
+					echo '<p style="margin-top:60px;"><b><center><font size="2" color="red">Sorry, an error occurred and the system cannot process your request. Please reload the page and try again.</font></center></b></p>';
+				}else{
+					header('Location: page3.php');
+				}
+			}
+		?>
 	</body>
 </html>

@@ -6,9 +6,6 @@
 	
 	@mysqli_connect($hostname, $username, $password, $db);
 	@mysqli_select_db(mysqli_connect($hostname, $username, $password, $db), "user");
-	
-	require 'path.php';
-	init_cobalt();
 ?>
 
 <html>
@@ -68,15 +65,25 @@
 			if(isset($_POST['btnNext'])){				
 				$reset = $_POST['reset_code'];
 				
-				$query = "SELECT password_reset_code FROM user WHERE username='{$_SESSION['user']}'";
+				$query = "SELECT username FROM user WHERE password_reset_code='$reset'";
+				$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+				$row = mysqli_fetch_row($result);
+				
+				if(mysqli_num_rows($result) > 0){
+					header('Location: new_password.php');
+				}else{
+					echo "Sorry, that password token you entered is not associated with any account. Please request a new code and try again.";
+				}
+				
+				/*$query = "SELECT password_reset_code FROM user WHERE username='$user'";
 				$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
 				$row = mysqli_fetch_row($result);
 				
 				if($row[0] == $reset){
 					header('Location: new_password.php');
 				}else{
-					echo "<p style='color:red; text-align:center; margin-top:-50px;'><b>Invalid reset code for account '" . $_SESSION['user'] . "'. Please try again.</b></p>";
-				}
+					echo "That is not the correct reset code for account '" . $user . "'. Please try again.";
+				}*/
 			}
 		?>
 	</body>

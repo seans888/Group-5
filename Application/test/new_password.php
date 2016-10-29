@@ -1,18 +1,13 @@
 <?php
-	require 'path.php';
-	init_cobalt();
-	
 	$username = "root";
 	$password = "projDb_2016";
 	$hostname = "localhost";
 	$db = "dbtest";
 	
 	@mysqli_connect($hostname, $username, $password, $db);
-	@mysqli_select_db(mysqli_connect($hostname, $username, $password, $db), $db);
-	
-	$query = "UPDATE user SET password_reset_code = '' WHERE username = '{$_SESSION['user']}'";
-	@mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-?>	
+	@mysqli_select_db(mysqli_connect($hostname, $username, $password, $db), "user");
+?>
+
 <html>
 	<head>
 		<title>Forgotten Password - SAMS_TEST</title>
@@ -50,10 +45,6 @@
 			img.logo{ margin-top:-190px;}
 			p{ font-size:12px; margin-top:-7px; color:rgb(7,6,191); }
 			label{ font-size:15px; }
-			p.err{
-				font-size:10sp;
-				margin-top:-50px;
-			}
 	</style>
 	<body>
 		<center>
@@ -71,29 +62,16 @@
 		
 		<?php
 			if(isset($_POST['btnContinue'])){
-				$password = $_POST['new_password'];
+				$new = $_POST['new_password'];
 				$confirm = $_POST['confirm_password'];
-				$username = $_SESSION['user'];
 				
-				if($password != $confirm){
-					echo '<p class="err"><font size="2" color="red"><b><center>The passwords did not match. Please try again.</b></font></p></center>';
+				
+				if($new != $confirm){
+					echo "The passwords did not match. Please try again.";
 				}else{
-					require 'core/password_crypto.php';
-					
-					$passhash = cobalt_password_hash('NEW', $password, $username, $new_salt, $new_iteration, $new_method);
-					
-					$salt = $new_salt;
-					$iteration = $new_iteration;
-					$method = $new_method;
-					
-					$data_con = new data_abstraction;
-					$data_con->set_query_type('UPDATE');
-					$data_con->set_table('user');
-					$data_con->set_update("`password`='$passhash', `salt`='$new_salt', `iteration`='$new_iteration', `method`='$new_method'");
-					$data_con->set_where("username='" . $_SESSION['user'] . "'");
-					$data_con->make_query();
-					
-					session_destroy();
+					//Hash and salt new password before redirecting to login page.
+					//$passhash = invoke method to hash sha512 password;
+					//$newpass = "$2y$12$" + $salt + ;
 					header('Location: login.php');
 				}
 			}

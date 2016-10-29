@@ -1,4 +1,4 @@
-<?php require 'path.php'; init_cobalt(); ?>
+<?php session_start(); ?>
 <html>
 	<head>
 		<title>Forgotten Password - SAMS_TEST</title>
@@ -68,8 +68,6 @@
 					$user = $_POST['username'];
 					$row;
 					
-					$_SESSION['user'] = $user;
-					
 					$s = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 5)), 0, 5);
 					$query = "SELECT username FROM user WHERE username='$user'";
 					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
@@ -90,7 +88,7 @@
 							header('Location: reset_code.php');
 						}
 					}else{
-						echo '<center><p style="margin-top:-30px; color:red;"><b>Sorry, account for ' . $user . ' does not exist.</b></p></center>';
+						echo '<center><p style="margin-top:-30px; color:red;"><b>Sorry, user with username ' . $user . ' does not exist.</b></p></center>';
 					}
 				}
 			}else if(isset($_POST['btnLogIn'])){

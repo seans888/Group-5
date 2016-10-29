@@ -7,12 +7,14 @@
 		$_SESSION['midname'] == "" ||
 		$_SESSION['gender'] == "" ||
 		$_SESSION['bday'] == "" ||
-		$_SESSION['contact'] == ""){
+		$_SESSION['contact_num' == ""]){
 			header('Location: signup.php');
-		}else if($_SESSION['org'] == ""){
+		}else if($_SESSION['org'] == "" ||
+				$_SESSION['committee'] == ""){
 			header('Location: page2.php');
 		}else{
-			
+			echo $_SESSION['org'];
+			echo $_SESSION['committee'];
 		}
 ?>
 <html>
@@ -118,11 +120,11 @@
 				</div>
 			
 				<form action="" method="POST">
-					<label>E-mail Address: &nbsp;&nbsp;&nbsp;</label>
+					<label>E-Mail Address: </label>
 					<input type="text" name="email" required/><br><br>
-					<label>Username: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label>Username: </label>
 					<input type="text" name="username" required/><br><br>
-					<label>Password: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label>Password: </label>
 					<input type="password" name="pswd" required/><br><br>
 					<div class="agreement">
 						<h4>By clicking "submit" button, You are bound to agree to the registration requirements of the system that you must be a:</h4>
@@ -132,57 +134,32 @@
 					</div>
 					<center><input type="submit" name="next" class="btnext" value="SUBMIT" /></center>
 				</form>
-				<?php		
-					if(isset($_POST['next'])){
-						$username = "root";
-						$password = "projDb_2016";
-						$hostname = "localhost";
-						$db = "dbtest";
-						
-						$email = $_POST['email'];
-						$user = $_POST['username'];
-						$password = $_POST['pswd'];
-						
-						//Password Hashing for the new User
-						require_once 'password_config.php';
-						require '/core/password_crypto.php';
-						$phsh = cobalt_password_hash('NEW', $password, $username, $new_salt, $new_iteration, $new_method);
-						@mysqli_connect($hostname, $username, $password, $db);
-						@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
-						
-						$link = new mysqli($hostname, $username, 'projDb_2016', $db);
-
-						//Adding data to the Person Table in the Database
-						$data_con = new data_abstraction;
-						$data_con->execute_query("INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES ('{$_SESSION['lastname']}', '{$_SESSION['firstname']}', '{$_SESSION['midname']}', '{$_SESSION['gender']}', '{$_SESSION['bday']}', '{$_SESSION['contact']}')");
-
-						//Getting id values in Organization_has_Person
-						$query1 = "SELECT id FROM organization WHERE name = '{$_SESSION['org']}'";
-						$result1 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query1)";
-						
-						$query2 = "SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'";
-						$result2 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query2)";
-						
-						$query3 = "SELECT id FROM org_position WHERE name = '{$_SESSION['org_pos']}'";
-						$result3 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query3)";
-						
-						$query4 = "SELECT role_id FROM user_role WHERE role = 'Standard User'";
-						$result4 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query4)";
-						
-						$query5 = "SELECT skin_id FROM system_skins WHERE skin_name = 'Cobalt Default'";
-						$result5 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query5)";
-						
-						//Adding data to the Organization_has_Person in the Database
-						$data_con = new data_abstraction;						
-						$data_con->execute_query("INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = '{$_SESSION['org']}'), `person_id` = (SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'), `org_position_id` = (SELECT id FROM org_position WHERE name = '{$_SESSION['org_pos']}')");
-						
-						$data_con = new data_abstraction;
-						$data_con->execute_query("INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES ('$user', '$phsh', '$email', '$new_salt', '$new_iteration', '$new_method', (SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'), (SELECT role_id FROM user_role WHERE role = 'Standard User'), (SELECT skin_id FROM system_skins WHERE skin_name = 'Cobalt Default'))");
-						
-						header('Location: login.php');
-					}
-				?>
 			</div>
 		</div>
+		
+		<?php		
+			if(isset($_POST['next'])){
+				$username = "root";
+				$password = "projDb_2016";
+				$hostname = "localhost";
+				$db = "dbtest";
+				
+				$email = $_POST['email'];
+				$user = $_POST['username'];
+				$password = $_POST['pswd'];
+				
+				$salt = uniqid(mt_rand(), true);
+				//$phsh = 
+				//$real_pass = '$2y$12$' + $salt + ;
+				@mysqli_connect($hostname, $username, $password, $db);
+				
+				$query = "INSERT INTO person(last_name, first_name, middle_name, gender, birthday, contact_num, org_position)
+							VALUES ('{$_SESSION['lastname']}', '{$_SESSION['firstname']}', '{$_SESSION['midname']}', '{$_SESSION['gender']}',
+							'{$_SESSION['bday']}', '{$_SESSION['contact_num']}')";
+				@mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+				
+				header('Location: signup_success.php');
+			}
+		?>
 	</body>
 </html>

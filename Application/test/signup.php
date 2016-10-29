@@ -71,12 +71,12 @@
 				height:50px;
 			}
 			
-			input[type="text"],[type="date"]{
+			input[type="text"]{
 				border-radius:5px;
 				height:30px;
 				width:50%;
 				font-size:15px;
-				padding-left:5px;
+				padding-left:3px;
 			}
 		</style>
 	</head>
@@ -101,18 +101,17 @@
 				</div>
 			
 				<form action="" method="POST">
-					<label>Last Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label>Lastname: </label>
 					<input type="text" name="last" required/><br><br>
-					<label>First Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label>Firstname: </label>
 					<input type="text" name="first" required/><br><br>
-					<label>Middle Name: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label>Middle Name: </label>
 					<input type="text" name="middle" /><br><br>
-					<label>Gender: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label>Gender: </label>
 						<input type="radio" name="gender" value="male" required/>Male
 						<input type="radio" name="gender" value="female" required/>Female<br><br>
-					<label>Birthdate: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-					<input type="date" name="bday" required/>
-					<label><font size="2">(yyyy-mm-dd)</font></label><br><br>
+					<label>Birthdate: </label>
+					<input type="date" name="bday" required/><br><br>
 					<label>Contact Number: </label>
 					<input type="text" name="contact" required/><br><br>
 					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>

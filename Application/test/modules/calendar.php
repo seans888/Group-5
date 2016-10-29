@@ -76,8 +76,9 @@ if(isset($_GET['add'])){
 $title =$_POST['txttitle'];
 $detail =$_POST['txtdetail'];
 $venue =$_POST['txtvenue'];
+$eventtime =$_POST['txteventtime'];
 $eventdate = $month."/".$day."/".$year;
-$sqlinsert = "insert into calendar_event(name,description,date,time,venue) values ('".$title."','".$detail."','".$eventdate."',now(),'".$venue."')";
+$sqlinsert = "insert into calendar_event(name,description,date,timestamp,venue,eventTime) values ('".$title."','".$detail."','".$eventdate."',now(),'".$venue."','".$eventtime."')";
 $resultinginsert = mysqli_query(mysqli_connect($hostname,$username,$password,$dbname),$sqlinsert);
 if($resultinginsert ){
 echo "Event was successfully Added...";
@@ -155,7 +156,8 @@ echo "<hr>";
 while ($events = mysqli_fetch_array($resultEvents)){
 echo "Event Name ".$events['name']."<br>";
 echo "Detail: ".$events['description']."<br>";
-echo "Venue: ".$events['venue']."<br><br><br>";
+echo "Venue: ".$events['venue']."<br>";
+echo "Time: ".$events['eventTime']."<br><br><br>";
 }
 }
 ?>
