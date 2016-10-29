@@ -63,7 +63,8 @@ class base_data_abstraction
 
         if(mysqli_connect_errno())
         {
-            printf("Failed to connect to database: %s\n", mysqli_connect_error());
+            header('Location: db_connection_error.php');
+			//printf("Failed to connect to database: %s\n", mysqli_connect_error());
             exit();
         }
 

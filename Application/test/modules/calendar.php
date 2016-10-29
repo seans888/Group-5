@@ -1,7 +1,7 @@
 <?php
 	$hostname = "localhost";
 	$username = "root";
-	$password = "";
+	$password = "projDb_2016";
 	$dbname = "dbtest";
 	$error = "Cannot connect to databasae, Please try again later...";
 	

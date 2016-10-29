@@ -8,12 +8,17 @@ body{
 }
 
 img.logo{
-	margin-top:-25px;
+	margin-top:5px;
 }
 
 * {
     padding: 0;
     margin:  0;
+}
+
+p{
+	line-height:2px;
+	color:rgb(8,8,194);
 }
 
 a:link {
@@ -123,6 +128,10 @@ fieldset.right_panel {
     border:             none;
 }
 
+table.login_contents{
+	margin-left:-15px;
+}
+
 input {
     font-size : 16px;
     font-weight: bold;
@@ -142,7 +151,7 @@ input[type=password]{
     color:#000000;
     padding:10px;
     margin:6px;
-    width: 360px;
+    width: 300px;
 }
 
 input[type=password]:focus{
@@ -161,7 +170,7 @@ input[type=submit]{
     padding-bottom: 10px;
     padding-left: 1px;
     padding-right: 1px;
-    width: 380px;
+    width: 320px;
     color: #111;
     text-decoration: none;
     background-color: #eeeeee;
@@ -199,7 +208,7 @@ input[type=text]{
     color:#000000;
     padding:10px;
     margin:6px;
-    width: 360px;
+    width: 300px;
 }
 
 input[type=text]:focus{

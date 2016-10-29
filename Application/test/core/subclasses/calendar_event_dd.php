@@ -91,7 +91,7 @@ class calendar_event_dd
                                               'rpt_column_format'=>'normal',
                                               'rpt_column_alignment'=>'left',
                                               'rpt_show_sum'=>FALSE),
-                        'time' => array('value'=>'',
+                        'timestamp' => array('value'=>'',
                                               'nullable'=>FALSE,
                                               'data_type'=>'time',
                                               'length'=>6,

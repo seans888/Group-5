@@ -2,13 +2,16 @@
 	require 'path.php';
 	init_cobalt();
 	
-	$username = "root";
-	$password = "projDb_2016";
-	$db = "dbtest";
-	$hostname = "localhost";
-	
-	@mysqli_connect($hostname, $username, $password, $db);
-	@mysqli_select_db($db);
+	if(isset($_SESSION['logged']) && $_SESSION['logged'] == "Logged"){
+		$hostname="localhost";
+		$username = "root";
+		$password = "projDb_2016";
+		$db = "dbtest";
+		
+		@mysqli_connect($hostname, $username, $password, $db);
+	}else{
+		header('Location: ../login.php');
+	}
 ?>
 <html>
 	<head>
@@ -89,22 +92,8 @@
 			<p><b>Upload Document</b></p>
 		</div>
 		<div class="main">
-		<form action="upload.php" method="post" enctype="multipart/form-data">
+		<form action="change_org_profimg.php" method="post" enctype="multipart/form-data">
 			<input type="file" name="file"><br><br>
-			<label>Share with: &nbsp;&nbsp;&nbsp;</label>
-			<select name="share_options" required="required">
-			<option vlue="0">------------------ Select One ------------------</option>
-				<?php
-					$query = "SELECT * FROM share_option";
-					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-					
-					while($row=mysqli_fetch_assoc($result)){
-						echo "<option value=" . $row['id'] . ">" . $row['name'] . "</option>";
-					}
-				?>
-			</select><br /><br />
-			<label>Description: </label><br>
-			<textarea name="desc" required="required"></textarea><br>
 		</div>
 		<div class="footer">
 			<input type="submit" value="UPLOAD" />&nbsp;&nbsp;&nbsp;
@@ -117,8 +106,6 @@
 <?php	
 	if(isset($_FILES['file'])){
 		$file = $_FILES['file'];
-		$desc = $_POST['desc'];
-		$shareOption = $_POST['share_options'];
 		
 		//File Properties
 		$file_name = $file['name'];
@@ -130,29 +117,33 @@
 		$file_ext = explode('.', $file_name);
 		$file_ext = strtolower(end($file_ext));
 		
-		$allowed = array('docx','doc','xlsx','xls','pdf');
-		$dir = 'c:/xampp/tmp';
+		$allowed = array('jpg', 'jpeg', 'png');
+		$dir = 'c:/xampp/tmp/uploads/';
 		
 		if(in_array($file_ext, $allowed)){
 			if($file_error === 0){
 				if($file_size <= 2097152){
-					$file_name_new = uniqid('', true) . '.' . $file_ext;
-					$file_destination = $dir . '/uploads/documents' . $file_name_new;
+					$query = "SELECT id FROM organization WHERE name = (SELECT name FROM organization WHERE id = (SELECT organization_id FROM organization_has_person WHERE person_id = (SELECT person_id FROM person WHERE last_name = '{$_SESSION['last_name']}' AND first_name = '{$_SESSION['first_name']}')))";
+					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+					$row = mysqli_fetch_assoc($result);
+					
+					$file_name_new = "org" . $row['id'] . '.' . $file_ext;
+					$file_destination = $dir . $file_name_new;
 					
 					//$query = "INSERT INTO document(`Doc_Name`, `Doc_Description`) VALUES($file_name, $desc)";
 					//@mysqli_query($link, $query);
 					
 					if(move_uploaded_file($file_tmp, $file_destination)){
-						echo "Your file was successfully uploaded!";
+						echo "The image was successfully uploaded!";
 					}
 				}else{
-					echo "The file uploaded has exceeded the maximum upload size limit. Your file was not uploaded. Please try again.";
+					echo "The image uploaded has exceeded the maximum upload size limit. Your image was not uploaded. Please try again.";
 				}
 			}else{
-				echo "An error was found on your file. Please upload another file and try again";
+				echo "An error was found on your image file. Please upload another file and try again";
 			}
 		}else{
-			echo "Sorry, only DOCX, DOC, XLSX, XLS and PDF files are allowed to be uploaded.";
+			echo "Sorry, only JPG / JPEG and PNG images are allowed to be uploaded.";
 		}
 		@mysqli_close($link);
 	}

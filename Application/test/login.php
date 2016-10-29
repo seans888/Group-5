@@ -130,19 +130,19 @@ echo '<input type="hidden" name="form_key" value="' . $form_key .'">';
 			div.bgovr{
 				position:absolute;
 				width:70%;
-				padding-top:50px;
-				padding-left:410px;
+				padding-top:35px;
+				padding-left:200px;
 				padding-right:0px;
 			}
 			
 			div.main{
 				padding-left:40px;
 				padding-right:40px;
-				width:50%;
+				width:40%;
 				vertical-align:middle;
 				border:1px solid black;
-				background-color:rgb(232,192,32);;
-				
+				background-color:rgb(232,192,32);
+				margin: 0 auto;			
 			}
 </style>
 <div class="left_container">
@@ -159,10 +159,11 @@ echo '<input type="hidden" name="form_key" value="' . $form_key .'">';
 <div class="bgovr">
 	<div class="main">
     <fieldset class="right_panel">
-        <table border="0" width="100%" cellspacing="1">
+        <table border="0" width="100%" cellspacing="1" class="login_contents">
         <tr>
             <td align="center">
-                <img src="images/sao.png" class="logo">
+                <img src="images/sao.png" class="logo"><br />
+				<p><b>Student Activities Management System</b></p><br />
 				<?php
                 init_var($error_message);
                 $_SESSION['icon_set'] = 'cobalt';
@@ -183,7 +184,6 @@ echo '<input type="hidden" name="form_key" value="' . $form_key .'">';
         <tr>
             <td align="center">
                 <input type=submit value="LOG IN" name="btnSubmit">
-                
             </td>
         </tr>
 		<tr>
