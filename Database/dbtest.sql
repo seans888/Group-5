@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2016 at 09:25 AM
+-- Generation Time: Nov 19, 2016 at 09:41 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -177,7 +177,7 @@ CREATE TABLE `organization_has_person` (
 --
 
 INSERT INTO `organization_has_person` (`organization_id`, `person_id`, `org_position_id`) VALUES
-(24, 9, 1);
+(24, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -221,7 +221,7 @@ CREATE TABLE `person` (
 
 INSERT INTO `person` (`person_id`, `last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES
 (1, 'Root', 'Super User', 'X', 'Male', '0000-00-00', '2147483647'),
-(9, 'Jose', 'Chamber', 'Figuro', 'male', '1997-10-03', '09123456789');
+(2, 'Jose', 'Chamber', 'Figuro', 'male', '1997-10-03', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -1876,7 +1876,26 @@ INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`
 (1607, '::1', 'root', 2016, 'Logged out', '/test/end.php'),
 (1608, '::1', 'cfjose', 2016, 'Logged in', '/test/login.php'),
 (1609, '::1', 'cfjose', 2016, 'Logged out', '/test/end.php'),
-(1610, '::1', 'root', 2016, 'Logged in', '/test/login.php');
+(1610, '::1', 'root', 2016, 'Logged in', '/test/login.php'),
+(1611, '::1', 'root', 2016, 'Logged out', '/test/end.php'),
+(1612, '::1', 'Not Logged In', 2016, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''User'', ''Sample'', ''Sample'', ''male'', ''1990-02-04'', ''09999999999'')', '/test/page3.php'),
+(1613, '::1', 'Not Logged In', 2016, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''APC Animation Society''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''User'' AND first_name = ''Sample''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1614, '::1', 'Not Logged In', 2016, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''example'', ''$2y$12$cp35aSFvkjsR7ACwHt45T.P7EigAsn8SPnOtpq0k1QFDLESfQmPOy'', ''example@sample.com'', ''cp35aSFvkjsR7ACwHt45TA'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''User'' AND first_name = ''Sample''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1615, '::1', 'example', 2016, 'Logged in', '/test/login.php'),
+(1616, '::1', 'example', 2016, 'Logged out', '/test/end.php'),
+(1617, '::1', 'root', 2016, 'Logged in', '/test/login.php'),
+(1618, '::1', 'root', 2016, 'Pressed delete button', '/test/sysadmin/delete_user.php'),
+(1619, '::1', 'root', 2016, 'Query Executed: DELETE FROM user WHERE username = ?\r\nArray\n(\n    [0] => s\n    [1] => example\n)\n', '/test/sysadmin/delete_user.php'),
+(1620, '::1', 'root', 2016, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1621, '::1', 'root', 2016, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1622, '::1', 'root', 2016, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1623, '::1', 'root', 2016, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1624, '::1', 'root', 2016, 'Pressed submit button', '/test/sysadmin/add_user.php'),
+(1625, '::1', 'root', 2016, 'Query Executed: INSERT INTO user(username, password, salt, iteration, method, person_id, role_id, skin_id) VALUES(?,?,?,?,?,?,?,?)\r\nArray\n(\n    [0] => sssisiii\n    [1] => cfjose\n    [2] => $2y$12$aS8JhJcoSR9lFBzFPF84e.MUV6iD4mdcpuruGNkYKW3mPWKwlz92u\n    [3] => aS8JhJcoSR9lFBzFPF84eA\n    [4] => 12\n    [5] => blowfish\n    [6] => 2\n    [7] => 3\n    [8] => 2\n)\n', '/test/sysadmin/add_user.php'),
+(1626, '::1', 'root', 2016, 'Logged out', '/test/end.php'),
+(1627, '::1', 'cfjose', 2016, 'Logged in', '/test/login.php'),
+(1628, '::1', 'cfjose', 2016, 'Logged out', '/test/end.php'),
+(1629, '::1', 'root', 2016, 'Logged in', '/test/login.php');
 
 -- --------------------------------------------------------
 
@@ -1960,7 +1979,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`, `password_reset_code`) VALUES
 ('admin', '$2y$12$kw5iDRDo2B2XzelJN4BWa.wpEDbk2Esbvsj3fsUHoVhiwjNHLBoJ6', '', 'kw5iDRDo2B2XzelJN4BWaA', 12, 'blowfish', 1, 2, 6, ''),
-('cfjose', '$2y$12$wUNWuJmVPa9zDcLIaBWk8..T2dG.wE/Jh/TO04apzYQvd5gq9d8MS', 'cfjose@student.apc.edu.ph', 'wUNWuJmVPa9zDcLIaBWk8A', 12, 'blowfish', 9, 3, 2, ''),
+('cfjose', '$2y$12$aS8JhJcoSR9lFBzFPF84e.MUV6iD4mdcpuruGNkYKW3mPWKwlz92u', '', 'aS8JhJcoSR9lFBzFPF84eA', 12, 'blowfish', 2, 3, 2, ''),
 ('root', '$2y$12$vTeDK/BecBP4rv80XKUiKeKZwaAnV00EwYIWxD.2VtmL88OdiUNkq', '', 'vTeDK/BecBP4rv80XKUiKg', 12, 'blowfish', 1, 1, 2, ''),
 ('user', '$2y$12$kWm1MCsF.TYT66dbInZg.ekOuLE9aSMAyvzKg.cVrOegsctLtwVpi', '', 'kWm1MCsF+TYT66dbInZg+g', 12, 'blowfish', 1, 3, 6, '');
 
@@ -2519,7 +2538,7 @@ ALTER TABLE `org_position`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `share_option`
 --
@@ -2529,7 +2548,7 @@ ALTER TABLE `share_option`
 -- AUTO_INCREMENT for table `system_log`
 --
 ALTER TABLE `system_log`
-  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1611;
+  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1630;
 --
 -- AUTO_INCREMENT for table `system_skins`
 --
