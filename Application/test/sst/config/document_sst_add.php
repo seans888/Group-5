@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/add_document.php',
+                ['location'=>'modules/document/add_document.php',
                 'pre'=>'document_sst_add.php',
                 'post'=>''],
                );

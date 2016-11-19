@@ -5,7 +5,7 @@
     <table width="100%">
     <tr>
         <td class="menu" width="100"> <a <?php echo $target;?> class="menu" href="/<?php echo BASE_DIRECTORY;?>/main.php">  HOME  </a> </td>
-		<td class="menu" width="100"> <a <?php echo $target;?> class="menu" href="/<?php echo BASE_DIRECTORY;?>/main.php">  PROFILE  </a> </td>
+		<td class="menu" width="100"> <a <?php echo $target;?> class="menu" href="/<?php echo BASE_DIRECTORY;?>/org_profile.php">  PROFILE  </a> </td>
         <td class="menu" width="105"> <a <?php echo $target;?> class="menu" href="/<?php echo BASE_DIRECTORY;?>/change_password.php">  PASSWORD  </a> </td>
         <td class="menu" width="100"> <a <?php echo $target;?> class="menu" href="/<?php echo BASE_DIRECTORY;?>/change_skin.php">  SKIN  </a> </td>
         <td class="menu" width="100"> <a <?php echo $target;?> class="menu" href="/<?php echo BASE_DIRECTORY;?>/about.php">  ABOUT  </a> </td>

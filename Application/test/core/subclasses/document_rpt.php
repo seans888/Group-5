@@ -4,7 +4,7 @@ class document_rpt extends reporter
 {
     var $tables='';
     var $session_array_name = 'DOCUMENT_REPORT_CUSTOM';
-    var $report_title = 'Document: Custom Reporting Tool';
+    var $report_title = '%%: Custom Reporting Tool';
     var $html_subclass = 'document_html';
     var $data_subclass = 'document';
     var $result_page = 'reporter_result_document.php';

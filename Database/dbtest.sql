@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2016 at 06:09 PM
+-- Generation Time: Nov 19, 2016 at 08:59 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -28,12 +28,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `calendar_event` (
   `id` int(11) NOT NULL,
+  `timestamp` time(6) NOT NULL,
   `name` varchar(45) NOT NULL,
+  `description` varchar(45) NOT NULL,
   `date` date NOT NULL,
-  `time` time(6) NOT NULL,
-  `attendee` varchar(255) NOT NULL,
+  `eventTime` varchar(25) NOT NULL,
   `venue` varchar(45) NOT NULL,
-  `description` varchar(45) NOT NULL
+  `attendee` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -83,31 +84,6 @@ CREATE TABLE `cobalt_sst` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `committee`
---
-
-CREATE TABLE `committee` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `committee`
---
-
-INSERT INTO `committee` (`id`, `name`) VALUES
-(2, 'Logistics Committee'),
-(3, 'Marketing and Promotions Committee'),
-(4, 'Information and Communications Committee'),
-(5, 'Events Committee'),
-(6, 'Finance Committee'),
-(7, 'Membership Committee'),
-(11, 'Creative Committee'),
-(12, 'Operations Committee');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `document`
 --
 
@@ -115,7 +91,8 @@ CREATE TABLE `document` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `file_size` int(11) NOT NULL
+  `file_size` int(11) NOT NULL,
+  `share_option_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -136,39 +113,52 @@ CREATE TABLE `organization` (
 --
 
 INSERT INTO `organization` (`id`, `name`, `representative`, `adviser`) VALUES
-(1, 'Junior Philippine Computer Society (JPCS)', 'N / A', 'N / A'),
-(2, 'Junior Information Systems Security Association (JISSA)', 'N / A', 'N / A'),
-(3, 'Microsoft Community (MSC)', 'N / A', 'N / A'),
-(4, 'Cipher', 'N / A', 'N / A'),
+(1, 'APC Animation Society', 'N / A', 'N / A'),
+(2, 'APC Band', 'N / A', 'N / A'),
+(3, 'APC Campus Ministry', 'N / A', 'N / A'),
+(4, 'APC Dance Company', 'N / A', 'N / A'),
 (5, 'APC Gaming Genesis (GG)', 'N / A', 'N / A'),
 (6, 'APC Grand Chorale', 'N / A', 'N / A'),
-(7, 'Bahay Bombilya (BB)', 'N / A', 'N / A'),
-(8, 'Association of Computer Engineering Students (ACES)', 'N / A', 'N / A'),
-(9, 'APC Animation Society', 'N / A', 'N / A'),
-(10, 'APC Band', 'N / A', 'N / A'),
-(11, 'APC Speaks', 'N / A', 'N / A'),
-(12, 'APC Dance Company', 'N / A', 'N / A'),
-(13, 'APC SM Scholars', 'N / A', 'N / A'),
-(14, 'Business Management Group (BMAG)', 'N / A', 'N / A'),
-(15, 'Explorer''s Club', 'N / A', 'N / A'),
-(16, 'Junior Philippine Institute of Accountants (JPIA)', 'N / A', 'N / A'),
-(17, 'Asia Pacific Junior Marketing Association (APJMA)', 'N / A', 'N / A'),
-(18, 'Asia Pacific College Psychological Society', 'N / A', 'N / A'),
-(19, 'APC Robotics Organization (ROBORG)', 'N / A', 'N / A'),
-(20, 'Teatre Phileo', 'N / A', 'N / A'),
-(21, 'Student Organization Association of Regents (SOAR)', 'N / A', 'N / A'),
-(22, 'APC Math Society', 'N / A', 'N / A'),
-(23, 'PWERSA', 'N / A', 'N / A'),
-(24, 'APC Rotaract Club', 'N / A', 'N / A'),
-(25, 'APC Strings', 'N / A', 'N / A'),
-(26, 'Tourism Management Society', 'N / A', 'N / A'),
-(27, 'Flickers Photo Society', 'N / A', 'N / A'),
-(28, 'Junior People Management of the Philippines (JPMAP)', 'N / A', 'N / A'),
-(29, 'APC Campus Ministry', 'N / A', 'N / A'),
-(30, 'Association Internationale des Étudiants en Sciences Économiques et Commerciales APC', 'N / A', 'N / A'),
-(31, 'Every Nation Campus', 'N / A', 'N / A'),
-(32, 'Seeds of the Nation Campus Ministry', 'N / A', 'N / A'),
-(33, 'Society of Electronics Engineering Students (SEES)', 'N / A', 'N / A');
+(7, 'APC Psychological Society', 'N / A', 'N / A'),
+(8, 'APC Robotics Organization', 'N / A', 'N / A'),
+(9, 'APC Rotaract', 'N / A', 'N / A'),
+(10, 'APC Speaks', 'N / A', 'N / A'),
+(11, 'APC Strings', 'N / A', 'N / A'),
+(12, 'Asia Pacific Junior Marketing Association (APJMA)', 'N / A', 'N / A'),
+(13, 'Association Internationale des Étudiants en Sciences Économiques et Commerciales APC', 'N / A', 'N / A'),
+(14, 'Association of Computer Engineering Students (ACES)', 'N / A', 'N / A'),
+(15, 'Bahay Bombilya', 'N / A', 'N / A'),
+(16, 'Business Management Group (BMAG)', 'N / A', 'N / A'),
+(17, 'CinemaSoMA', 'N / A', 'N / A'),
+(18, 'Cipher', 'N / A', 'N / A'),
+(19, 'Every Nation Campus', 'N / A', 'N / A'),
+(20, 'Explorer''s Club', 'N / A', 'N / A'),
+(21, 'Flicker''s Photo Society', 'N / A', 'N / A'),
+(22, 'Junior Information Systems Security Association (JISSA)', 'N / A', 'N / A'),
+(23, 'Junior People Management of the Philippines', 'N / A', 'N / A'),
+(24, 'Junior Philippine Computer Society (JPCS)', 'N / A', 'N / A'),
+(25, 'Junior Philippine Institute of Accountants', 'N / A', 'N / A'),
+(26, 'Math Society', 'N / A', 'N / A'),
+(27, 'Microsoft Community', 'N / A', 'N / A'),
+(28, 'PWERSA', 'N / A', 'N / A'),
+(29, 'Seeds of the Nations Campus Ministry', 'N / A', 'N / A'),
+(30, 'SM Scholar', 'N / A', 'N / A'),
+(31, 'Society of Electronics Engineering Students', 'N / A', 'N / A'),
+(32, 'Student Organization Association of Regents', 'N / A', 'N / A'),
+(33, 'Teatre Phileo', 'N / A', 'N / A'),
+(34, 'Tourism Management Society', 'N / A', 'N / A');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organization_has_org_position`
+--
+
+CREATE TABLE `organization_has_org_position` (
+  `org_position_id` int(11) NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -178,15 +168,16 @@ INSERT INTO `organization` (`id`, `name`, `representative`, `adviser`) VALUES
 
 CREATE TABLE `organization_has_person` (
   `organization_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL
+  `person_id` int(11) NOT NULL,
+  `org_position_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `organization_has_person`
 --
 
-INSERT INTO `organization_has_person` (`organization_id`, `person_id`) VALUES
-(1, 1);
+INSERT INTO `organization_has_person` (`organization_id`, `person_id`, `org_position_id`) VALUES
+(24, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -206,11 +197,7 @@ CREATE TABLE `org_position` (
 INSERT INTO `org_position` (`id`, `name`) VALUES
 (1, 'President'),
 (2, 'Vice President for Internal Affairs'),
-(3, 'Vice President for External Affairs'),
-(4, 'Committee Director'),
-(5, 'Officer'),
-(6, 'Assistant Director'),
-(7, 'Organization''s Adviser');
+(3, 'Vice President for External Affairs');
 
 -- --------------------------------------------------------
 
@@ -233,27 +220,27 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`person_id`, `last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES
-(1, 'Root', 'Super User', 'X', 'Male', '0000-00-00', '2147483647');
+(1, 'Root', 'Super User', 'X', 'Male', '0000-00-00', '2147483647'),
+(9, 'Jose', 'Chamber', 'Figuro', 'male', '1997-10-03', '09123456789');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `person_has_org_position`
+-- Table structure for table `share_option`
 --
 
-CREATE TABLE `person_has_org_position` (
-  `person_id` int(11) NOT NULL,
-  `org_position_id` int(11) NOT NULL,
-  `organization_id` int(11) DEFAULT NULL
+CREATE TABLE `share_option` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `person_has_org_position`
+-- Dumping data for table `share_option`
 --
 
-INSERT INTO `person_has_org_position` (`person_id`, `org_position_id`, `organization_id`) VALUES
-(1, 1, 1),
-(1, 5, 2);
+INSERT INTO `share_option` (`id`, `name`) VALUES
+(1, 'Specific Organization'),
+(2, 'All Organizations');
 
 -- --------------------------------------------------------
 
@@ -1234,7 +1221,569 @@ INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`
 (955, '::1', 'root', 1477238880, 'Pressed submit button', '/test/sysadmin/edit_person.php'),
 (956, '::1', 'root', 1477238880, 'Query Executed: UPDATE person SET first_name = ?, middle_name = ?, last_name = ?, gender = ? WHERE person_id = ?\r\nArray\n(\n    [0] => ssssi\n    [1] => Super User\n    [2] => X\n    [3] => Root\n    [4] => Male\n    [5] => 1\n)\n', '/test/sysadmin/edit_person.php'),
 (957, '::1', 'root', 1477238885, 'Logged out', '/test/end.php'),
-(958, '::1', 'root', 1477238889, 'Logged in', '/test/login.php');
+(958, '::1', 'root', 1477238889, 'Logged in', '/test/login.php'),
+(959, '::1', 'root', 1477239009, 'Logged out', '/test/end.php'),
+(960, '::1', 'root', 1477240197, 'Logged in', '/test/login.php'),
+(961, '::1', 'root', 1477242566, 'Logged out', '/test/end.php'),
+(962, '::1', 'root', 1477280858, 'Logged in', '/test/login.php'),
+(963, '::1', 'root', 1477281138, 'Logged out', '/test/end.php'),
+(964, '::1', 'root', 1477287479, 'Logged in', '/test/login.php'),
+(965, '::1', 'root', 1477287514, 'Logged out', '/test/end.php'),
+(966, '::1', 'root', 1477287532, 'Logged in', '/test/login.php'),
+(967, '::1', 'root', 1477287541, 'Pressed delete button', '/test/sysadmin/delete_user_links.php'),
+(968, '::1', 'root', 1477287541, 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 49\n)\n', '/test/sysadmin/delete_user_links.php'),
+(969, '::1', 'root', 1477287544, 'Pressed delete button', '/test/sysadmin/delete_user_links.php'),
+(970, '::1', 'root', 1477287544, 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 50\n)\n', '/test/sysadmin/delete_user_links.php'),
+(971, '::1', 'root', 1477287549, 'Pressed delete button', '/test/sysadmin/delete_user_links.php'),
+(972, '::1', 'root', 1477287549, 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 51\n)\n', '/test/sysadmin/delete_user_links.php'),
+(973, '::1', 'root', 1477287555, 'Pressed delete button', '/test/sysadmin/delete_user_links.php'),
+(974, '::1', 'root', 1477287555, 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 52\n)\n', '/test/sysadmin/delete_user_links.php'),
+(975, '::1', 'root', 1477287568, 'Logged out', '/test/end.php'),
+(976, '::1', 'root', 1477287699, 'Logged in', '/test/login.php'),
+(977, '::1', 'root', 1477287905, 'Pressed cancel button', '/test/modules/delete_org_position.php'),
+(978, '::1', 'root', 1477287907, 'Pressed delete button', '/test/modules/delete_org_position.php'),
+(979, '::1', 'root', 1477287907, 'Query Executed: DELETE FROM org_position WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 4\n)\n', '/test/modules/delete_org_position.php'),
+(980, '::1', 'root', 1477287910, 'Pressed delete button', '/test/modules/delete_org_position.php'),
+(981, '::1', 'root', 1477287910, 'Query Executed: DELETE FROM org_position WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 5\n)\n', '/test/modules/delete_org_position.php'),
+(982, '::1', 'root', 1477287912, 'Pressed delete button', '/test/modules/delete_org_position.php'),
+(983, '::1', 'root', 1477287912, 'Query Executed: DELETE FROM org_position WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 6\n)\n', '/test/modules/delete_org_position.php'),
+(984, '::1', 'root', 1477287914, 'Pressed delete button', '/test/modules/delete_org_position.php'),
+(985, '::1', 'root', 1477287914, 'Query Executed: DELETE FROM org_position WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 7\n)\n', '/test/modules/delete_org_position.php'),
+(986, '::1', 'root', 1477287928, 'Logged out', '/test/end.php'),
+(987, '::1', 'root', 1477288168, 'Logged in', '/test/login.php'),
+(988, '::1', 'root', 1477288309, 'Logged out', '/test/end.php'),
+(989, '::1', 'root', 1477312992, 'Logged in', '/test/login.php'),
+(990, '::1', 'root', 1477313366, 'Query executed: UPDATE user SET skin_id=''5'' WHERE username=''root''', '/test/change_skin.php'),
+(991, '::1', 'root', 1477313387, 'Logged out', '/test/end.php'),
+(992, '::1', 'root', 1477318232, 'Logged in', '/test/login.php'),
+(993, '::1', 'root', 1477318242, 'Pressed cancel button', '/test/sysadmin/csv_user_links.php'),
+(994, '::1', 'root', 1477320122, 'Logged out', '/test/end.php'),
+(995, '::1', 'root', 1477320417, 'Logged in', '/test/login.php'),
+(996, '::1', 'root', 1477320773, 'Logged out', '/test/end.php'),
+(997, '::1', 'root', 1477326592, 'Logged in', '/test/login.php'),
+(998, '::1', 'root', 1477326902, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(999, '::1', 'root', 1477326902, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 26\n)\n', '/test/modules/delete_organization.php'),
+(1000, '::1', 'root', 1477326904, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1001, '::1', 'root', 1477326904, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 27\n)\n', '/test/modules/delete_organization.php'),
+(1002, '::1', 'root', 1477326907, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1003, '::1', 'root', 1477326907, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 28\n)\n', '/test/modules/delete_organization.php'),
+(1004, '::1', 'root', 1477326909, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1005, '::1', 'root', 1477326909, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 29\n)\n', '/test/modules/delete_organization.php'),
+(1006, '::1', 'root', 1477326912, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1007, '::1', 'root', 1477326912, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 30\n)\n', '/test/modules/delete_organization.php'),
+(1008, '::1', 'root', 1477326914, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1009, '::1', 'root', 1477326914, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 31\n)\n', '/test/modules/delete_organization.php'),
+(1010, '::1', 'root', 1477326916, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1011, '::1', 'root', 1477326916, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 32\n)\n', '/test/modules/delete_organization.php'),
+(1012, '::1', 'root', 1477326919, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1013, '::1', 'root', 1477326919, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 33\n)\n', '/test/modules/delete_organization.php'),
+(1014, '::1', 'root', 1477326976, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1015, '::1', 'root', 1477326976, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Animation Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1016, '::1', 'root', 1477326988, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1017, '::1', 'root', 1477326988, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Band\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1018, '::1', 'root', 1477326997, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1019, '::1', 'root', 1477326997, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Campus Ministry\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1020, '::1', 'root', 1477327006, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1021, '::1', 'root', 1477327006, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Dance Company\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1022, '::1', 'root', 1477327024, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1023, '::1', 'root', 1477327025, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Gaming Genesis (GG)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1024, '::1', 'root', 1477327038, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1025, '::1', 'root', 1477327038, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Grand Chorale\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1026, '::1', 'root', 1477327094, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1027, '::1', 'root', 1477327094, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Math Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1028, '::1', 'root', 1477327114, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1029, '::1', 'root', 1477327114, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Robotics Organization (ROBORG)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1030, '::1', 'root', 1477327129, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1031, '::1', 'root', 1477327129, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Rotaract Club\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1032, '::1', 'root', 1477327140, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1033, '::1', 'root', 1477327140, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC SM Scholars\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1034, '::1', 'root', 1477327160, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1035, '::1', 'root', 1477327160, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Speaks\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1036, '::1', 'root', 1477327169, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1037, '::1', 'root', 1477327170, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Strings\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1038, '::1', 'root', 1477327192, 'Pressed cancel button', '/test/modules/add_organization.php'),
+(1039, '::1', 'root', 1477327204, 'Pressed submit button', '/test/modules/add_organization.php');
+INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`, `module`) VALUES
+(1040, '::1', 'root', 1477327204, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Psychological Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1041, '::1', 'root', 1477327277, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1042, '::1', 'root', 1477327277, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 40\n)\n', '/test/modules/delete_organization.php'),
+(1043, '::1', 'root', 1477327282, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1044, '::1', 'root', 1477327282, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 41\n)\n', '/test/modules/delete_organization.php'),
+(1045, '::1', 'root', 1477327285, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1046, '::1', 'root', 1477327286, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 42\n)\n', '/test/modules/delete_organization.php'),
+(1047, '::1', 'root', 1477327289, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1048, '::1', 'root', 1477327290, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 43\n)\n', '/test/modules/delete_organization.php'),
+(1049, '::1', 'root', 1477327292, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1050, '::1', 'root', 1477327293, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 44\n)\n', '/test/modules/delete_organization.php'),
+(1051, '::1', 'root', 1477327295, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1052, '::1', 'root', 1477327295, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 45\n)\n', '/test/modules/delete_organization.php'),
+(1053, '::1', 'root', 1477327298, 'Pressed delete button', '/test/modules/delete_organization.php'),
+(1054, '::1', 'root', 1477327298, 'Query Executed: DELETE FROM organization WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 46\n)\n', '/test/modules/delete_organization.php'),
+(1055, '::1', 'root', 1477327313, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1056, '::1', 'root', 1477327313, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Psychological Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1057, '::1', 'root', 1477327324, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1058, '::1', 'root', 1477327324, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Robotics Organization\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1059, '::1', 'root', 1477327337, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1060, '::1', 'root', 1477327337, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Rotaract\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1061, '::1', 'root', 1477327350, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1062, '::1', 'root', 1477327350, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Speaks\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1063, '::1', 'root', 1477327359, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1064, '::1', 'root', 1477327359, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => APC Strings\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1065, '::1', 'root', 1477327391, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1066, '::1', 'root', 1477327391, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Asia Pacific Junior Marketing Association (APJMA)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1067, '::1', 'root', 1477327417, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1068, '::1', 'root', 1477327418, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Association Internationale des Étudiants en Sciences Économiques et Commerciales APC\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1069, '::1', 'root', 1477327450, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1070, '::1', 'root', 1477327450, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Association of Computer Engineering Students (ACES)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1071, '::1', 'root', 1477327471, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1072, '::1', 'root', 1477327471, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Bahay Bombilya\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1073, '::1', 'root', 1477327478, 'Pressed submit button', '/test/modules/edit_organization.php'),
+(1074, '::1', 'root', 1477327478, 'Query Executed: UPDATE organization SET name = ?, representative = ?, adviser = ? WHERE id = ?\r\nArray\n(\n    [0] => sssi\n    [1] => Bahay Bombilya\n    [2] => N / A\n    [3] => N / A\n    [4] => 55\n)\n', '/test/modules/edit_organization.php'),
+(1075, '::1', 'root', 1477327501, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1076, '::1', 'root', 1477327501, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Business Management Group (BMAG)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1077, '::1', 'root', 1477327516, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1078, '::1', 'root', 1477327516, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => CinemaSoMA\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1079, '::1', 'root', 1477327526, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1080, '::1', 'root', 1477327526, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Cipher\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1081, '::1', 'root', 1477327537, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1082, '::1', 'root', 1477327537, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Every Nation Campus\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1083, '::1', 'root', 1477327553, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1084, '::1', 'root', 1477327553, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Explorer''s Club\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1085, '::1', 'root', 1477327567, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1086, '::1', 'root', 1477327567, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Flicker''s Photo Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1087, '::1', 'root', 1477327593, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1088, '::1', 'root', 1477327594, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Junior Information Systems Security Association (JISSA)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1089, '::1', 'root', 1477327621, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1090, '::1', 'root', 1477327621, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Junior People Management of the Philippines\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1091, '::1', 'root', 1477327643, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1092, '::1', 'root', 1477327643, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Junior Philippine Computer Society (JPCS)\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1093, '::1', 'root', 1477327663, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1094, '::1', 'root', 1477327663, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Junior Philippine Institute of Accountants\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1095, '::1', 'root', 1477327679, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1096, '::1', 'root', 1477327679, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Math Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1097, '::1', 'root', 1477327699, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1098, '::1', 'root', 1477327699, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Microsoft Community\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1099, '::1', 'root', 1477327709, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1100, '::1', 'root', 1477327709, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => PWERSA\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1101, '::1', 'root', 1477327729, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1102, '::1', 'root', 1477327729, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Seeds of the Nations Campus Ministry\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1103, '::1', 'root', 1477327740, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1104, '::1', 'root', 1477327740, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => SM Scholar\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1105, '::1', 'root', 1477327761, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1106, '::1', 'root', 1477327761, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Society of Electronics Engineering Students\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1107, '::1', 'root', 1477327786, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1108, '::1', 'root', 1477327786, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Student Organization Association of Regents\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1109, '::1', 'root', 1477327799, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1110, '::1', 'root', 1477327799, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Teatre Phileo\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1111, '::1', 'root', 1477327810, 'Pressed submit button', '/test/modules/add_organization.php'),
+(1112, '::1', 'root', 1477327810, 'Query Executed: INSERT INTO organization(id, name, representative, adviser) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Tourism Management Society\n    [3] => N / A\n    [4] => N / A\n)\n', '/test/modules/add_organization.php'),
+(1113, '::1', 'root', 1477327822, 'Logged out', '/test/end.php'),
+(1114, '127.0.0.1', 'root', 1477351007, 'Logged in', '/test/login.php'),
+(1115, '127.0.0.1', 'root', 1477351071, 'Logged out', '/test/end.php'),
+(1116, '127.0.0.1', 'user', 1477352905, 'Logged in', '/test/login.php'),
+(1117, '127.0.0.1', 'user', 1477352912, 'Logged out', '/test/end.php'),
+(1118, '127.0.0.1', 'root', 1477352916, 'Logged in', '/test/login.php'),
+(1119, '127.0.0.1', 'root', 1477353131, 'Logged out', '/test/end.php'),
+(1120, '::1', 'root', 1477355400, 'Logged in', '/test/login.php'),
+(1121, '::1', 'root', 1477355419, 'Pressed submit button', '/test/sysadmin/edit_user.php'),
+(1122, '::1', 'root', 1477355419, 'Query Executed: UPDATE user SET username = ?, person_id = ?, role_id = ?, skin_id = ? WHERE username = ?\r\nArray\n(\n    [0] => siiis\n    [1] => user-backup\n    [2] => 1\n    [3] => 3\n    [4] => 2\n    [5] => user\n)\n', '/test/sysadmin/edit_user.php'),
+(1123, '::1', 'root', 1477355419, 'Query executed: DELETE FROM user_passport WHERE username = ''user-backup''', '/test/sysadmin/edit_user.php'),
+(1124, '::1', 'root', 1477355419, 'Query executed: INSERT `user_passport` SELECT ''user-backup'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/edit_user.php'),
+(1125, '::1', 'root', 1477355440, 'Pressed submit button', '/test/sysadmin/add_user.php'),
+(1126, '::1', 'root', 1477355441, 'Query Executed: INSERT INTO user(username, password, salt, iteration, method, person_id, role_id, skin_id) VALUES(?,?,?,?,?,?,?,?)\r\nArray\n(\n    [0] => sssisiii\n    [1] => user\n    [2] => $2y$12$yHTKsTb36Odkox5iLZPVxO0zBn8rPLLFY.1.rGdugKpxY0qzyIQJm\n    [3] => yHTKsTb36Odkox5iLZPVxQ\n    [4] => 12\n    [5] => blowfish\n    [6] => 1\n    [7] => 3\n    [8] => 5\n)\n', '/test/sysadmin/add_user.php'),
+(1127, '::1', 'root', 1477355459, 'Logged out', '/test/end.php'),
+(1128, '::1', 'user', 1477355470, 'Logged in', '/test/login.php'),
+(1129, '::1', 'user', 1477355473, 'Logged out', '/test/end.php'),
+(1130, '::1', 'user', 1477355725, 'Logged in', '/test/login.php'),
+(1131, '::1', 'user', 1477355728, 'Logged out', '/test/end.php'),
+(1132, '::1', 'root', 1477357572, 'Logged in', '/test/login.php'),
+(1133, '::1', 'root', 1477357975, 'Logged out', '/test/end.php'),
+(1134, '::1', 'root', 1477359193, 'Logged in', '/test/login.php'),
+(1135, '::1', 'root', 1477359222, 'Pressed delete button', '/test/sysadmin/delete_user.php'),
+(1136, '::1', 'root', 1477359222, 'Query Executed: DELETE FROM user WHERE username = ?\r\nArray\n(\n    [0] => s\n    [1] => user\n)\n', '/test/sysadmin/delete_user.php'),
+(1137, '::1', 'root', 1477359227, 'Pressed submit button', '/test/sysadmin/edit_user.php'),
+(1138, '::1', 'root', 1477359227, 'Query Executed: UPDATE user SET username = ?, person_id = ?, role_id = ?, skin_id = ? WHERE username = ?\r\nArray\n(\n    [0] => siiis\n    [1] => user\n    [2] => 1\n    [3] => 3\n    [4] => 2\n    [5] => user-backup\n)\n', '/test/sysadmin/edit_user.php'),
+(1139, '::1', 'root', 1477359227, 'Query executed: DELETE FROM user_passport WHERE username = ''user''', '/test/sysadmin/edit_user.php'),
+(1140, '::1', 'root', 1477359227, 'Query executed: INSERT `user_passport` SELECT ''user'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/edit_user.php'),
+(1141, '::1', 'root', 1477359230, 'Logged out', '/test/end.php'),
+(1142, '::1', 'user', 1477359244, 'Logged in', '/test/login.php'),
+(1143, '::1', 'user', 1477359252, 'Logged out', '/test/end.php'),
+(1144, '::1', 'root', 1477401826, 'Logged in', '/test/login.php'),
+(1145, '::1', 'root', 1477401860, 'Logged out', '/test/end.php'),
+(1146, '::1', 'root', 1477445691, 'Logged in', '/test/login.php'),
+(1147, '::1', 'root', 1477446116, 'Logged out', '/test/end.php'),
+(1148, '::1', 'user', 1477446752, 'Logged in', '/test/login.php'),
+(1149, '::1', 'user', 1477446934, 'Query executed: UPDATE user SET skin_id=''1'' WHERE username=''user''', '/test/change_skin.php'),
+(1150, '::1', 'user', 1477446961, 'Query executed: UPDATE user SET skin_id=''4'' WHERE username=''user''', '/test/change_skin.php'),
+(1151, '::1', 'user', 1477447230, 'Logged out', '/test/end.php'),
+(1152, '::1', 'user', 1477457249, 'Query executed: UPDATE user SET `password`='''', `salt`=''0q3rpTxZ5+lfurPG5FTS1A'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1153, '::1', 'user', 1477457264, 'Query executed: UPDATE user SET `password`=''$2y$12$HGmFo4LFFnwgUqPs5k7JPu/JavtNDYymLyC9zOEkKsgzfWWIQ8VbC'', `salt`=''HGmFo4LFFnwgUqPs5k7JPw'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1154, '::1', 'user', 1477457342, 'Logged in', '/test/login.php'),
+(1155, '::1', 'user', 1477457345, 'Logged out', '/test/end.php'),
+(1156, '::1', 'user', 1477457416, 'Query executed: UPDATE user SET `password`=''$2y$12$lREDgqDgdN2Mug8uGaTn2e0hJOIDgNPxXW6DF8wJLv.VZL1BXfdDC'', `salt`=''lREDgqDgdN2Mug8uGaTn2g'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1157, '::1', 'user', 1477457450, 'Logged in', '/test/login.php'),
+(1158, '::1', 'user', 1477457454, 'Logged out', '/test/end.php'),
+(1159, '::1', 'user', 1477457517, 'Query executed: UPDATE user SET `password`=''$2y$12$PAjoewppK7WQjQYGUwyThOjLEIkznmdRnSiBuKyWyUvXaQsvsgnI6'', `salt`=''PAjoewppK7WQjQYGUwyThQ'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1160, '::1', 'user', 1477457534, 'Logged in', '/test/login.php'),
+(1161, '::1', 'user', 1477457537, 'Logged out', '/test/end.php'),
+(1162, '::1', 'user', 1477457945, 'Query executed: UPDATE user SET `password`=''$2y$12$pUFY84leASLJ779Tl/1N.el/5cntGR6v/qP33cj6wr/2irrX69IsW'', `salt`=''pUFY84leASLJ779Tl/1N+g'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1163, '::1', 'user', 1477457950, 'Logged in', '/test/login.php'),
+(1164, '::1', 'user', 1477457964, 'Logged out', '/test/end.php'),
+(1165, '::1', 'admin', 1477458059, 'Query executed: UPDATE user SET `password`=''$2y$12$kw5iDRDo2B2XzelJN4BWa.wpEDbk2Esbvsj3fsUHoVhiwjNHLBoJ6'', `salt`=''kw5iDRDo2B2XzelJN4BWaA'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''admin''', '/test/new_password.php'),
+(1166, '::1', 'admin', 1477458071, 'Logged in', '/test/login.php'),
+(1167, '::1', 'admin', 1477458075, 'Logged out', '/test/end.php'),
+(1168, '::1', 'root', 1477466182, 'Logged in', '/test/login.php'),
+(1169, '::1', 'root', 1477466186, 'Logged out', '/test/end.php'),
+(1170, '::1', 'Not Logged In', 1477469114, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1171, '::1', 'Not Logged In', 1477469170, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1172, '::1', 'Not Logged In', 1477469361, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1173, '::1', 'Not Logged In', 1477469380, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1174, '::1', 'Not Logged In', 1477469453, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1175, '::1', 'Not Logged In', 1477469488, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1176, '::1', 'Not Logged In', 1477469512, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1177, '::1', 'Not Logged In', 1477469590, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1178, '::1', 'Not Logged In', 1477469621, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1179, '::1', 'Not Logged In', 1477469656, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1180, '::1', 'Not Logged In', 1477470041, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1181, '::1', 'Not Logged In', 1477470195, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1182, '::1', 'Not Logged In', 1477470276, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1183, '::1', 'Not Logged In', 1477470547, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1184, '::1', 'Not Logged In', 1477470875, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1185, '::1', 'Not Logged In', 1477471092, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1186, '::1', 'Not Logged In', 1477471141, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1187, '::1', 'Not Logged In', 1477471467, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1188, '::1', 'Not Logged In', 1477471506, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1189, '::1', 'Not Logged In', 1477471544, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1190, '::1', 'Not Logged In', 1477471571, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1191, '::1', 'Not Logged In', 1477471571, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1192, '::1', 'Not Logged In', 1477471595, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1193, '::1', 'Not Logged In', 1477471820, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1194, '::1', 'Not Logged In', 1477471847, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1195, '::1', 'Not Logged In', 1477471847, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1196, '::1', 'Not Logged In', 1477472003, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1197, '::1', 'Not Logged In', 1477472003, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1198, '::1', 'Not Logged In', 1477472448, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1199, '::1', 'Not Logged In', 1477472448, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1200, '::1', 'Not Logged In', 1477472795, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1201, '::1', 'Not Logged In', 1477472795, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1202, '::1', 'Not Logged In', 1477472994, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1203, '::1', 'Not Logged In', 1477472994, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1204, '::1', 'Not Logged In', 1477473100, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1205, '::1', 'Not Logged In', 1477473100, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1206, '::1', 'Not Logged In', 1477473165, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1207, '::1', 'Not Logged In', 1477473165, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1208, '::1', 'Not Logged In', 1477473338, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1209, '::1', 'Not Logged In', 1477473338, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1210, '::1', 'Not Logged In', 1477473469, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1211, '::1', 'Not Logged In', 1477473469, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1212, '::1', 'Not Logged In', 1477473512, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1213, '::1', 'Not Logged In', 1477473512, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1214, '::1', 'Not Logged In', 1477473845, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1215, '::1', 'Not Logged In', 1477473845, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1216, '::1', 'Not Logged In', 1477473935, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1217, '::1', 'Not Logged In', 1477473935, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1218, '::1', 'Not Logged In', 1477474049, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1219, '::1', 'Not Logged In', 1477474049, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1220, '::1', 'Not Logged In', 1477474074, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1221, '::1', 'Not Logged In', 1477474074, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1222, '::1', 'Not Logged In', 1477474168, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1223, '::1', 'Not Logged In', 1477474168, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1224, '::1', 'Not Logged In', 1477474205, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1225, '::1', 'Not Logged In', 1477474205, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1226, '::1', 'Not Logged In', 1477474317, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1227, '::1', 'Not Logged In', 1477474317, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1228, '::1', 'Not Logged In', 1477474357, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1229, '::1', 'Not Logged In', 1477474357, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1230, '::1', 'Not Logged In', 1477474423, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1231, '::1', 'Not Logged In', 1477474423, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1232, '::1', 'Not Logged In', 1477474487, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1233, '::1', 'Not Logged In', 1477474487, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1234, '::1', 'Not Logged In', 1477474572, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1235, '::1', 'Not Logged In', 1477474572, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1236, '::1', 'Not Logged In', 1477474701, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1237, '::1', 'Not Logged In', 1477474701, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1238, '::1', 'Not Logged In', 1477475172, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1239, '::1', 'Not Logged In', 1477475172, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1240, '::1', 'Not Logged In', 1477475764, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1241, '::1', 'Not Logged In', 1477475764, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1242, '::1', 'Not Logged In', 1477476092, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1243, '::1', 'Not Logged In', 1477476092, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1244, '::1', 'Not Logged In', 1477476427, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1245, '::1', 'Not Logged In', 1477476427, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1246, '::1', 'Not Logged In', 1477476469, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1247, '::1', 'Not Logged In', 1477476469, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1248, '::1', 'Not Logged In', 1477476621, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1249, '::1', 'Not Logged In', 1477477350, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1250, '::1', 'Not Logged In', 1477477350, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1251, '::1', 'Not Logged In', 1477477797, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1252, '::1', 'Not Logged In', 1477477797, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1253, '::1', 'Not Logged In', 1477477853, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1254, '::1', 'Not Logged In', 1477477853, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1255, '::1', 'Not Logged In', 1477477927, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1256, '::1', 'Not Logged In', 1477477927, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1257, '::1', 'Not Logged In', 1477478765, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1258, '::1', 'Not Logged In', 1477478765, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1259, '::1', 'cfjose', 1477480365, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1260, '::1', 'cfjose', 1477480365, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1261, '::1', 'cfjose', 1477480464, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1262, '::1', 'cfjose', 1477480489, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1263, '::1', 'cfjose', 1477480489, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php');
+INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`, `module`) VALUES
+(1264, '::1', 'cfjose', 1477480741, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1265, '::1', 'cfjose', 1477480741, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1266, '::1', 'cfjose', 1477480766, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1267, '::1', 'cfjose', 1477480858, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1268, '::1', 'cfjose', 1477480858, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1269, '::1', 'cfjose', 1477481526, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1270, '::1', 'cfjose', 1477481555, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1271, '::1', 'cfjose', 1477481555, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1272, '::1', 'cfjose', 1477481631, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1273, '::1', 'cfjose', 1477481632, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1274, '::1', 'cfjose', 1477482564, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1275, '::1', 'root', 1477482619, 'Logged in', '/test/login.php'),
+(1276, '::1', 'user', 1477564133, 'Logged in', '/test/login.php'),
+(1277, '::1', 'user', 1477564136, 'Logged out', '/test/end.php'),
+(1278, '::1', 'user', 1477566083, 'Logged in', '/test/login.php'),
+(1279, '::1', 'user', 1477566087, 'Logged out', '/test/end.php'),
+(1280, '::1', 'user', 1477566184, 'Query executed: UPDATE user SET `password`=''$2y$12$rC.eVPoU0GGTMPneDc/7ROC0Wo44Dr2F1sAzlmxnhPXzCtyJ2szX2'', `salt`=''rC+eVPoU0GGTMPneDc/7RQ'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1281, '::1', 'user', 1477566202, 'Logged in', '/test/login.php'),
+(1282, '::1', 'user', 1477566206, 'Logged out', '/test/end.php'),
+(1283, '::1', 'user', 1477566254, 'Query executed: UPDATE user SET `password`=''$2y$12$6UX9ELcHJmEICTwPBxkOs.0ET4iKaYDzp0DZNv2ZKsUxot0C0byn6'', `salt`=''6UX9ELcHJmEICTwPBxkOsA'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1284, '::1', 'user', 1477566259, 'Logged in', '/test/login.php'),
+(1285, '::1', 'user', 1477566366, 'Logged out', '/test/end.php'),
+(1286, '::1', 'user', 1477568186, 'Logged in', '/test/login.php'),
+(1287, '::1', 'user', 1477568390, 'Logged out', '/test/end.php'),
+(1288, '::1', 'user', 1477569729, 'Logged in', '/test/login.php'),
+(1289, '::1', 'user', 1477570183, 'Logged out', '/test/end.php'),
+(1290, '::1', 'admin', 1477570187, 'Logged in', '/test/login.php'),
+(1291, '::1', 'admin', 1477570199, 'Logged out', '/test/end.php'),
+(1292, '::1', 'root', 1477570203, 'Logged in', '/test/login.php'),
+(1293, '::1', 'root', 1477570209, 'Logged out', '/test/end.php'),
+(1294, '::1', 'admin', 1477570214, 'Logged in', '/test/login.php'),
+(1295, '::1', 'admin', 1477570252, 'Logged out', '/test/end.php'),
+(1296, '::1', 'root', 1477570258, 'Logged in', '/test/login.php'),
+(1297, '::1', 'root', 1477570260, 'Logged out', '/test/end.php'),
+(1298, '::1', 'admin', 1477570268, 'Logged in', '/test/login.php'),
+(1299, '::1', 'admin', 1477570276, 'Query executed: UPDATE user SET skin_id=''6'' WHERE username=''admin''', '/test/change_skin.php'),
+(1300, '::1', 'admin', 1477570278, 'Logged out', '/test/end.php'),
+(1301, '::1', 'user', 1477570283, 'Logged in', '/test/login.php'),
+(1302, '::1', 'user', 1477570295, 'Logged out', '/test/end.php'),
+(1303, '::1', 'user', 1477570412, 'Logged in', '/test/login.php'),
+(1304, '::1', 'user', 1477570416, 'Logged out', '/test/end.php'),
+(1305, '::1', 'user', 1477570505, 'Query executed: UPDATE user SET `password`=''$2y$12$0IeGjvq4SV1D.Ma9DhTnHOUXSFdHniEDG.0S8NwlhFtxLYmNOhnmm'', `salt`=''0IeGjvq4SV1D+Ma9DhTnHQ'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1306, '::1', 'user', 1477570531, 'Logged in', '/test/login.php'),
+(1307, '::1', 'user', 1477570535, 'Logged out', '/test/end.php'),
+(1308, '::1', 'user', 1477570575, 'Query executed: UPDATE user SET `password`=''$2y$12$kWm1MCsF.TYT66dbInZg.ekOuLE9aSMAyvzKg.cVrOegsctLtwVpi'', `salt`=''kWm1MCsF+TYT66dbInZg+g'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''user''', '/test/new_password.php'),
+(1309, '::1', 'user', 1477570584, 'Logged in', '/test/login.php'),
+(1310, '::1', 'user', 1477570586, 'Logged out', '/test/end.php'),
+(1311, '::1', 'Not Logged In', 1477574029, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1312, '::1', 'Not Logged In', 1477574029, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1313, '::1', 'Not Logged In', 1477574641, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1314, '::1', 'Not Logged In', 1477574641, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1315, '::1', 'Not Logged In', 1477575272, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1316, '::1', 'Not Logged In', 1477575272, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1317, '::1', 'Not Logged In', 1477575427, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1318, '::1', 'Not Logged In', 1477575427, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1319, '::1', 'Not Logged In', 1477575811, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1320, '::1', 'Not Logged In', 1477575811, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1321, '::1', 'Not Logged In', 1477575929, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1322, '::1', 'Not Logged In', 1477575929, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1323, '::1', 'user', 1477576391, 'Logged in', '/test/login.php'),
+(1324, '::1', 'user', 1477576407, 'ILLEGAL ACCESS ATTEMPT - Tried to access ''/test/sysadmin/add_user.php'' without sufficient privileges.', '/test/sysadmin/add_user.php'),
+(1325, '::1', 'root', 1477576460, 'Logged in', '/test/login.php'),
+(1326, '::1', 'root', 1477576487, 'Logged out', '/test/end.php'),
+(1327, '::1', 'user', 1477576491, 'Logged in', '/test/login.php'),
+(1328, '::1', 'user', 1477576499, 'ILLEGAL ACCESS ATTEMPT - Tried to access ''/test/sysadmin/add_user.php'' without sufficient privileges.', '/test/sysadmin/add_user.php'),
+(1329, '::1', 'Not Logged In', 1477577131, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro '', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1330, '::1', 'Not Logged In', 1477577131, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1331, '::1', 'Not Logged In', 1477577791, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1332, '::1', 'Not Logged In', 1477577792, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1333, '::1', 'Not Logged In', 1477577792, 'Query executed: INSERT into `USER` (`username`) VALUES (''cfjose'')', '/test/page3.php'),
+(1334, '::1', 'Not Logged In', 1477577903, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1335, '::1', 'Not Logged In', 1477577903, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1336, '::1', 'Not Logged In', 1477578010, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1337, '::1', 'Not Logged In', 1477578010, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1338, '::1', 'Not Logged In', 1477578010, 'Query executed: INSERT into `USER` (`username`) VALUES (''cfjose'')', '/test/page3.php'),
+(1339, '::1', 'Not Logged In', 1477578010, 'Query executed: INSERT into `USER` (`password`) VALUES (''$2y$12$v.yGIi2hsSvUGOaXf4IcQ.Hvz2KKz2gbcSZ47qJyFzs8YwPa13mFO'')', '/test/page3.php'),
+(1340, '::1', 'Not Logged In', 1477578159, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1341, '::1', 'Not Logged In', 1477578159, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1342, '::1', 'Not Logged In', 1477578159, 'Query executed: INSERT into `USER` (`username`) VALUES (''cfjose'')', '/test/page3.php'),
+(1343, '::1', 'Not Logged In', 1477578160, 'Query executed: INSERT into `USER` (`password`) VALUES (''$2y$12$HfAuwms5cGJDZR4TZLFfmOVI8I9vImusXK/Ivp/MmYqzK4lmkcQzu'')', '/test/page3.php'),
+(1344, '::1', 'Not Logged In', 1477578280, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1345, '::1', 'Not Logged In', 1477578280, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1346, '::1', 'Not Logged In', 1477578280, 'Query executed: INSERT into `USER` (`username`) VALUES (''example'')', '/test/page3.php'),
+(1347, '::1', 'Not Logged In', 1477578280, 'Query executed: INSERT into `USER` (`password`) VALUES (''$2y$12$rI/wahuTJEXET2iEFhtfFeCReujuyGaTFypCanZlemJnT7blvQFN.'')', '/test/page3.php'),
+(1348, '::1', 'Not Logged In', 1477578695, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1349, '::1', 'Not Logged In', 1477578695, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1350, '::1', 'Not Logged In', 1477578768, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1351, '::1', 'Not Logged In', 1477578768, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1352, '::1', 'Not Logged In', 1477578925, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1353, '::1', 'Not Logged In', 1477578925, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1354, '::1', 'Not Logged In', 1477579024, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1355, '::1', 'Not Logged In', 1477579025, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1356, '::1', 'Not Logged In', 1477579025, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''cfjose'', ''$2y$12$ATRXc.1detr0qXlJgAkWG.gy8a.S3ewZxNiZwf4xf5lOKSCCSto7C'', '' cfjose@student.apc.edu.ph'', ''ATRXc+1detr0qXlJgAkWGA'', ''12'', ''blowfish'', ''1'', ''3'', ''1'')', '/test/page3.php'),
+(1357, '::1', 'cfjose', 1477579078, 'Logged in', '/test/login.php'),
+(1358, '::1', 'cfjose', 1477579083, 'Logged out', '/test/end.php'),
+(1359, '::1', 'Not Logged In', 1477579623, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1360, '::1', 'Not Logged In', 1477579623, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1361, '::1', 'Not Logged In', 1477579623, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''cfjose'', ''$2y$12$FJPo4jerbxZzjFxKREV.qeQhUTpyCYC3pqV.rlZENXBqm.gCOfUXG'', ''cfjose@student.apc.edu.ph'', ''FJPo4jerbxZzjFxKREV+qg'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1362, '::1', 'cfjose', 1477579705, 'Logged in', '/test/login.php'),
+(1363, '::1', 'cfjose', 1477579718, 'Logged out', '/test/end.php'),
+(1364, '::1', 'Not Logged In', 1477579833, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1365, '::1', 'Not Logged In', 1477579833, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1366, '::1', 'Not Logged In', 1477579833, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''cfjose'', ''$2y$12$UIrEXY.V2zlaeh4LZhFYIu0PtJuv7/k8PLLXhHJ3BCu9u9LFMIZl.'', ''cfjose@student.apc.edu.ph'', ''UIrEXY+V2zlaeh4LZhFYIw'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1367, '::1', 'cfjose', 1477580539, 'Logged in', '/test/login.php'),
+(1368, '::1', 'cfjose', 1477580550, 'Query executed: UPDATE user SET skin_id=''6'' WHERE username=''cfjose''', '/test/change_skin.php'),
+(1369, '::1', 'cfjose', 1477580661, 'Logged out', '/test/end.php'),
+(1370, '::1', 'Not Logged In', 1477581297, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES ('''', '''', '''', '''', '''', '''')', '/test/page3.php'),
+(1371, '::1', 'root', 1477586014, 'Logged in', '/test/login.php'),
+(1372, '::1', 'root', 1477586065, 'Logged out', '/test/end.php'),
+(1373, '::1', 'cfjose', 1477586131, 'Logged in', '/test/login.php'),
+(1374, '::1', 'root', 1477610894, 'Logged in', '/test/login.php'),
+(1375, '::1', 'root', 1477610901, 'Logged out', '/test/end.php'),
+(1376, '::1', 'Not Logged In', 1477611007, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''de la Cruz'', ''Juan'', ''Santo'', ''male'', ''1990-04-06'', ''09123456789'')', '/test/page3.php'),
+(1377, '::1', 'Not Logged In', 1477611007, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''de la Cruz'' AND first_name = ''Juan''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1378, '::1', 'Not Logged In', 1477611007, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''jsdelacruz'', ''$2y$12$Lh93YKxU8kOp.cM9FZvOA.ugxNuutsUrEdoIaSJ0VYI9QDm6rAsKC'', ''jsdelacruz@example.com'', ''Lh93YKxU8kOp+cM9FZvOAA'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''de la Cruz'' AND first_name = ''Juan''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1379, '::1', 'jsdelacruz', 1477611015, 'Logged in', '/test/login.php'),
+(1380, '::1', 'jsdelacruz', 1477611023, 'Logged out', '/test/end.php'),
+(1381, '::1', 'cfjose', 1477611031, 'Logged in', '/test/login.php'),
+(1382, '::1', 'cfjose', 1477611036, 'Logged out', '/test/end.php'),
+(1383, '::1', 'root', 1477611038, 'Logged in', '/test/login.php'),
+(1384, '::1', 'root', 1477611050, 'Pressed submit button', '/test/sysadmin/edit_person.php'),
+(1385, '::1', 'root', 1477611050, 'Query Executed: UPDATE person SET first_name = ?, middle_name = ?, last_name = ?, gender = ? WHERE person_id = ?\r\nArray\n(\n    [0] => ssssi\n    [1] => Juan\n    [2] => Santos\n    [3] => de la Cruz\n    [4] => Male\n    [5] => 5\n)\n', '/test/sysadmin/edit_person.php'),
+(1386, '::1', 'root', 1477611055, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1387, '::1', 'root', 1477611055, 'Query Executed: DELETE FROM person WHERE person_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 4\n)\n', '/test/sysadmin/delete_person.php'),
+(1388, '::1', 'root', 1477611073, 'Query executed: DELETE FROM user_passport WHERE username IN (''cfjose'',''jsdelacruz'',''user'')', '/test/sysadmin/role_permissions_cascade.php'),
+(1389, '::1', 'root', 1477611074, 'Query executed: INSERT `user_passport` SELECT ''cfjose'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1390, '::1', 'root', 1477611074, 'Query executed: INSERT `user_passport` SELECT ''jsdelacruz'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1391, '::1', 'root', 1477611074, 'Query executed: INSERT `user_passport` SELECT ''user'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1392, '::1', 'root', 1477611076, 'Pressed cancel button', '/test/sysadmin/role_permissions_cascade.php'),
+(1393, '::1', 'root', 1477611077, 'Logged out', '/test/end.php'),
+(1394, '::1', 'jsdelacruz', 1477611083, 'Logged in', '/test/login.php'),
+(1395, '::1', 'jsdelacruz', 1477611087, 'Logged out', '/test/end.php'),
+(1396, '::1', 'Not Logged In', 1477611249, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''User'', ''Sample'', ''V'', ''male'', ''1990-04-06'', ''09123456789'')', '/test/page3.php'),
+(1397, '::1', 'Not Logged In', 1477611249, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''User'' AND first_name = ''Sample''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1398, '::1', 'Not Logged In', 1477611249, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''svuser'', ''$2y$12$oYytSLdB1UQrth5aDth/1O0n72Fag8fKg.vp4d7texIFJAOCQGU1W'', ''svuser@example.com'', ''oYytSLdB1UQrth5aDth/1Q'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''User'' AND first_name = ''Sample''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1399, '::1', 'svuser', 1477611315, 'Logged in', '/test/login.php'),
+(1400, '::1', 'svuser', 1477611317, 'Logged out', '/test/end.php'),
+(1401, '::1', 'root', 1477611323, 'Logged in', '/test/login.php'),
+(1402, '::1', 'root', 1477611328, 'Query executed: DELETE FROM user_passport WHERE username IN (''cfjose'',''jsdelacruz'',''svuser'',''user'')', '/test/sysadmin/role_permissions_cascade.php'),
+(1403, '::1', 'root', 1477611328, 'Query executed: INSERT `user_passport` SELECT ''cfjose'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1404, '::1', 'root', 1477611328, 'Query executed: INSERT `user_passport` SELECT ''jsdelacruz'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1405, '::1', 'root', 1477611328, 'Query executed: INSERT `user_passport` SELECT ''svuser'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1406, '::1', 'root', 1477611329, 'Query executed: INSERT `user_passport` SELECT ''user'', `link_id` FROM user_role_links WHERE role_id=''3''', '/test/sysadmin/role_permissions_cascade.php'),
+(1407, '::1', 'root', 1477611330, 'Pressed cancel button', '/test/sysadmin/role_permissions_cascade.php'),
+(1408, '::1', 'root', 1477611572, 'Logged out', '/test/end.php'),
+(1409, '::1', 'cfjose', 1477611585, 'Logged in', '/test/login.php'),
+(1410, '::1', 'cfjose', 1477612405, 'Logged out', '/test/end.php'),
+(1411, '::1', 'Not Logged In', 1477612837, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Ferrer'', ''John Kenneth'', ''H'', ''male'', ''1997-11-25'', ''09123456789'')', '/test/page3.php'),
+(1412, '::1', 'Not Logged In', 1477612838, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Ferrer'' AND first_name = ''John Kenneth''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1413, '::1', 'Not Logged In', 1477612838, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''jhferrer'', ''$2y$12$HFF79gMiEYzd3GD/kQzsR.ur3vJqbjjf1CZFt9A4MHt2ziMYYTd8i'', ''jhferrer@student.apc.edu.ph'', ''HFF79gMiEYzd3GD/kQzsRA'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''Ferrer'' AND first_name = ''John Kenneth''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1414, '::1', 'user', 1477612865, 'Logged in', '/test/login.php'),
+(1415, '::1', 'user', 1477612959, 'Logged out', '/test/end.php'),
+(1416, '::1', 'cfjose', 1477612964, 'Logged in', '/test/login.php'),
+(1417, '::1', 'cfjose', 1477612983, 'Logged out', '/test/end.php'),
+(1418, '::1', 'cfjose', 1477613091, 'Query executed: UPDATE user SET `password`=''$2y$12$IwgxTAIDK3NnxXA6EtrqA.VBPpSWFC0gLoqOVAfutPLu0w8vgfjye'', `salt`=''IwgxTAIDK3NnxXA6EtrqAA'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''cfjose''', '/test/new_password.php'),
+(1419, '::1', 'cfjose', 1477613124, 'Logged in', '/test/login.php'),
+(1420, '::1', 'cfjose', 1477613287, 'Logged out', '/test/end.php'),
+(1421, '::1', 'root', 1477613477, 'Logged in', '/test/login.php'),
+(1422, '::1', 'root', 1477613654, 'Query executed: UPDATE user SET skin_id=''8'' WHERE username=''root''', '/test/change_skin.php'),
+(1423, '::1', 'root', 1477613662, 'Query executed: UPDATE user SET skin_id=''6'' WHERE username=''root''', '/test/change_skin.php'),
+(1424, '::1', 'root', 1477613667, 'Query executed: UPDATE user SET skin_id=''3'' WHERE username=''root''', '/test/change_skin.php'),
+(1425, '::1', 'root', 1477613671, 'Query executed: UPDATE user SET skin_id=''5'' WHERE username=''root''', '/test/change_skin.php'),
+(1426, '::1', 'root', 1477613684, 'Logged out', '/test/end.php'),
+(1427, '::1', 'root', 1477613883, 'Logged in', '/test/login.php'),
+(1428, '::1', 'root', 1477613890, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1429, '::1', 'root', 1477613927, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1430, '::1', 'root', 1477613932, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1431, '::1', 'root', 1477613937, 'Pressed delete button', '/test/sysadmin/delete_person.php'),
+(1432, '::1', 'root', 1477613963, 'Pressed delete button', '/test/sysadmin/delete_user.php'),
+(1433, '::1', 'root', 1477613963, 'Query Executed: DELETE FROM user WHERE username = ?\r\nArray\n(\n    [0] => s\n    [1] => jhferrer\n)\n', '/test/sysadmin/delete_user.php'),
+(1434, '::1', 'root', 1477613966, 'Pressed delete button', '/test/sysadmin/delete_user.php'),
+(1435, '::1', 'root', 1477613966, 'Query Executed: DELETE FROM user WHERE username = ?\r\nArray\n(\n    [0] => s\n    [1] => jsdelacruz\n)\n', '/test/sysadmin/delete_user.php'),
+(1436, '::1', 'root', 1477613969, 'Pressed cancel button', '/test/sysadmin/delete_user.php'),
+(1437, '::1', 'root', 1477613971, 'Pressed delete button', '/test/sysadmin/delete_user.php'),
+(1438, '::1', 'root', 1477613971, 'Query Executed: DELETE FROM user WHERE username = ?\r\nArray\n(\n    [0] => s\n    [1] => svuser\n)\n', '/test/sysadmin/delete_user.php'),
+(1439, '::1', 'root', 1477613974, 'Pressed cancel button', '/test/sysadmin/delete_user.php'),
+(1440, '::1', 'root', 1477613977, 'Pressed delete button', '/test/sysadmin/delete_user.php'),
+(1441, '::1', 'root', 1477613977, 'Query Executed: DELETE FROM user WHERE username = ?\r\nArray\n(\n    [0] => s\n    [1] => cfjose\n)\n', '/test/sysadmin/delete_user.php'),
+(1442, '::1', 'root', 1477614115, 'Logged out', '/test/end.php'),
+(1443, '::1', 'admin', 1477614123, 'Logged in', '/test/login.php'),
+(1444, '::1', 'admin', 1477614127, 'Logged out', '/test/end.php'),
+(1445, '::1', 'user', 1477614155, 'Logged in', '/test/login.php'),
+(1446, '::1', 'user', 1477614157, 'Logged out', '/test/end.php'),
+(1447, '::1', 'root', 1477715144, 'Logged in', '/test/login.php'),
+(1448, '::1', 'root', 1477715239, 'Pressed delete button', '/test/modules/delete_calendar_event.php'),
+(1449, '::1', 'root', 1477715239, 'Query Executed: DELETE FROM calendar_event WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 1\n)\n', '/test/modules/delete_calendar_event.php'),
+(1450, '::1', 'root', 1477718951, 'Logged out', '/test/end.php'),
+(1451, '::1', 'root', 1477754440, 'Logged in', '/test/login.php'),
+(1452, '::1', 'root', 1477754498, 'Pressed delete button', '/test/modules/delete_calendar_event.php'),
+(1453, '::1', 'root', 1477754498, 'Query Executed: DELETE FROM calendar_event WHERE id = ?\r\nArray\n(\n    [0] => i\n    [1] => 1\n)\n', '/test/modules/delete_calendar_event.php'),
+(1454, '::1', 'root', 1477754521, 'Logged out', '/test/end.php'),
+(1455, '::1', 'root', 1478005174, 'Logged in', '/test/login.php'),
+(1456, '::1', 'root', 1478005860, 'Logged out', '/test/end.php'),
+(1457, '::1', 'root', 1478478751, 'Logged in', '/test/login.php'),
+(1458, '::1', 'root', 1478478763, 'Logged out', '/test/end.php'),
+(1459, '::1', 'root', 1478663858, 'Logged in', '/test/login.php'),
+(1460, '::1', 'root', 1478669715, 'Logged out', '/test/end.php'),
+(1461, '::1', 'user', 1479171949, 'Logged in', '/test/login.php'),
+(1462, '::1', 'user', 1479171961, 'Query executed: UPDATE user SET skin_id=''6'' WHERE username=''user''', '/test/change_skin.php'),
+(1463, '::1', 'user', 1479172872, 'Logged out', '/test/end.php'),
+(1464, '::1', 'root', 1479194993, 'Logged in', '/test/login.php'),
+(1465, '::1', 'root', 1479195006, 'Query executed: UPDATE user SET skin_id=''5'' WHERE username=''root''', '/test/change_skin.php'),
+(1466, '::1', 'root', 1479195106, 'Pressed submit button', '/test/sst/add_cobalt_sst.php'),
+(1467, '::1', 'root', 1479195106, 'Query Executed: INSERT INTO cobalt_sst(auto_id, title, description, config_file) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => isss\n    [1] => \n    [2] => Test Add Calendar Event\n    [3] => Test Calendar Event\n    [4] => calendar_event_sst_add.php\n)\n', '/test/sst/add_cobalt_sst.php'),
+(1468, '::1', 'root', 1479195115, 'Pressed cancel button', '/test/modules/add_calendar_event.php'),
+(1469, '::1', 'root', 1479195263, 'Logged out', '/test/end.php'),
+(1470, '::1', 'user', 1479195359, 'Logged in', '/test/login.php'),
+(1471, '::1', 'user', 1479195361, 'Logged out', '/test/end.php'),
+(1472, '::1', 'Not Logged In', 1479195407, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1473, '::1', 'Not Logged In', 1479195642, 'Query executed: INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES (''Jose'', ''Chamber'', ''Figuro'', ''male'', ''1997-10-03'', ''09123456789'')', '/test/page3.php'),
+(1474, '::1', 'Not Logged In', 1479195642, 'Query executed: INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = ''Junior Philippine Computer Society (JPCS)''), `person_id` = (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), `org_position_id` = (SELECT id FROM org_position WHERE name = ''President'')', '/test/page3.php'),
+(1475, '::1', 'Not Logged In', 1479195642, 'Query executed: INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES (''cfjose'', ''$2y$12$eovNYO6LfgMCDnzmWoPIYOpx10.PhrjV.9JPea9Pz53.qSzENoWUG'', ''cfjose@student.apc.edu.ph'', ''eovNYO6LfgMCDnzmWoPIYQ'', ''12'', ''blowfish'', (SELECT person_id FROM person WHERE last_name = ''Jose'' AND first_name = ''Chamber''), (SELECT role_id FROM user_role WHERE role = ''Standard User''), (SELECT skin_id FROM system_skins WHERE skin_name = ''Cobalt Default''))', '/test/page3.php'),
+(1476, '::1', 'cfjose', 1479195647, 'Logged in', '/test/login.php'),
+(1477, '::1', 'cfjose', 1479195654, 'Logged out', '/test/end.php'),
+(1478, '::1', 'root', 1479373006, 'Logged in', '/test/login.php'),
+(1479, '::1', 'root', 1479373063, 'Logged out', '/test/end.php'),
+(1480, '::1', 'cfjose', 1479373159, 'Logged in', '/test/login.php'),
+(1481, '::1', 'cfjose', 1479373172, 'Query executed: UPDATE user SET skin_id=''6'' WHERE username=''cfjose''', '/test/change_skin.php'),
+(1482, '::1', 'cfjose', 1479373181, 'Query executed: UPDATE user SET skin_id=''1'' WHERE username=''cfjose''', '/test/change_skin.php'),
+(1483, '::1', 'cfjose', 1479373188, 'Logged out', '/test/end.php'),
+(1484, '::1', 'cfjose', 1479373875, 'Query executed: UPDATE user SET `password`=''$2y$12$wUNWuJmVPa9zDcLIaBWk8..T2dG.wE/Jh/TO04apzYQvd5gq9d8MS'', `salt`=''wUNWuJmVPa9zDcLIaBWk8A'', `iteration`=''12'', `method`=''blowfish'' WHERE username=''cfjose''', '/test/new_password.php'),
+(1485, '::1', 'cfjose', 1479373896, 'Logged in', '/test/login.php'),
+(1486, '::1', 'cfjose', 1479373936, 'ILLEGAL ACCESS ATTEMPT - Tried to access ''/test/sysadmin/add_person.php'' without sufficient privileges.', '/test/sysadmin/add_person.php'),
+(1487, '::1', 'root', 1479373980, 'Logged in', '/test/login.php'),
+(1488, '::1', 'root', 1479373996, 'Pressed submit button', '/test/sysadmin/security_monitor.php'),
+(1489, '::1', 'root', 1479374133, 'Logged out', '/test/end.php'),
+(1490, '::1', 'user', 1479374211, 'Logged in', '/test/login.php'),
+(1491, '::1', 'user', 1479374220, 'Logged out', '/test/end.php'),
+(1492, '::1', 'cfjose', 1479374615, 'Logged in', '/test/login.php'),
+(1493, '::1', 'cfjose', 1479374825, 'Logged out', '/test/end.php'),
+(1494, '::1', 'root', 2016, 'Logged in', '/test/login.php'),
+(1495, '::1', 'root', 2016, 'Logged out', '/test/end.php'),
+(1496, '::1', 'user', 2016, 'Logged in', '/test/login.php'),
+(1497, '::1', 'user', 2016, 'Logged out', '/test/end.php'),
+(1498, '::1', 'root', 2016, 'Logged in', '/test/login.php'),
+(1499, '::1', 'root', 2016, 'Logged out', '/test/end.php'),
+(1500, '::1', 'root', 2016, 'Logged in', '/test/login.php'),
+(1501, '::1', 'root', 2016, 'Pressed cancel button', '/test/sysadmin/add_system_skins.php'),
+(1502, '::1', 'root', 2016, 'Pressed cancel button', '/test/sysadmin/add_system_skins.php'),
+(1503, '::1', 'root', 2016, 'Pressed submit button', '/test/sysadmin/add_system_skins.php'),
+(1504, '::1', 'root', 2016, 'Query Executed: INSERT INTO system_skins(skin_id, skin_name, header, footer, master_css, colors_css, fonts_css, override_css, icon_set) VALUES(?,?,?,?,?,?,?,?,?)\r\nArray\n(\n    [0] => issssssss\n    [1] => \n    [2] => Warm Teal\n    [3] => skins/default_header.php\n    [4] => skins/default_footer.php\n    [5] => warm_teal_master.css\n    [6] => warm_teal_colors.css\n    [7] => warm_teal_fonts.css\n    [8] => warm_teal_override.css\n    [9] => cobalt\n)\n', '/test/sysadmin/add_system_skins.php'),
+(1505, '::1', 'root', 2016, 'Query executed: UPDATE user SET skin_id=''11'' WHERE username=''root''', '/test/change_skin.php'),
+(1506, '::1', 'root', 2016, 'Query executed: UPDATE user SET skin_id=''5'' WHERE username=''root''', '/test/change_skin.php'),
+(1507, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/calendar_event/add_calendar_event.php'),
+(1508, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/calendar_event/csv_calendar_event.php'),
+(1509, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/document/add_document.php'),
+(1510, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/document/csv_document.php'),
+(1511, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/org_position/add_org_position.php'),
+(1512, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/org_position/csv_org_position.php'),
+(1513, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/organization/add_organization.php'),
+(1514, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/organization/edit_organization.php'),
+(1515, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/organization/detailview_organization.php'),
+(1516, '::1', 'root', 2016, 'Pressed cancel button', '/test/modules/share_option/add_share_option.php'),
+(1517, '::1', 'root', 2016, 'Query executed: UPDATE user SET skin_id=''11'' WHERE username=''root''', '/test/change_skin.php'),
+(1518, '::1', 'root', 2016, 'Logged out', '/test/end.php');
 
 -- --------------------------------------------------------
 
@@ -1253,7 +1802,7 @@ CREATE TABLE `system_settings` (
 
 INSERT INTO `system_settings` (`setting`, `value`) VALUES
 ('Max Attachment Height', '0'),
-('Max Attachment Size (MB)', '100'),
+('Max Attachment Size (MB)', '0'),
 ('Max Attachment Width', '0'),
 ('Security Level', 'HIGH');
 
@@ -1289,7 +1838,9 @@ INSERT INTO `system_skins` (`skin_id`, `skin_name`, `header`, `footer`, `master_
 (7, 'Salmon Impression', 'skins/default_header.php', 'skins/default_footer.php', 'salmon_impression_master.css', 'salmon_impression_colors.css', 'salmon_impression_fonts.css', 'salmon_impression_override.css', 'cobalt'),
 (8, 'Royal Amethyst', 'skins/default_header.php', 'skins/default_footer.php', 'royal_amethyst_master.css', 'royal_amethyst_colors.css', 'royal_amethyst_fonts.css', 'royal_amethyst_override.css', 'cobalt'),
 (9, 'Red Decadence', 'skins/default_header.php', 'skins/default_footer.php', 'red_decadence_master.css', 'red_decadence_colors.css', 'red_decadence_fonts.css', 'red_decadence_override.css', 'cobalt'),
-(10, 'Modern Eden', 'skins/default_header.php', 'skins/default_footer.php', 'modern_eden_master.css', 'modern_eden_colors.css', 'modern_eden_fonts.css', 'modern_eden_override.css', 'cobalt');
+(10, 'Modern Eden', 'skins/default_header.php', 'skins/default_footer.php', 'modern_eden_master.css', 'modern_eden_colors.css', 'modern_eden_fonts.css', 'modern_eden_override.css', 'cobalt'),
+(11, 'Warm Teal', 'skins/default_header.php', 'skins/default_footer.php', 'warm_teal_master.css', 'warm_teal_colors.css', 'warm_teal_fonts.css', 'warm_teal_override.css', 'cobalt'),
+(12, 'Purple Rain', 'skins/default_header.php', 'skins/default_footer.php', 'purple_rain_master.css', 'purple_rain_colors.css', 'purple_rain_fonts.css', 'purple_rain_override.css', 'cobalt');
 
 -- --------------------------------------------------------
 
@@ -1304,7 +1855,7 @@ CREATE TABLE `user` (
   `salt` varchar(255) NOT NULL,
   `iteration` int(11) NOT NULL,
   `method` varchar(255) NOT NULL,
-  `person_id` int(11) NOT NULL,
+  `person_id` int(11) DEFAULT NULL,
   `role_id` int(11) NOT NULL,
   `skin_id` int(11) NOT NULL,
   `password_reset_code` varchar(6) NOT NULL
@@ -1315,11 +1866,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`, `password_reset_code`) VALUES
-('admin', '$2y$12$O0o8fsnA3Mt2if/0NBI0HOVqbHzRPHf08BPvC82OHSsytROAphnKO', '', 'O0o8fsnA3Mt2if/0NBI0HQ', 12, 'blowfish', 1, 2, 5, ''),
-('commdir', '$2y$12$rzFfBA67p/hizoLETRJbmu1AJjek9pO2oam/FQnP30dIlu.7T3gr6', '', 'rzFfBA67p/hizoLETRJbmw', 12, 'blowfish', 1, 6, 3, ''),
-('org_head', '$2y$12$DV.KBe5mbDZU2iBJkjuGee3M8cafZcL1yZ2sREw5t4XEQVNL7AC2.', '', 'DV+KBe5mbDZU2iBJkjuGeg', 12, 'blowfish', 1, 4, 7, ''),
-('root', '$2y$12$vTeDK/BecBP4rv80XKUiKeKZwaAnV00EwYIWxD.2VtmL88OdiUNkq', '', 'vTeDK/BecBP4rv80XKUiKg', 12, 'blowfish', 1, 1, 6, ''),
-('user', '$2y$12$LDoyF6YbFd5pzPSAUzFd3uTTBvCduxyhpFPaTLhyrxETgOOHRc3R2', '', 'LDoyF6YbFd5pzPSAUzFd3w', 12, 'blowfish', 1, 3, 2, '');
+('admin', '$2y$12$kw5iDRDo2B2XzelJN4BWa.wpEDbk2Esbvsj3fsUHoVhiwjNHLBoJ6', '', 'kw5iDRDo2B2XzelJN4BWaA', 12, 'blowfish', 1, 2, 6, ''),
+('cfjose', '$2y$12$wUNWuJmVPa9zDcLIaBWk8..T2dG.wE/Jh/TO04apzYQvd5gq9d8MS', 'cfjose@student.apc.edu.ph', 'wUNWuJmVPa9zDcLIaBWk8A', 12, 'blowfish', 9, 3, 1, ''),
+('root', '$2y$12$vTeDK/BecBP4rv80XKUiKeKZwaAnV00EwYIWxD.2VtmL88OdiUNkq', '', 'vTeDK/BecBP4rv80XKUiKg', 12, 'blowfish', 1, 1, 11, ''),
+('user', '$2y$12$kWm1MCsF.TYT66dbInZg.ekOuLE9aSMAyvzKg.cVrOegsctLtwVpi', '', 'kWm1MCsF+TYT66dbInZg+g', 12, 'blowfish', 1, 3, 6, '');
 
 -- --------------------------------------------------------
 
@@ -1381,26 +1931,26 @@ INSERT INTO `user_links` (`link_id`, `name`, `target`, `descriptive_title`, `des
 (34, 'Edit cobalt sst', 'sst/edit_cobalt_sst.php', 'Edit Cobalt SST', '', 2, 'No', 'On', 'form3.png', 0),
 (35, 'View cobalt sst', 'sst/listview_cobalt_sst.php', 'Cobalt SST', '', 2, 'Yes', 'On', 'form3.png', 0),
 (36, 'Delete cobalt sst', 'sst/delete_cobalt_sst.php', 'Delete Cobalt SST', '', 2, 'No', 'On', 'form3.png', 0),
-(37, 'Add calendar event', 'modules/calendar.php', 'Add Calendar Event', '', 1, 'Yes', 'On', 'form3.png', 0),
-(38, 'Edit calendar event', 'modules/edit_calendar_event.php', 'Edit Calendar Event', '', 1, 'No', 'On', 'form3.png', 0),
-(39, 'View calendar event', 'modules/listview_calendar_event.php', 'Calendar Event', '', 1, 'Yes', 'On', 'calendar.png', 0),
-(40, 'Delete calendar event', 'modules/delete_calendar_event.php', 'Delete Calendar Event', '', 1, 'No', 'On', 'form3.png', 0),
-(41, 'Add document', 'modules/upload.php', 'Add Document', '', 1, 'Yes', 'On', 'Docs.png', 0),
-(42, 'Edit document', 'modules/edit_document.php', 'Edit Document', '', 1, 'No', 'On', 'form3.png', 0),
-(43, 'View document', 'modules/listview_document.php', 'Document', '', 1, 'No', 'On', 'Docs.png', 0),
-(44, 'Delete document', 'modules/delete_document.php', 'Delete Document', '', 1, 'No', 'On', 'form3.png', 0),
-(45, 'Add organization', 'modules/add_organization.php', 'Add Organization', '', 1, 'No', 'On', 'form3.png', 0),
-(46, 'Edit organization', 'modules/edit_organization.php', 'Edit Organization', '', 1, 'No', 'On', 'form3.png', 0),
-(47, 'View organization', 'modules/listview_organization.php', 'Organization', '', 1, 'Yes', 'On', 'org.png', 0),
-(48, 'Delete organization', 'modules/delete_organization.php', 'Delete Organization', '', 1, 'No', 'On', 'form3.png', 0),
-(49, 'Add Committee', 'modules/add_committee.php', 'Add Committee', '', 1, 'No', 'On', 'form3.png', 0),
-(50, 'View Committee', 'modules/listview_committee.php', 'Committee', '', 1, 'Yes', 'On', 'form3.png', 0),
-(51, 'Edit Committee', 'modules/edit_committee.php', 'Edit Committee', '', 1, 'No', 'On', 'form3.png', 0),
-(52, 'Delete Committee', 'modules/delete_committee.php', 'Delete Committee', '', 1, 'No', 'On', 'form3.png', 0),
-(53, 'Add Org Position', 'modules/add_org_position.php', 'Add Org Position', '', 1, 'No', 'On', 'form3.png', 0),
-(54, 'View Org Position', 'modules/listview_org_position.php', 'Org Position', '', 1, 'Yes', 'On', 'form3.png', 0),
-(55, 'Edit Org Position', 'modules/edit_org_position.php', 'Edit Org Position', '', 1, 'No', 'On', 'form3.png', 0),
-(56, 'Delete Org Position', 'modules/delete_org_position.php', 'Delete Org Position', '', 1, 'No', 'On', 'form3.png', 0);
+(37, 'Add calendar event', 'modules/calendar_event/add_calendar_event.php', 'Add Calendar Event', '', 1, 'No', 'On', 'form3.png', 0),
+(38, 'Edit calendar event', 'modules/calendar_event/edit_calendar_event.php', 'Edit Calendar Event', '', 1, 'No', 'On', 'form3.png', 0),
+(39, 'View calendar event', 'modules/calendar_event/listview_calendar_event.php', 'Calendar Event', '', 1, 'Yes', 'On', 'form3.png', 0),
+(40, 'Delete calendar event', 'modules/calendar_event/delete_calendar_event.php', 'Delete Calendar Event', '', 1, 'No', 'On', 'form3.png', 0),
+(41, 'Add document', 'modules/document/add_document.php', 'Add Document', '', 1, 'No', 'On', 'form3.png', 0),
+(42, 'Edit document', 'modules/document/edit_document.php', 'Edit Document', '', 1, 'No', 'On', 'form3.png', 0),
+(43, 'View document', 'modules/document/listview_document.php', 'Document', '', 1, 'Yes', 'On', 'form3.png', 0),
+(44, 'Delete document', 'modules/document/delete_document.php', 'Delete Document', '', 1, 'No', 'On', 'form3.png', 0),
+(45, 'Add org position', 'modules/org_position/add_org_position.php', 'Add Org Position', '', 1, 'No', 'On', 'form3.png', 0),
+(46, 'Edit org position', 'modules/org_position/edit_org_position.php', 'Edit Org Position', '', 1, 'No', 'On', 'form3.png', 0),
+(47, 'View org position', 'modules/org_position/listview_org_position.php', 'Org Position', '', 1, 'Yes', 'On', 'form3.png', 0),
+(48, 'Delete org position', 'modules/org_position/delete_org_position.php', 'Delete Org Position', '', 1, 'No', 'On', 'form3.png', 0),
+(49, 'Add organization', 'modules/organization/add_organization.php', 'Add Organization', '', 1, 'No', 'On', 'form3.png', 0),
+(50, 'Edit organization', 'modules/organization/edit_organization.php', 'Edit Organization', '', 1, 'No', 'On', 'form3.png', 0),
+(51, 'View organization', 'modules/organization/listview_organization.php', 'Organization', '', 1, 'Yes', 'On', 'form3.png', 0),
+(52, 'Delete organization', 'modules/organization/delete_organization.php', 'Delete Organization', '', 1, 'No', 'On', 'form3.png', 0),
+(53, 'Add share option', 'modules/share_option/add_share_option.php', 'Add Share Option', '', 1, 'No', 'On', 'form3.png', 0),
+(54, 'Edit share option', 'modules/share_option/edit_share_option.php', 'Edit Share Option', '', 1, 'No', 'On', 'form3.png', 0),
+(55, 'View share option', 'modules/share_option/listview_share_option.php', 'Share Option', '', 1, 'Yes', 'On', 'form3.png', 0),
+(56, 'Delete share option', 'modules/share_option/delete_share_option.php', 'Delete Share Option', '', 1, 'No', 'On', 'form3.png', 0);
 
 -- --------------------------------------------------------
 
@@ -1441,7 +1991,6 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 ('cfjose', 42),
 ('cfjose', 43),
 ('cfjose', 44),
-('cfjose', 45),
 ('cfjose', 46),
 ('cfjose', 47),
 ('jcheramia', 37),
@@ -1455,6 +2004,16 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 ('jcheramia', 45),
 ('jcheramia', 46),
 ('jcheramia', 47),
+('jsdelacruz', 37),
+('jsdelacruz', 38),
+('jsdelacruz', 39),
+('jsdelacruz', 40),
+('jsdelacruz', 41),
+('jsdelacruz', 42),
+('jsdelacruz', 43),
+('jsdelacruz', 44),
+('jsdelacruz', 46),
+('jsdelacruz', 47),
 ('org_head', 37),
 ('org_head', 38),
 ('org_head', 39),
@@ -1524,6 +2083,16 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 ('root', 54),
 ('root', 55),
 ('root', 56),
+('svuser', 37),
+('svuser', 38),
+('svuser', 39),
+('svuser', 40),
+('svuser', 41),
+('svuser', 42),
+('svuser', 43),
+('svuser', 44),
+('svuser', 46),
+('svuser', 47),
 ('user', 37),
 ('user', 38),
 ('user', 39),
@@ -1533,7 +2102,17 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 ('user', 43),
 ('user', 44),
 ('user', 46),
-('user', 47);
+('user', 47),
+('user-backup', 37),
+('user-backup', 38),
+('user-backup', 39),
+('user-backup', 40),
+('user-backup', 41),
+('user-backup', 42),
+('user-backup', 43),
+('user-backup', 44),
+('user-backup', 46),
+('user-backup', 47);
 
 -- --------------------------------------------------------
 
@@ -1649,31 +2228,42 @@ INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES
 (1, 54),
 (1, 55),
 (1, 56),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
 (2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
 (2, 10),
+(2, 11),
+(2, 12),
+(2, 13),
 (2, 14),
+(2, 15),
+(2, 16),
+(2, 17),
+(2, 18),
+(2, 19),
+(2, 20),
+(2, 21),
+(2, 22),
+(2, 23),
+(2, 24),
+(2, 25),
+(2, 26),
+(2, 27),
+(2, 28),
+(2, 29),
+(2, 30),
+(2, 31),
 (2, 32),
-(2, 36),
-(2, 37),
-(2, 38),
-(2, 39),
-(2, 40),
-(2, 41),
-(2, 42),
-(2, 43),
-(2, 44),
-(2, 45),
-(2, 47),
-(3, 37),
-(3, 38),
-(3, 39),
-(3, 40),
-(3, 41),
-(3, 42),
-(3, 43),
-(3, 44),
-(3, 46),
-(3, 47);
+(2, 33),
+(2, 34),
+(2, 35),
+(2, 36);
 
 --
 -- Indexes for dumped tables
@@ -1707,17 +2297,12 @@ ALTER TABLE `cobalt_sst`
   ADD PRIMARY KEY (`auto_id`);
 
 --
--- Indexes for table `committee`
---
-ALTER TABLE `committee`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `document`
 --
 ALTER TABLE `document`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_UNIQUE` (`id`);
+  ADD UNIQUE KEY `id_UNIQUE` (`id`),
+  ADD KEY `fk_share_option_id_idx` (`share_option_id`);
 
 --
 -- Indexes for table `organization`
@@ -1728,12 +2313,19 @@ ALTER TABLE `organization`
   ADD UNIQUE KEY `name_UNIQUE` (`name`);
 
 --
+-- Indexes for table `organization_has_org_position`
+--
+ALTER TABLE `organization_has_org_position`
+  ADD KEY `fk_org_position_id_idx` (`org_position_id`);
+
+--
 -- Indexes for table `organization_has_person`
 --
 ALTER TABLE `organization_has_person`
-  ADD PRIMARY KEY (`organization_id`,`person_id`),
+  ADD PRIMARY KEY (`organization_id`,`person_id`) USING BTREE,
   ADD KEY `fk_organization_has_person_person1_idx` (`person_id`),
-  ADD KEY `fk_organization_has_person_organization1_idx` (`organization_id`);
+  ADD KEY `fk_organization_has_person_organization1_idx` (`organization_id`),
+  ADD KEY `fk_org_position_id_idx` (`org_position_id`);
 
 --
 -- Indexes for table `org_position`
@@ -1745,16 +2337,14 @@ ALTER TABLE `org_position`
 -- Indexes for table `person`
 --
 ALTER TABLE `person`
-  ADD PRIMARY KEY (`person_id`),
+  ADD PRIMARY KEY (`person_id`) USING BTREE,
   ADD UNIQUE KEY `id_UNIQUE` (`person_id`);
 
 --
--- Indexes for table `person_has_org_position`
+-- Indexes for table `share_option`
 --
-ALTER TABLE `person_has_org_position`
-  ADD KEY `fk_person_id_idx` (`person_id`),
-  ADD KEY `fk_org_position_id_idx` (`org_position_id`) USING BTREE,
-  ADD KEY `fk_organization_id_idx` (`organization_id`);
+ALTER TABLE `share_option`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `system_log`
@@ -1825,12 +2415,7 @@ ALTER TABLE `calendar_event`
 -- AUTO_INCREMENT for table `cobalt_sst`
 --
 ALTER TABLE `cobalt_sst`
-  MODIFY `auto_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `committee`
---
-ALTER TABLE `committee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `auto_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `document`
 --
@@ -1840,27 +2425,32 @@ ALTER TABLE `document`
 -- AUTO_INCREMENT for table `organization`
 --
 ALTER TABLE `organization`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `org_position`
 --
 ALTER TABLE `org_position`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `share_option`
+--
+ALTER TABLE `share_option`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `system_log`
 --
 ALTER TABLE `system_log`
-  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=959;
+  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1519;
 --
 -- AUTO_INCREMENT for table `system_skins`
 --
 ALTER TABLE `system_skins`
-  MODIFY `skin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `skin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `user_links`
 --
@@ -1875,7 +2465,7 @@ ALTER TABLE `user_passport_groups`
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -1888,19 +2478,18 @@ ALTER TABLE `calendar_event_has_person`
   ADD CONSTRAINT `fk_calendar_event_has_person_person1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `document`
+--
+ALTER TABLE `document`
+  ADD CONSTRAINT `fk_share_option_id` FOREIGN KEY (`share_option_id`) REFERENCES `share_option` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `organization_has_person`
 --
 ALTER TABLE `organization_has_person`
+  ADD CONSTRAINT `fk_org_position_id` FOREIGN KEY (`org_position_id`) REFERENCES `org_position` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_organization_has_person_organization1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_organization_has_person_person1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `person_has_org_position`
---
-ALTER TABLE `person_has_org_position`
-  ADD CONSTRAINT `fk_org_position_id` FOREIGN KEY (`org_position_id`) REFERENCES `org_position` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_organization_id` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_person_id` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`

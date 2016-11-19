@@ -1,89 +1,4 @@
 --
--- Table structure for table `cobalt_reporter`
---
-
-CREATE TABLE `cobalt_reporter` (
-  `module_name` varchar(255) NOT NULL,
-  `report_name` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `show_field` blob NOT NULL,
-  `operator` blob NOT NULL,
-  `text_field` blob NOT NULL,
-  `sum_field` blob NOT NULL,
-  `count_field` blob NOT NULL,
-  `group_field1` blob NOT NULL,
-  `group_field2` blob NOT NULL,
-  `group_field3` blob NOT NULL,
-  PRIMARY KEY (`module_name`,`report_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
---
--- Table structure for table `cobalt_sst`
---
-
-CREATE TABLE `cobalt_sst` (
-  `auto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `config_file` varchar(255) NOT NULL,
-  PRIMARY KEY (`auto_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Table structure for table `person`
---
-
-CREATE TABLE `person` (
-  `person_id` int(11) NOT NULL auto_increment,
-  `first_name` varchar(255) NOT NULL,
-  `middle_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `gender` varchar(255) NOT NULL,
-  PRIMARY KEY  (`person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`person_id`, `first_name`, `middle_name`, `last_name`, `gender`) VALUES
-(1, 'Super User', 'X', 'Root', 'Male');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `system_log`
---
-
-CREATE TABLE `system_log` (
-  `entry_id` bigint(20) NOT NULL auto_increment,
-  `ip_address` varchar(255) NOT NULL,
-  `user` varchar(255) NOT NULL,
-  `datetime` int(11) NOT NULL,
-  `action` varchar(50000) NOT NULL,
-  `module` varchar(255) NOT NULL,
-  PRIMARY KEY  (`entry_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `system_log`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `system_settings`
---
-
-CREATE TABLE `system_settings` (
-  `setting` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY  (`setting`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Dumping data for table `system_settings`
 --
 
@@ -93,23 +8,6 @@ INSERT INTO `system_settings` (`setting`, `value`) VALUES
 ('Max Attachment Width', '0'),
 ('Max Attachment Height', '0');
 -- --------------------------------------------------------
-
---
--- Table structure for table `system_skins`
---
-
-CREATE TABLE `system_skins` (
-  `skin_id` int(11) NOT NULL auto_increment,
-  `skin_name` varchar(255) NOT NULL,
-  `header` varchar(255) NOT NULL,
-  `footer` varchar(255) NOT NULL,
-  `master_css` varchar(255) NOT NULL,
-  `colors_css` varchar(255) NOT NULL,
-  `fonts_css` varchar(255) NOT NULL,
-  `override_css` varchar(255) NOT NULL,
-  `icon_set` varchar(255) NOT NULL,
-  PRIMARY KEY  (`skin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `system_skins`
@@ -125,54 +23,13 @@ INSERT INTO `system_skins` (`skin_id`, `skin_name`, `header`, `footer`, `master_
 (7, 'Salmon Impression', 'skins/default_header.php', 'skins/default_footer.php', 'salmon_impression_master.css', 'salmon_impression_colors.css', 'salmon_impression_fonts.css', 'salmon_impression_override.css','cobalt'),
 (8, 'Royal Amethyst', 'skins/default_header.php', 'skins/default_footer.php', 'royal_amethyst_master.css', 'royal_amethyst_colors.css', 'royal_amethyst_fonts.css', 'royal_amethyst_override.css','cobalt'),
 (9, 'Red Decadence', 'skins/default_header.php', 'skins/default_footer.php', 'red_decadence_master.css', 'red_decadence_colors.css', 'red_decadence_fonts.css', 'red_decadence_override.css','cobalt'),
-(10, 'Modern Eden', 'skins/default_header.php', 'skins/default_footer.php', 'modern_eden_master.css', 'modern_eden_colors.css', 'modern_eden_fonts.css', 'modern_eden_override.css','cobalt');
+(10, 'Modern Eden', 'skins/default_header.php', 'skins/default_footer.php', 'modern_eden_master.css', 'modern_eden_colors.css', 'modern_eden_fonts.css', 'modern_eden_override.css','cobalt'),
+(11, 'Warm Teal', 'skins/default_header.php', 'skins/default_footer.php', 'warm_teal_master.css', 'warm_teal_colors.css', 'warm_teal_fonts.css', 'warm_teal_override.css', 'cobalt'),
+(12, 'Purple Rain', 'skins/default_header.php', 'skins/default_footer.php', 'purple_rain_master.css', 'purple_rain_colors.css', 'purple_rain_fonts.css', 'purple_rain_override.css', 'cobalt');
 
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `salt` varchar(255) NOT NULL,
-  `iteration` int(11) NOT NULL,
-  `method` varchar(255) NOT NULL,
-  `person_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `skin_id` int(11) NOT NULL,
-  PRIMARY KEY  (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`username`, `password`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES
-('root', 'Glwcc4ARIZm9OUaR2mX1eI8Qs7pw8pPBajzN0OfFZDqpabO4fR1LjWksSuny+I4GHStS9K6RoWmszf8V4MlTQA', 'NKVHBDaicXG7SQxfOTvjPQ', '150000', 'sha512', '1', '1', '1');
-
 -- --------------------------------------------------------
-
---
--- Table structure for table `user_links`
---
-
-CREATE TABLE `user_links` (
-  `link_id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) NOT NULL,
-  `target` varchar(255) NOT NULL,
-  `descriptive_title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `passport_group_id` int(11) NOT NULL,
-  `show_in_tasklist` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
-  `priority` int(11) NOT NULL,
-  PRIMARY KEY (`link_id`),
-  KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_links`
@@ -217,77 +74,6 @@ INSERT INTO `user_links` (`link_id`, `name`, `target`, `descriptive_title`, `des
 (36, 'Delete cobalt sst', 'sst/delete_cobalt_sst.php', 'Delete Cobalt SST', '', 2, 'No', 'On', 'form3.png', 0);
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `user_passport`
---
-
-CREATE TABLE `user_passport` (
-  `username` varchar(255) NOT NULL,
-  `link_id` int(11) NOT NULL,
-  PRIMARY KEY  (`username`,`link_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user_passport`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_passport_groups`
---
-
-CREATE TABLE `user_passport_groups` (
-  `passport_group_id` int(11) NOT NULL auto_increment,
-  `passport_group` varchar(255) NOT NULL,
-  `priority` int(11) NOT NULL,
-  `icon` varchar(255) NOT NULL,
-  PRIMARY KEY  (`passport_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `user_passport_groups`
---
-
-INSERT INTO `user_passport_groups` (`passport_group_id`, `passport_group`,`icon`) VALUES
-(1, 'Default','blue_folder3.png'),
-(2, 'Admin','preferences-system.png');
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_role`
---
-
- CREATE TABLE `user_role` (
-`role_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`role` VARCHAR( 255 ) NOT NULL ,
-`description` VARCHAR( 255 ) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user_role`
---
-
-INSERT INTO `user_role` (`role_id`, `role`, `description`) VALUES
-(1, 'Super Admin', 'Super admin role with 100% system privileges'),
-(2, 'System Admin', 'System admin role with all sysadmin permissions');
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_role_links`
---
-
-CREATE TABLE `user_role_links` (
-`role_id` INT NOT NULL ,
-`link_id` INT NOT NULL ,
-PRIMARY KEY ( `role_id` , `link_id` )
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_role_links`
@@ -366,19 +152,26 @@ INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES
 (2, 34),
 (2, 35),
 (2, 36);
-
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add calendar event', 'modules/add_calendar_event.php', 'Add Calendar Event','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit calendar event', 'modules/edit_calendar_event.php', 'Edit Calendar Event','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View calendar event', 'modules/listview_calendar_event.php', 'Calendar Event','','1','Yes','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete calendar event', 'modules/delete_calendar_event.php', 'Delete Calendar Event','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add document', 'modules/add_document.php', 'Add Document','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit document', 'modules/edit_document.php', 'Edit Document','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View document', 'modules/listview_document.php', 'Document','','1','Yes','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete document', 'modules/delete_document.php', 'Delete Document','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add organization', 'modules/add_organization.php', 'Add Organization','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit organization', 'modules/edit_organization.php', 'Edit Organization','','1','No','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View organization', 'modules/listview_organization.php', 'Organization','','1','Yes','On','form3.png');
-INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete organization', 'modules/delete_organization.php', 'Delete Organization','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add calendar event', 'modules/calendar_event/add_calendar_event.php', 'Add Calendar Event','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit calendar event', 'modules/calendar_event/edit_calendar_event.php', 'Edit Calendar Event','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View calendar event', 'modules/calendar_event/listview_calendar_event.php', 'Calendar Event','','1','Yes','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete calendar event', 'modules/calendar_event/delete_calendar_event.php', 'Delete Calendar Event','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add document', 'modules/document/add_document.php', 'Add Document','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit document', 'modules/document/edit_document.php', 'Edit Document','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View document', 'modules/document/listview_document.php', 'Document','','1','Yes','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete document', 'modules/document/delete_document.php', 'Delete Document','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add org position', 'modules/org_position/add_org_position.php', 'Add Org Position','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit org position', 'modules/org_position/edit_org_position.php', 'Edit Org Position','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View org position', 'modules/org_position/listview_org_position.php', 'Org Position','','1','Yes','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete org position', 'modules/org_position/delete_org_position.php', 'Delete Org Position','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add organization', 'modules/organization/add_organization.php', 'Add Organization','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit organization', 'modules/organization/edit_organization.php', 'Edit Organization','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View organization', 'modules/organization/listview_organization.php', 'Organization','','1','Yes','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete organization', 'modules/organization/delete_organization.php', 'Delete Organization','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Add share option', 'modules/share_option/add_share_option.php', 'Add Share Option','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Edit share option', 'modules/share_option/edit_share_option.php', 'Edit Share Option','','1','No','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'View share option', 'modules/share_option/listview_share_option.php', 'Share Option','','1','Yes','On','form3.png');
+INSERT INTO `user_links`(link_id, name, target, descriptive_title, description, passport_group_id, show_in_tasklist, `status`, icon) VALUES(null,'Delete share option', 'modules/share_option/delete_share_option.php', 'Delete Share Option','','1','No','On','form3.png');
 INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '37');
 INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '38');
 INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '39');
@@ -391,4 +184,12 @@ INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '45');
 INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '46');
 INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '47');
 INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '48');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '49');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '50');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '51');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '52');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '53');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '54');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '55');
+INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES ('1', '56');
 INSERT `user_passport` SELECT 'root', `link_id` FROM user_role_links WHERE role_id='1'

@@ -1,11 +1,11 @@
 <?php
-define('GLOBAL_PROJECT_NAME', 'Student Activities Management System - TEST');
-define('GLOBAL_SESSION_NAME', 'C4b3154ca');
+define('GLOBAL_PROJECT_NAME', 'Student Activities Management System');
+define('GLOBAL_SESSION_NAME', 'Cb6c13472');
 
 //Default database settings
 define('DEFAULT_DB_HOST','localhost');
 define('DEFAULT_DB_USER','root');
-define('DEFAULT_DB_PASS','');
+define('DEFAULT_DB_PASS','projDb_2016');
 define('DEFAULT_DB_USE' ,'dbtest');
 
 //Paths and directory names
@@ -37,4 +37,4 @@ define('MAX_FORM_KEYS',10);
 define('LISTVIEW_RESULTS_PER_PAGE',50);
 define('FOOTER_RESOURCE_USAGE', FALSE);
 define('ENABLE_SIDEBAR', TRUE);
-define('CONTROL_CENTER_COLUMNS',3);
+define('CONTROL_CENTER_COLUMNS',6);

@@ -21,17 +21,18 @@ class calendar_event extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('INSERT');
-            $this->set_fields('id, name, date, time, attendee, venue, description');
-            $this->set_values("?,?,?,?,?,?,?");
+            $this->set_fields('id, timestamp, name, description, date, eventTime, venue, attendee');
+            $this->set_values("?,?,?,?,?,?,?,?");
 
-            $bind_params = array('issssss',
+            $bind_params = array('isssssss',
                                  &$this->fields['id']['value'],
+                                 &$this->fields['timestamp']['value'],
                                  &$this->fields['name']['value'],
+                                 &$this->fields['description']['value'],
                                  &$this->fields['date']['value'],
-                                 &$this->fields['time']['value'],
-                                 &$this->fields['attendee']['value'],
+                                 &$this->fields['eventTime']['value'],
                                  &$this->fields['venue']['value'],
-                                 &$this->fields['description']['value']);
+                                 &$this->fields['attendee']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -47,16 +48,17 @@ class calendar_event extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('UPDATE');
-            $this->set_update("name = ?, date = ?, time = ?, attendee = ?, venue = ?, description = ?");
+            $this->set_update("timestamp = ?, name = ?, description = ?, date = ?, eventTime = ?, venue = ?, attendee = ?");
             $this->set_where("id = ?");
 
-            $bind_params = array('ssssssi',
+            $bind_params = array('sssssssi',
+                                 &$this->fields['timestamp']['value'],
                                  &$this->fields['name']['value'],
-                                 &$this->fields['date']['value'],
-                                 &$this->fields['time']['value'],
-                                 &$this->fields['attendee']['value'],
-                                 &$this->fields['venue']['value'],
                                  &$this->fields['description']['value'],
+                                 &$this->fields['date']['value'],
+                                 &$this->fields['eventTime']['value'],
+                                 &$this->fields['venue']['value'],
+                                 &$this->fields['attendee']['value'],
                                  &$this->fields['id']['value']);
 
             $this->stmt_prepare($bind_params);

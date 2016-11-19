@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/delete_organization.php',
+                ['location'=>'modules/organization/delete_organization.php',
                 'pre'=>'organization_sst_delete.php',
                 'post'=>''],
                );

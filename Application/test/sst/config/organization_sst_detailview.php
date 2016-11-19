@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/detailview_organization.php',
+                ['location'=>'modules/organization/detailview_organization.php',
                 'pre'=>'organization_sst_detailview.php',
                 'post'=>''],
                );
