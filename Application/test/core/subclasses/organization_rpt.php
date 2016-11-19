@@ -4,7 +4,7 @@ class organization_rpt extends reporter
 {
     var $tables='';
     var $session_array_name = 'ORGANIZATION_REPORT_CUSTOM';
-    var $report_title = 'Organization: Custom Reporting Tool';
+    var $report_title = '%%: Custom Reporting Tool';
     var $html_subclass = 'organization_html';
     var $data_subclass = 'organization';
     var $result_page = 'reporter_result_organization.php';

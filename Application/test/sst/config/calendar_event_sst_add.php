@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/add_calendar_event.php',
+                ['location'=>'modules/calendar_event/add_calendar_event.php',
                 'pre'=>'calendar_event_sst_add.php',
                 'post'=>''],
                );

@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/delete_document.php',
+                ['location'=>'modules/document/delete_document.php',
                 'pre'=>'document_sst_delete.php',
                 'post'=>''],
                );

@@ -21,14 +21,15 @@ class document extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('INSERT');
-            $this->set_fields('id, name, description, file_size');
-            $this->set_values("?,?,?,?");
+            $this->set_fields('id, name, description, file_size, share_option_id');
+            $this->set_values("?,?,?,?,?");
 
-            $bind_params = array('issi',
+            $bind_params = array('issii',
                                  &$this->fields['id']['value'],
                                  &$this->fields['name']['value'],
                                  &$this->fields['description']['value'],
-                                 &$this->fields['file_size']['value']);
+                                 &$this->fields['file_size']['value'],
+                                 &$this->fields['share_option_id']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -44,13 +45,14 @@ class document extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('UPDATE');
-            $this->set_update("name = ?, description = ?, file_size = ?");
+            $this->set_update("name = ?, description = ?, file_size = ?, share_option_id = ?");
             $this->set_where("id = ?");
 
-            $bind_params = array('ssii',
+            $bind_params = array('ssiii',
                                  &$this->fields['name']['value'],
                                  &$this->fields['description']['value'],
                                  &$this->fields['file_size']['value'],
+                                 &$this->fields['share_option_id']['value'],
                                  &$this->fields['id']['value']);
 
             $this->stmt_prepare($bind_params);

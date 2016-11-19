@@ -4,6 +4,8 @@
 
 	if(isset($_SESSION['logged']) && $_SESSION['logged'] == "Logged"){
 		redirect('start.php');
+	}else{
+		
 	}
 ?>
 <html>
@@ -125,15 +127,7 @@
 			</div>
 		</div>
 		
-		<?php					
-			$username="root";
-			$password="projDb_2016";
-			$db="dbtest";
-			$hostname="localhost";
-			
-			@mysqli_connect($hostname, $username, $password);
-			@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
-		
+		<?php							
 			if(isset($_POST['next'])){
 				$lastname = $_POST['last'];
 				$firstname = $_POST['first'];

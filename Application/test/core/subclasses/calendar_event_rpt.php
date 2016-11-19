@@ -4,7 +4,7 @@ class calendar_event_rpt extends reporter
 {
     var $tables='';
     var $session_array_name = 'CALENDAR_EVENT_REPORT_CUSTOM';
-    var $report_title = 'Calendar Event: Custom Reporting Tool';
+    var $report_title = '%%: Custom Reporting Tool';
     var $html_subclass = 'calendar_event_html';
     var $data_subclass = 'calendar_event';
     var $result_page = 'reporter_result_calendar_event.php';

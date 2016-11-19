@@ -4,7 +4,7 @@ class org_position_rpt extends reporter
 {
     var $tables='';
     var $session_array_name = 'ORG_POSITION_REPORT_CUSTOM';
-    var $report_title = 'Org Position: Custom Reporting Tool';
+    var $report_title = '%%: Custom Reporting Tool';
     var $html_subclass = 'org_position_html';
     var $data_subclass = 'org_position';
     var $result_page = 'reporter_result_org_position.php';

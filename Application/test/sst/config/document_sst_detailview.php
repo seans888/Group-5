@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/detailview_document.php',
+                ['location'=>'modules/document/detailview_document.php',
                 'pre'=>'document_sst_detailview.php',
                 'post'=>''],
                );

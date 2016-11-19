@@ -1,6 +1,6 @@
 <?php
 $config = array(
-                ['location'=>'modules/edit_organization.php',
+                ['location'=>'modules/organization/edit_organization.php',
                 'pre'=>'organization_sst_edit.php',
                 'post'=>''],
                );
