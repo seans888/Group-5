@@ -12,7 +12,7 @@
 
 		$hostname = "localhost";
         $username = "root";
-        $password = "";
+        $password = "projDb_2016";
         $dbname = "dbtest";
         $error = "Cannot connect to databasae, Please try again later...";
         
@@ -291,7 +291,7 @@ a:hover {
                 
 
           
-                        $con = mysqli_connect("localhost","root","","dbtest");
+                        $con = mysqli_connect("localhost","root","projDb_2016","dbtest");
                         $q = mysqli_query($con,"SELECT * FROM org_profile");
                         while($row = mysqli_fetch_assoc($q)){
                                 

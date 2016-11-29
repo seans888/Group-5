@@ -72,9 +72,11 @@
 					$s = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 5)), 0, 5);
 					$query = "SELECT email FROM user WHERE username='$user'";
 					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-					$msg = "Good Day! Here is the Code you need to reset your password to access the APC-Student Activities Management System. \n Just enter the code in the Password Reset Code field and you're good to go! \n\n\n\t\tCODE: " . $s . "";
+					$msg = "<p>Good Day! Here is the Code you need to reset your password to access APC-Student Activities Management System. \n Just enter the code in the Password Reset Code field and you're good to go!</p><br/><div style='width:150px; min-height:30px; border: 1px solid #b6b6b4; padding: 10px; background-color: #e5e4e2; margin-left: 150px;'><b style='font-size:20px;'>CODE: &nbsp;&nbsp;&nbsp;" . $s . "</b></div><br/><p>If you think this email message was sent by mistake, please disregard this message.</p>";
 
-					$header = "From: apcsams.noreply@gmail.com";
+					$header = 'MIME-Version: 1.0' . "\r\n";
+					$header .= 'Content-Type: text/html; charset=UTF-8' . "\r\n";
+					$header .= "From: Student Activities Management System <apcsams.noreply@gmail.com>";
 					
 					if(mysqli_num_rows($result) > 0){
 						$query1 = "SELECT email FROM user WHERE username='$user'";
