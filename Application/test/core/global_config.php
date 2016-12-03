@@ -5,7 +5,7 @@ define('GLOBAL_SESSION_NAME', 'Cb6c13472');
 //Default database settings
 define('DEFAULT_DB_HOST','localhost');
 define('DEFAULT_DB_USER','root');
-define('DEFAULT_DB_PASS','projDb_2016');
+define('DEFAULT_DB_PASS','');
 define('DEFAULT_DB_USE' ,'dbtest');
 
 //Paths and directory names
