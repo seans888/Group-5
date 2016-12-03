@@ -66,17 +66,15 @@
 					echo '<center><p style="margin-top:-30px; color:red;"><b>No input detected. Please enter your username and try again.</b></p></center>';
 				}else{
 					$user = $_POST['username'];
-					$row;
 					
 					$_SESSION['user'] = $user;
 					
 					$s = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 5)), 0, 5);
-					$query = "SELECT username FROM user WHERE username='$user'";
+					$query = "SELECT email FROM user WHERE username='$user'";
 					$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-					$msg = "Good Day! Here is the Code you need to reset your password to access the APC-Student Activities Management System. \n
-							 Just enter the code in the Password Reset Code field and you're good to go! \n\n\n\t\tCODE: " . $s . ".";
-							 
-					$header = "From: webmaster@example.com";
+					$msg = "Good Day! Here is the Code you need to reset your password to access the APC-Student Activities Management System. \n Just enter the code in the Password Reset Code field and you're good to go! \n\n\n\t\tCODE: " . $s . "";
+
+					$header = "From: apcsams.noreply@gmail.com";
 					
 					if(mysqli_num_rows($result) > 0){
 						$query1 = "SELECT email FROM user WHERE username='$user'";

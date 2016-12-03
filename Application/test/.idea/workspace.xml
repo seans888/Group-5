@@ -20,6 +20,7 @@
     <favorites_list name="test" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="editEventTitle.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/full_calendar/editEventTitle.php">
@@ -66,6 +67,20 @@
               <folding>
                 <element signature="n#style#0;n#option#1;n#select#0;n#div#0;n#div#3;n#div#1;n#form#0;n#div#0;n#div#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <marker date="1480739731123" expanded="true" signature="41:108" ph="SELECT id, t... " />
+=======
+    <leaf>
+      <file leaf-file-name="forgot_password.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/forgot_password.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="76" column="64" selection-start-line="76" selection-start-column="64" selection-end-line="76" selection-end-column="64" />
+              <folding>
+                <marker date="1479567073789" expanded="true" signature="1668:1696" ph="..." />
+                <marker date="1479567073789" expanded="true" signature="1976:2021" ph="SELECT email... user" />
+                <marker date="1479567073789" expanded="true" signature="2464:2509" ph="SELECT email... user" />
+                <marker date="1479567073789" expanded="true" signature="2717:2780" ph="UPDATE user " />
+                <marker date="1479567073789" expanded="true" signature="3069:3097" ph="..." />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
               </folding>
             </state>
           </provider>
@@ -77,6 +92,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/core/global_config.php" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/signup.php" />
         <option value="$PROJECT_DIR$/modules/calendar.php" />
         <option value="$PROJECT_DIR$/modules/full_calendar/bdd.php" />
@@ -88,6 +104,10 @@
         <option value="$PROJECT_DIR$/modules/full_calendar/index.php" />
         <option value="$PROJECT_DIR$/modules/full_calendar/editEventDate.php" />
         <option value="$PROJECT_DIR$/modules/full_calendar/addEvent.php" />
+=======
+        <option value="$PROJECT_DIR$/modules/upload_img.php" />
+        <option value="$PROJECT_DIR$/forgot_password.php" />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
       </list>
     </option>
   </component>
@@ -148,6 +168,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+=======
+      <pane id="Scope" />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -190,6 +214,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+<<<<<<< HEAD
               <option name="myItemId" value="modules" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -239,12 +264,18 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="css" />
+=======
+              <option name="myItemId" value="core" />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="Scope" />
+=======
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
       <pane id="Scratches" />
     </panes>
   </component>
@@ -311,16 +342,22 @@
       <option name="presentableId" value="Default" />
       <updated>1479540045565</updated>
       <workItem from="1479540052525" duration="620000" />
+<<<<<<< HEAD
       <workItem from="1479541194722" duration="32000" />
       <workItem from="1479546894150" duration="1296000" />
       <workItem from="1479552005599" duration="8098000" />
       <workItem from="1480634870373" duration="16000" />
       <workItem from="1480637400713" duration="913000" />
       <workItem from="1480638941239" duration="26450000" />
+=======
+      <workItem from="1479541194722" duration="617000" />
+      <workItem from="1479554370720" duration="7086000" />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="37425000" />
   </component>
   <component name="ToolWindowManager">
@@ -328,6 +365,15 @@
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24231333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+=======
+    <option name="totallyTimeSpent" value="8323000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -713,6 +759,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/modules/full_calendar/editEventTitle.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -751,6 +798,26 @@
           <folding>
             <element signature="n#style#0;n#option#1;n#select#0;n#div#0;n#div#3;n#div#1;n#form#0;n#div#0;n#div#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <marker date="1480739731123" expanded="true" signature="41:108" ph="SELECT id, t... " />
+=======
+    <entry file="file://$PROJECT_DIR$/modules/upload_img.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forgot_password.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="76" column="64" selection-start-line="76" selection-start-column="64" selection-end-line="76" selection-end-column="64" />
+          <folding>
+            <marker date="1479567073789" expanded="true" signature="1668:1696" ph="..." />
+            <marker date="1479567073789" expanded="true" signature="1976:2021" ph="SELECT email... user" />
+            <marker date="1479567073789" expanded="true" signature="2464:2509" ph="SELECT email... user" />
+            <marker date="1479567073789" expanded="true" signature="2717:2780" ph="UPDATE user " />
+            <marker date="1479567073789" expanded="true" signature="3069:3097" ph="..." />
+>>>>>>> b371430413acb2877fbecabadbe43a310c4d273a
           </folding>
         </state>
       </provider>
