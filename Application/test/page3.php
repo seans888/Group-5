@@ -161,28 +161,26 @@
 						$data_con->execute_query("INSERT into PERSON (`last_name`, `first_name`, `middle_name`, `gender`, `birthday`, `contact_num`) VALUES ('{$_SESSION['lastname']}', '{$_SESSION['firstname']}', '{$_SESSION['midname']}', '{$_SESSION['gender']}', '{$_SESSION['bday']}', '{$_SESSION['contact']}')");
 
 						//Getting id values in Organization_has_Person
-						$query1 = "SELECT id FROM organization WHERE name = '{$_SESSION['org']}'";
-						$result1 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query1)";
-						
 						$query2 = "SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'";
 						$result2 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query2)";
 						
-						$query3 = "SELECT id FROM org_position WHERE name = '{$_SESSION['org_pos']}'";
-						$result3 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query3)";
-						
 						$query4 = "SELECT role_id FROM user_role WHERE role = 'Standard User'";
-						$result4 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query4)";
+						$result4 = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query4);
+						$roleId = mysqli_fetch_assoc($result4);
 						
 						$query5 = "SELECT skin_id FROM system_skins WHERE skin_name = 'Cobalt Default'";
 						$result5 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query5)";
 						
 						//Adding data to the Organization_has_Person in the Database
 						$data_con = new data_abstraction;						
-						$data_con->execute_query("INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = (SELECT id FROM organization WHERE name = '{$_SESSION['org']}'), `person_id` = (SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'), `org_position_id` = (SELECT id FROM org_position WHERE name = '{$_SESSION['org_pos']}')");
+						$data_con->execute_query("INSERT into ORGANIZATION_HAS_PERSON SET `organization_id` = '{$_SESSION['org']}', `person_id` = (SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'), `org_position_id` = '{$_SESSION['org_pos']}'");
 						
 						$data_con = new data_abstraction;
 						$data_con->execute_query("INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES ('$user', '$phsh', '$email', '$new_salt', '$new_iteration', '$new_method', (SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'), (SELECT role_id FROM user_role WHERE role = 'Standard User'), (SELECT skin_id FROM system_skins WHERE skin_name = 'Cobalt Default'))");
-						
+
+						$db = new data_abstraction();
+						$db->execute_query("INSERT `user_passport` SELECT '" . quote_smart($user) . "', `link_id` FROM user_role_links WHERE role_id='" . quote_smart($result4['id']) . "'");
+
 						header('Location: login.php');
 					}
 				?>

@@ -1,9 +1,9 @@
 <?php
 	$hostname = "localhost";
 	$username = "root";
-	$password = "projDb_2016";
+	$password = "";
 	$dbname = "dbtest";
-	$error = "Cannot connect to databasae, Please try again later...";
+	$error = "Cannot connect to database, Please try again later...";
 	
 	mysqli_connect($hostname,$username,$password) or die ($error);
 	mysqli_select_db (mysqli_connect($hostname,$username,$password),$dbname) or die ($error);

@@ -54,7 +54,7 @@
 		
 		<?php
 			$username = "root";
-			$password = "projDb_2016";
+			$password = "";
 			$hostname = "localhost";
 			$db = "dbtest";
 			

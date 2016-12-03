@@ -10,7 +10,7 @@
 			header('Location: signup.php');
 		}else{				
 			$username = "root";
-			$password = "projDb_2016";
+			$password = "";
 			$hostname = "localhost";
 			$db = "dbtest";
 
@@ -88,7 +88,11 @@
 				height:5%;
 				width:78%;
 				border-radius:5px;
-			}	
+			}
+
+			#orgpos{
+				width:74%;
+			}
 		</style>
 	</head>
 	<body>
@@ -114,7 +118,7 @@
 				<form action="" method="POST" id="orgs">
 					<label>Your Organizations</label><br><hr />
 					<label>Organization Name:</label>
-					<select name="org" required="required">
+					<select name="org" required="required" id="organization" onchange="document.getElementById('orgpos').disabled=false">
 						<option>------------------------------------------- Select One --------------------------------------------</option>
 						<?php
 							$query = "SELECT * FROM organization";
@@ -126,30 +130,38 @@
 						?>
 					</select>
 					<br /><br />
+					<label>Organizational Position:</label>
+					<select name="position" required="required" id="orgpos" disabled="disabled">
+						<option>------------------------------------------- Select One --------------------------------------------</option>
+						<?php
+							$query = "SELECT * FROM org_position";
+							$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+
+							while($row=mysqli_fetch_assoc($result)){
+								echo "<option value=".$row['id'].">".$row['name']."</option>";
+							}
+						?>
+					</select>
+					<br/><br/>
 					<center><input type="submit" name="next" class="btnext" value="NEXT >" /></center>
 					<?php
-					if(isset($_POST['org'])){
-						while(!isset($_POST['next'])){
-							
+						if(isset($_POST['org'])){
+							while(!isset($_POST['next'])){
+
+							}
+							$org_name = $_POST['org'];
+							$_SESSION['org'] = $org_name;
+
+							$org_pos = $_POST['position'];
+							$_SESSION['org_pos'] = $org_pos;
+
+							if(headers_sent()){
+								die("Please click this <a href='page3.php'>link</a> to continue");
+							}else{
+								exit(header('Location: page3.php'));
+							}
 						}
-						$org_name = $_POST['org'];
-						
-						$query = "SELECT * from ORGANIZATION where ID = $org_name";
-						$result = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
-						$rowOrg = mysqli_fetch_assoc($result);
-						
-						$_SESSION['org'] = $rowOrg['name'];
-						
-						$org_pos = "President";
-						$_SESSION['org_pos'] = $org_pos;
-						
-						if(headers_sent()){
-							die("Please click this <a href='page3.php'>link</a> to continue");
-						}else{
-							exit(header('Location: page3.php'));
-						}
-					}
-				?>
+					?>
 				</form>
 			</div>
 		</div>
