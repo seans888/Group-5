@@ -38,7 +38,7 @@ if(xsrf_guard())
         $clean_username = $mysqli->real_escape_string($username);
         $clean_password = cobalt_password_hash('RECREATE', $password, $username);
         //FIXME: remember to update this ancient code to use prepared statement
-        $mysqli->real_query("SELECT `username`, `skin_id`, `first_name`, `middle_name`, `last_name` FROM `user`, `person` WHERE `username`='$clean_username' AND `password`='$clean_password' AND `user`.`person_id` = `person`.`person_id`");
+        $mysqli->real_query("SELECT `person`.`person_id`,`username`, `skin_id`, `first_name`, `middle_name`, `last_name` FROM `user`, `person` WHERE `username`='$clean_username' AND `password`='$clean_password' AND `user`.`person_id` = `person`.`person_id`");
         if($result = $mysqli->use_result())
         {
             if($data = $result->fetch_assoc())
@@ -52,7 +52,7 @@ if(xsrf_guard())
                 $_SESSION['middle_name'] = $middle_name;
                 $_SESSION['last_name']   = $last_name;
                 $_SESSION['ip_address']  = get_ip();
-
+                $_SESSION['person_id']   = $person_id;
                 $data_con = new data_abstraction;
                 $data_con->set_fields('skin_name, header, footer, master_css, colors_css, fonts_css, override_css, icon_set');
                 $data_con->set_table('system_skins');

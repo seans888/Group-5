@@ -290,7 +290,7 @@ function cobalt_htmlentities($unclean, $flag=ENT_QUOTES)
 
 function cobalt_htmlentities_decode($unclean, $flag=ENT_QUOTES)
 {
-    $clean = htmlspecialchars_decode($unclean, $flag, MULTI_BYTE_ENCODING);
+    $clean = htmlspecialchars_decode($unclean, $flag);
     return $clean;
 }
 

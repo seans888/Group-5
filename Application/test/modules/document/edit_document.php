@@ -29,10 +29,11 @@ if(xsrf_guard())
     if($_POST['btn_cancel'])
     {
         log_action('Pressed cancel button');
-        redirect("listview_document.php?$query_string");
+        redirect("../profiles.php?$query_string");
     }
 
-
+    $file_upload_control_name = 'name';
+    require 'components/upload_generic.php';
     if($_POST['btn_submit'])
     {
         log_action('Pressed submit button');
@@ -54,7 +55,7 @@ if(xsrf_guard())
 
             $dbh_document->edit($arr_form_data);
 
-            redirect("listview_document.php?$query_string");
+            redirect("../profiles.php?$query_string");
         }
     }
 }

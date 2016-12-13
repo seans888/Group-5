@@ -7,7 +7,6 @@ require 'path.php';
 init_cobalt('Add document');
 
 require 'components/get_listview_referrer.php';
-
 if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
@@ -23,13 +22,33 @@ if(xsrf_guard())
     if($_POST['btn_cancel'])
     {
         log_action('Pressed cancel button');
-        redirect("listview_document.php?$query_string");
+        redirect("../profiles.php?$query_string");
     }
 
+    $file_upload_control_name = 'name';
+    require 'components/upload_generic.php';
+    if($_POST){
+        if($_FILES['name']['name'][0] == ''){
+            $file_name = $_POST['existing_name'][0];
+        }elseif($_POST){
+            $file_name = $_FILES['name']['name'][0];
+        }
+
+        $file = explode(".", $file_name);
+        $real_file_name = $file[0];
+        $file_ext = $file[1];
+
+    }
 
     if($_POST['btn_submit'])
     {
         log_action('Pressed submit button');
+
+        if($file_ext == "pptx" || $file_ext == "doc" || $file_ext == "docx" || $file_ext == "ppt" || $file_ext == "pdf" || $file_ext == "xls" || $file_ext == "xlsx"){
+            $message = '';
+        }else{
+            $message = 'Invalid file type. Please specify another file and try again<br/>';
+        }
 
         $message .= $dbh_document->sanitize($arr_form_data)->lst_error;
         extract($arr_form_data);
@@ -46,16 +65,33 @@ if(xsrf_guard())
         if($message=="")
         {
             $dbh_document->add($arr_form_data);
-            
-
-            redirect("listview_document.php?$query_string");
+            redirect("../profiles.php?$query_string");
         }
     }
 }
 require 'subclasses/document_html.php';
 $html = new document_html;
-$html->draw_header('Add %%', $message, $message_type);
+$html->draw_header('Add %%', $message, $message_type,TRUE,TRUE);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
-$html->draw_controls('add');
+init_var($_POST['share_option_id']);
+if($_POST['share_option_id'] == 1)
+{
+    require_once 'subclasses/organization.php';
+    $dbh_organization = new organization;
 
+    $result = $dbh_organization -> execute_query("SELECT name,organization.id FROM organization join organization_has_person ON organization.id = organization_has_person.organization_id WHERE person_id = ".$_SESSION['person_id']." ")->result;
+    $row = $result->fetch_assoc();
+    $html->fields['organization_id']['control_type'] = "drop-down list";
+
+    $uploader_organization = $row['id'];
+}else {
+    require_once 'subclasses/organization.php';
+    $dbh_organization = new organization;
+
+    $result = $dbh_organization->execute_query("SELECT name,organization.id FROM organization join organization_has_person ON organization.id = organization_has_person.organization_id WHERE person_id = " . $_SESSION['person_id'] . " ")->result;
+    $row = $result->fetch_assoc();
+
+    $uploader_organization = $row['id'];
+}
+$html->draw_controls('add');
 $html->draw_footer();

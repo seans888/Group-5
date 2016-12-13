@@ -21,14 +21,15 @@ class organization extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('INSERT');
-            $this->set_fields('id, name, representative, adviser');
-            $this->set_values("?,?,?,?");
+            $this->set_fields('id, name, representative, adviser, logo');
+            $this->set_values("?,?,?,?,?");
 
-            $bind_params = array('isss',
+            $bind_params = array('issss',
                                  &$this->fields['id']['value'],
                                  &$this->fields['name']['value'],
                                  &$this->fields['representative']['value'],
-                                 &$this->fields['adviser']['value']);
+                                 &$this->fields['adviser']['value'],
+                                 &$this->fields['logo']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -44,13 +45,14 @@ class organization extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('UPDATE');
-            $this->set_update("name = ?, representative = ?, adviser = ?");
+            $this->set_update("name = ?, representative = ?, adviser = ?, logo = ?");
             $this->set_where("id = ?");
 
-            $bind_params = array('sssi',
+            $bind_params = array('ssssi',
                                  &$this->fields['name']['value'],
                                  &$this->fields['representative']['value'],
                                  &$this->fields['adviser']['value'],
+                                 &$this->fields['logo']['value'],
                                  &$this->fields['id']['value']);
 
             $this->stmt_prepare($bind_params);

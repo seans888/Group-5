@@ -1,6 +1,9 @@
 <?php
-require_once('bdd.php');
 
+
+require_once 'bdd.php';
+require_once '../../path.php';
+init_cobalt();
 
 $sql = "SELECT id, title, description, venue, start, end, color FROM calendar_event";
 
@@ -60,7 +63,6 @@ $events = $req->fetchAll();
 </head>
 
 <body>
-
 
 <!-- Page Content -->
 <div class="container">
@@ -262,6 +264,7 @@ $events = $req->fetchAll();
                 $('#ModalAdd').modal('show');
             },
             eventRender: function (event, element) {
+              
                 element.bind('dblclick', function () {
                     $('#ModalEdit #id').val(event.id);
                     $('#ModalEdit #title').val(event.title);

@@ -1,339 +1,181 @@
 <?php
-	require 'path.php';
-	init_cobalt('View organization profile');
+    require 'path.php';
+    init_cobalt('View organization profile');
     require_once 'global_config.php';
-    require 'subclasses/organization.php';
-    require 'subclasses/organization_html.php';
-
-    $link = mysqli_connect(DEFAULT_DB_HOST, DEFAULT_DB_USER, DEFAULT_DB_PASS, DEFAULT_DB_USE);
-    $html = new organization_html();
-
-	if(isset($_SESSION['logged']) && $_SESSION['logged'] == "Logged"){
-		$dir = 'c:/xampp/tmp/uploads';
-        $error = "Cannot connect to database, Please try again later...";
-	}else{
-		redirect("../login.php");
-	}
-
-    if(isset($_POST['submit'])){
-            move_uploaded_file($_FILES['file']['tmp_name'],"pictures/".$_FILES['file']['name']);
-            $q = mysqli_query($link,"UPDATE org_profile SET image = '".$_FILES['file']['name']."' WHERE username = '".$_SESSION['user']."'");
-    }
 ?>
-
 <html>
-	<head>
-		<?php
-			$query = "SELECT name FROM organization WHERE id = (SELECT organization_id FROM organization_has_person WHERE person_id = (SELECT person_id FROM person WHERE last_name = '{$_SESSION['last_name']}' AND first_name = '{$_SESSION['first_name']}'))";
-			$resultName = mysqli_query(mysqli_connect(DEFAULT_DB_HOST, DEFAULT_DB_USER, DEFAULT_DB_PASS, DEFAULT_DB_USE), $query);
-			$rowName = mysqli_fetch_assoc($resultName);
-			echo "<title>" . $rowName['name'] . " | Organizational Profile</title>";
-		?>
-    <style type="text/css" >
-        h1, h2, h3 {
+<head>
+    <title>Student Activities Management System | Organization Profile</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
             margin: 0;
-            padding: 0;
-            font-weight: normal;
-            color: #333333;
         }
 
-        h1 {
-            font-size: 2em;
+        .no-content {
+            background-color: rgb(0, 191, 226);
+            height: 50%;
         }
 
-        h2 {
-            font-size: 2.4em;
-        }
-
-        h3 {
-            font-size: 1.6em;
-        }
-
-        p, ul, ol {
-            margin-top: 0;
-            line-height: 180%;
-        }
-
-        a {
-            text-decoration: none;
-            color: #9D151A;
-        }
-
-        #wrapper {
-            width: 960px;
+        .main {
+            background-color: white;
+            width: 70%;
+            height: 100%;
             margin: 0 auto;
-            padding: 0;
+            margin-top: -100px;
+            border: 0.5px solid #d3d3d3;
         }
 
-        /* Header */
-
-        #header {
-            width: 940px;
-            height: 148px;
-            margin: 0 auto;
+        .left-content {
+            /*background-color:white;*/
+            width: 25%;
+            height: 50%;
+            margin-top: -150px;
+            position: absolute;
         }
 
-        /* Logo */
-
-        #logo {
-            float: left;
-            height: 90px;
-            margin-top: -50px;
-            padding-top: 100px;
-            margin-left:100px;
-            padding-bottom: 20px;
-            color: #000000;
-        }
-
-        #logo h1, #logo p {
-            margin-left:200px;
-            margin-right:200px;
-            padding: 0;
-
-        }
-
-        #logo h1 {
-            float: left;
-            padding-left: 120px;
-            letter-spacing: -1px;
-            font-size: 3.8em;
-        }
-
-        #logo p {
-            float: left;
-            margin: 0;
-            padding: 26px 0 0 10px;
-            font: normal 14px Georgia, "Times New Roman", Times, serif;
-            font-style: italic;
-            color: #5E4E38;
-            padding-top: 300px;
-        }
-
-        #logo p a {
-            color: #5E4E38;
-        }
-
-        #logo a {
-            border: none;
-            background: none;
-            text-decoration: none;
-            color: #A83A01;
-        }
-
-        #page {
-            width: 940px;
-            margin-bottom: 100px
-            padding: 0;
-        }
-
-        #page-bgtop {
-            padding: 20px;
-        }
-
-        #file-container{
-            margin-top:-10px;
-        }
-
-        #document-container{
-            margin-top:-10px;
-        }
-        /* Content */
-
-        #content {
+        .right-content {
+            /*background-color: orange;*/
+            width: 64.5%;
+            min-height: 60%;
+            top: 90%;
+            padding: 10px;
             float: right;
-            width: 620px;
-            padding: 30px 0px 0px 0px;
-        }
-
-        .post {
-            margin-bottom: 15px;
-            margin-top: 55px;
-        }
-
-        .post .title {
-            margin-bottom: 10px;
-            padding: 12px 0 0 0px;
-            letter-spacing: -1px;
-            color: #000000;
-        }
-
-        .post .title a {
-            color: #333333;
-            border: none;
-        }
-
-        .post .meta {
-            height: 30px;
-            background: url(images/img03.jpg) no-repeat left top;
-            margin: 0px;
-            padding: 0px 20px 0px 20px;
             text-align: left;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13px;
-            font-weight: bold;
+            padding-top:75px;
         }
 
-        .post .meta .date {
-            float: left;
-            height: 24px;
-            padding: 3px 0px;
-            color: #FFFFFF;
+        .header-line{
+            border: 0;
+            height:3px;
+            background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+            background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+            background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+            background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
         }
 
-        .post .meta .posted {
-            float: right;
-            height: 24px;
-            padding: 3px 15px;
-            border-left: 1px solid #FFFFFF;
-            color: #FFFFFF;
+        img {
+            border: 5px double black;
+            margin-top: 20%;
+            background-color: white;
+            box-shadow: 3px 3px 3px black;
         }
 
-        .post .meta a {
-            color: #FFFFFF;
+        #left {
+            margin-left: 65px;
+            font-family: century;
+            font-size: 30px;
         }
 
-        .post .entry {
-            padding: 0px 0px 20px 0px;
-            padding-bottom: 20px;
-            text-align: justify;
+        #right-header{
+            font-family:Century;
+            margin-left:25px;
+            font-size:20px;
         }
 
-        .links {
-            padding-top: 20px;
-            font-size: 12px;
-            font-weight: bold;
+        #right-content{
+            margin-left:40px;
+            font-size:15px;
+            font-family:Century;
         }
 
-        .org-title{
-            margin-top:-105px;
-            font-size: 50px;
+        #doc-link{
+            padding:10px;
+            border-radius: 5px;
+            margin-left:40px;
+            margin-bottom:5px;
         }
 
-        /* Sidebar */
-
-
-        /* Footer */
-
-        #footer {
-            width: 940px;
-            height: 50px;
-            margin: 0 auto;
-            padding: 0px 0 15px 0;
-            border-top: 4px solid #EBE6D1;
-            font-family: Arial, Helvetica, sans-serif;
+        #doc-link:hover{
+            background-color:lightgrey;
+            text-decoration:none;
         }
+    </style>
+</head>
+<body>
+<div class='no-content'></div>
+<div class='main'>
+    <div class='left-content'>
+        <?php
+        $data_con = new data_abstraction();
+        $result = $data_con->execute_query("SELECT * FROM organization_has_person WHERE person_id = '{$_SESSION['person_id']}'")->result;
+        $fetch = $result->fetch_assoc();
 
-        #footer p {
-            margin: 0;
-            padding-top: 20px;
-            line-height: normal;
-            font-size: 10px;
-            text-transform: uppercase;
-            text-align: center;
-            color: #444444;
-        }
+        $result = $data_con->execute_query("SELECT * FROM organization WHERE id = '{$fetch['organization_id']}'")->result;
+        $fetchOrg = $result->fetch_assoc();
 
-        #footer a {
-            color: #464032;
-        }
+        //debug($fetch);
+        ?>
+        <center><img src='<?php echo 'http://localhost/test/tmp/'.$fetchOrg['logo'];?>' width='200' height='200'/></center>
+        <br/>
+        <p id='left'><?php echo $fetchOrg['name']; ?></p><br/>
+        <?php
+            echo "<a href='http://localhost/test/modules/organization/edit_organization.php?filter_field_used=&filter_used=&filter_sort_asc=&filter_sort_desc=&page_from=1&id={$fetchOrg['id']}' class='btn btn-success' style='margin-left: 65px'>Edit Organization Profile</a><br/><br/>";
+            echo "<a href='http://localhost/test/modules/document/add_document.php?filter_field_used=&filter_used=&filter_sort_asc=&filter_sort_desc=&page_from=1' class='btn btn-warning' style='margin-left: 65px'><i class='fa fa-file-word-o'></i> &nbsp;&nbsp;&nbsp;Upload a Document</a>";
+            ?>
+    </div>
+    <div class='right-content' align="right">
+        <p id="right-header">Organizational Heads</p>
+        <hr class="header-line"/><br/>
 
-        </style>
-	</head>
+        <?php
+            $result = $data_con->execute_query("SELECT * FROM org_position")->result;
 
-	<body>
-		<?php
-			$query = "SELECT id FROM organization WHERE name = (SELECT name FROM organization WHERE id = (SELECT organization_id FROM organization_has_person WHERE person_id = (SELECT person_id FROM person WHERE last_name = '{$_SESSION['last_name']}' AND first_name = '{$_SESSION['first_name']}')))";
-			$resultId = mysqli_query($link, $query);
-			$rowId = mysqli_fetch_assoc($resultId);
+            while($fetch=$result->fetch_assoc()){
+                $result = $data_con->execute_query("SELECT person_id FROM organization_has_person WHERE organization_id = '{$fetchOrg['id']}' AND org_position_id = '{$fetch['id']}'")->result;
+                $fetchPersonId = $result->fetch_assoc();
 
-			echo "<div id='logo'>";
-                echo "<form action='' method='post' enctype='multipart/form-data'>";
-                    $q = mysqli_query($link,"SELECT * FROM org_profile");
-                    while($row = mysqli_fetch_assoc($q)){
-                        if($row['image'] == ""){
-                            echo "<img width='200' height='200' src='../modules/pictures/default.jpg' alt='Default Profile Pic'>";
-                        } else {
-                            echo "<img width='200' height='200' src='../modules/pictures/".$row['image']."' alt='Profile Pic'>";
-                        }
-                        echo "<br>";
-                    }
+                /*$result = $data_con->execute_query("SELECT * FROM person WHERE person_id = '{$fetchPersonId['person_id']}'")->result;
+                $fetchPerson = $result->fetch_assoc();*/
 
-                    echo "<br>";
-                    echo"<br>";
-                    echo"<input type='file' name='file'><br>";
-                    echo"<br>";
-                    echo"<br>";
-                    echo"<input type='submit' name='submit'>";
-                echo "<form>";
-            echo "</div>";
-			
-                $query = "SELECT last_name, first_name FROM person WHERE person_id = (SELECT person_id FROM organization_has_person WHERE org_position_id = (SELECT id FROM org_position WHERE name = 'President') AND organization_id = '{$rowId['id']}')";
-                $resultPres = mysqli_query($link, $query);
-                $rowPres = mysqli_fetch_assoc($resultPres);
+                echo "<p id='right-content'>" . $fetch['name'] . ": </p>";
+            }
+        ?>
 
-                $query = "SELECT last_name, first_name FROM person WHERE person_id = (SELECT person_id FROM organization_has_person WHERE org_position_id = (SELECT id FROM org_position WHERE name = 'Vice President for Internal Affairs') AND organization_id = '{$rowId['id']}')";
-                $resultVpi = mysqli_query($link, $query);
-                $rowVpi = mysqli_fetch_assoc($resultVpi);
+        <br/><br/>
+        <p id="right-header">Private Documents</p>
+        <hr class="header-line"/><br/>
+        <?php
+            $result = $data_con->execute_query("SELECT id FROM share_option WHERE name = 'This Organization only'")->result;
+            $fetch = $result->fetch_assoc();
 
-                $query = "SELECT last_name, first_name FROM person WHERE person_id = (SELECT person_id FROM organization_has_person WHERE org_position_id = (SELECT id FROM org_position WHERE name = 'Vice President for External Affairs') AND organization_id = '{$rowId['id']}')";
-                $resultVpe = mysqli_query($link, $query);
-                $rowVpe = mysqli_fetch_assoc($resultVpe);
-	
-			echo "<div id='page'>";
-       	 	    echo "<div id='page-bgtop'>";
-        	        echo "<div id='page-bgbtm'>";
-                        echo "<div id='content'>";
-                           echo "<h1 class='org-title'><a href='#'>" . ucfirst($rowName['name']) . "</a></h1>";
-                                echo  "<div class='post'>";
-                                    echo "<h2 class='title'><a href='#'>Organizational Heads </a></h2>";
-                                    echo "<p class='meta'><span class='date'></span><span class='posted'> <a href='#'></a></span></p>";
-                                    echo "<div style='clear: both;'>&nbsp;</div>";
-                                    echo " <div class='entry'>";
-                                        echo "<p>President:" . $rowPres['last_name'] . ", " . $rowPres['first_name'] . "<br/></p>" ;
-                                        echo "<p>VP for Internal:". $rowVpi['last_name'] . ", " . $rowVpi['first_name'] ."<br/></p>";
-                                        echo "<pr>VP for External:" . $rowVpe['last_name'] . ", " . $rowVpe['first_name'] ." <br/></p>";
-                                    echo "</div>";
-                                echo "</div>";
+            $result = $data_con->execute_query("SELECT * FROM document WHERE share_option_id = '{$fetch['id']}' AND uploader_organization = '{$fetchOrg['id']}'")->result;
 
-                        echo "<div class='post' id='file-container'>";
-                            echo "<h2 class='title'><a href='#'>Organization's Files</a></h2>";
-                            echo "<p class='meta'><span class='date'></span><span class='posted'><a href='#''></a></span></p>";
-                            echo "<div style='clear: both;''>&nbsp;</div>";
-                                echo "<div class='entry'>";
-                                    echo "<p>List of Files here:<br/></p>";
-                                    echo "<p>List of Files here:<br/></p>";
-                                    echo " <p>List of Files here:<br/></p>";
-                                    echo "<p>List of Files here:<br/></p>";
-                                    echo " <p>List of Files here:<br/></p>";
-                                echo "</div>";
-                        echo "</div>";
+            while($fetch=$result->fetch_assoc()){
+                echo "<a href='http://localhost/test/modules/document/edit_document.php?filter_field_used=&filter_used=&filter_sort_asc=&filter_sort_desc=&page_from=1&id={$fetch['id']}' id='doc-link'>" . $fetch['name'] . "</a>";
+            }
+        ?>
+        <br/><br/>
+        <p id="right-header">Shared Documents</p>
+        <hr class="header-line"/><br/>
+        <?php
+            $result = $data_con->execute_query("SELECT id FROM share_option WHERE name = 'All Organizations' AND name = 'Specific Organization'")->result;
+            $fetch = $result->fetch_assoc();
 
-                        echo "<div class='post' id='document-container'>";
-                        echo "<h2 class='title'><a href='#'>". ucfirst("Shared Documents")."</a></h2>";
-                        echo "<p class='meta'><span class='date'></span><span class='posted'><a href='#''></a></span></p>";
-                        echo "<div style='clear: both;''>&nbsp;</div>";
-                           echo "<div class='entry'>";
-                                       echo "<p>Documents here:<br/></p>";
-                                       echo "<p>Documents here:<br/></p>";
-                                       echo "<p>Documents here:<br/></p>";
-                                       echo "<p>Documents here:<br/></p>";
-                                       echo "<p>Documents here:<br/></p>";
-                                        
-                              echo "</div>";
-                        echo "</div>";
-                
-                            echo  "<div style='clear: both;'>&nbsp;</div>";
-                            echo "</div>";
+            $result = $data_con->execute_query("SELECT * FROM `document` WHERE share_option_id = 1 AND organization_id = '{$fetchOrg['id']}' OR share_option_id = 2 OR uploader_organization = '{$fetchOrg['id']}' AND share_option_id = 1 OR share_option_id = 2")->result;
 
-                            echo "<div style='clear: both;'>&nbsp;</div>";
-                        echo " </div>";
-                    echo " </div>";
-                echo "</div>";
-            echo "</div>";
-
-            echo "<div id='footer'>";
-                echo " <p>Copyright (c) 2016 Asia Pacific College</p>";
-            echo "</div>";
-		?>
-	</body>
+            while($fetch=$result->fetch_assoc()){
+                if($fetch['uploader_organization'] == $fetchOrg['id']){
+                    echo "<a href='http://localhost/test/modules/document/edit_document.php?filter_field_used=&filter_used=&filter_sort_asc=&filter_sort_desc=&page_from=1&id={$fetch['id']}' id='doc-link'>" . $fetch['name'] . "</a>";
+                }else{
+                    echo "<a href='http://localhost/test/download_generic.php?filename={$fetch['name']}' id='doc-link'>" . $fetch['name'] . "</a>";
+                }
+            }
+        ?>
+    </div>
+</div>
+</body>
 </html>

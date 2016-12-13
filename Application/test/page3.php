@@ -154,7 +154,7 @@
 						@mysqli_connect($hostname, $username, $password, $db);
 						@mysqli_select_db(mysqli_connect($hostname, $username, $password), $db);
 						
-						$link = new mysqli($hostname, $username, 'projDb_2016', $db);
+						$link = new mysqli($hostname, $username, '', $db);
 
 						//Adding data to the Person Table in the Database
 						$data_con = new data_abstraction;
@@ -162,14 +162,14 @@
 
 						//Getting id values in Organization_has_Person
 						$query2 = "SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'";
-						$result2 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query2)";
+						$result2 = "mysqli_query(mysqli_connect($hostname, $username, '', $db), $query2)";
 						
 						$query4 = "SELECT role_id FROM user_role WHERE role = 'Standard User'";
-						$result4 = mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query4);
+						$result4 = mysqli_query(mysqli_connect($hostname, $username, '', $db), $query4);
 						$roleId = mysqli_fetch_assoc($result4);
 						
 						$query5 = "SELECT skin_id FROM system_skins WHERE skin_name = 'Cobalt Default'";
-						$result5 = "mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query5)";
+						$result5 = "mysqli_query(mysqli_connect($hostname, $username, '', $db), $query5)";
 						
 						//Adding data to the Organization_has_Person in the Database
 						$data_con = new data_abstraction;						
@@ -178,8 +178,8 @@
 						$data_con = new data_abstraction;
 						$data_con->execute_query("INSERT into `USER` (`username`, `password`, `email`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES ('$user', '$phsh', '$email', '$new_salt', '$new_iteration', '$new_method', (SELECT person_id FROM person WHERE last_name = '{$_SESSION['lastname']}' AND first_name = '{$_SESSION['firstname']}'), (SELECT role_id FROM user_role WHERE role = 'Standard User'), (SELECT skin_id FROM system_skins WHERE skin_name = 'Cobalt Default'))");
 
-						$db = new data_abstraction();
-						$db->execute_query("INSERT `user_passport` SELECT '" . quote_smart($user) . "', `link_id` FROM user_role_links WHERE role_id='" . quote_smart($result4['id']) . "'");
+                        $db = new data_abstraction();
+                        $db->execute_query("INSERT `user_passport` SELECT '" . quote_smart($_POST['username']) . "', `link_id` FROM user_role_links WHERE role_id='" . quote_smart($roleId['role_id']) . "'");
 
 						header('Location: login.php');
 					}

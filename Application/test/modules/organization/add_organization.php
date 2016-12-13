@@ -26,6 +26,8 @@ if(xsrf_guard())
         redirect("listview_organization.php?$query_string");
     }
 
+    $file_upload_control_name = 'logo';
+    require 'components/upload_generic.php';
 
     if($_POST['btn_submit'])
     {
@@ -54,7 +56,7 @@ if(xsrf_guard())
 }
 require 'subclasses/organization_html.php';
 $html = new organization_html;
-$html->draw_header('Add %%', $message, $message_type);
+$html->draw_header('Add %%', $message, $message_type, TRUE, TRUE);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_controls('add');
 

@@ -12,6 +12,14 @@ if (isset($_POST['title']) && isset($_POST['description']) && isset($_POST['venu
 	$end = $_POST['end'];
 	$color = $_POST['color'];
 
+	/*$link = mysqli_connect("localhost", "root", "", "dbtest");
+
+	$sql = mysqli_query($link, "SELECT person_id FROM person WHERE last_name = '{$_SESSION['last_name']}' AND first_name = '{$_SESSION['first_name']}'");
+	$fetchSql = mysqli_fetch_assoc($sql);
+
+	$sql = mysqli_query($link, "SELECT organization_id FROM organization_has_person WHERE person_id = '{$fetchSql['person_id']}'");
+	$fetchSql = mysqli_fetch_assoc($sql);*/
+
 	$sql = "INSERT INTO calendar_event(title, description, venue, start, end, color) values ('$title','$description','$venue', '$start', '$end', '$color')";
 	//$req = $bdd->prepare($sql);
 	//$req->execute();

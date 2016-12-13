@@ -16,7 +16,6 @@ if(ENABLE_SIDEBAR)
     </script>
     ';
 }
-
 if(DEBUG_MODE)
 {
     $html->display_error('System is running in DEBUG MODE. Please contact the system administrator ASAP.');
