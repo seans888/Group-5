@@ -95,10 +95,7 @@
 				font-size:15px;
 				padding-left:3px;
 			}
-			
-			h2, h3{
-				line-height:2px;
-			}
+
 		</style>
 	</head>
 	<body>

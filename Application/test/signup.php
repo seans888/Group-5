@@ -80,11 +80,6 @@
 				font-size:15px;
 				padding-left:5px;
 			}
-			
-			h2, h3{
-				line-height:10px;
-				color:rgb(8,8,194);
-			}
 		</style>
 	</head>
 	<body>

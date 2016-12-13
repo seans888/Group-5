@@ -9,6 +9,12 @@
 	
 	require 'path.php';
 	init_cobalt();
+
+    if(isset($_SESSION['logged']) && $_SESSION['logged'] == "Logged"){
+        redirect('start.php');
+    }else{
+
+    }
 ?>
 
 <html>

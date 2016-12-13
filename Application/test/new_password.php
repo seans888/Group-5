@@ -12,6 +12,12 @@
 	
 	$query = "UPDATE user SET password_reset_code = '' WHERE username = '{$_SESSION['user']}'";
 	@mysqli_query(mysqli_connect($hostname, $username, $password, $db), $query);
+
+    if(isset($_SESSION['logged']) && $_SESSION['logged'] == "Logged"){
+        redirect('start.php');
+    }else{
+
+    }
 ?>	
 <html>
 	<head>
